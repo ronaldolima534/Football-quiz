@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football Quiz</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#0d0d0d;
+color:white;
+text-align:center;
+}
+
+header{
+padding:20px;
+font-size:32px;
+font-weight:bold;
+}
+
+.hero{
+padding:80px 20px;
+background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+url('https://images.unsplash.com/photo-1486286701208-1d58e9338013?auto=format&fit=crop&w=1400&q=80');
+background-size:cover;
+background-position:center;
+}
+
+h1{
+font-size:52px;
+margin-bottom:20px;
+}
+
+p{
+font-size:20px;
+color:#ccc;
+}
+
+button{
+background:#00c853;
+color:white;
+border:none;
+padding:18px 35px;
+font-size:22px;
+border-radius:12px;
+cursor:pointer;
+margin-top:25px;
+}
+
+button:hover{
+background:#00e676;
+}
+
+.preview{
+padding:50px 20px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+max-width:1000px;
+margin:auto;
+}
+
+.card{
+background:#1a1a1a;
+padding:30px;
+border-radius:16px;
+}
+
+.card h3{
+margin:0 0 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>FQ | Football Quiz</header>
+
+<section class="hero">
+<h1>Demuestra cuánto sabes de fútbol</h1>
+<p>Juega quizzes interactivos y reta tu conocimiento.</p>
+<button>Jugar Ahora</button>
+</section>
+
+<section class="preview">
+<div class="card">
+<h3>Adivina el jugador</h3>
+<p>Por club, país y posición</p>
+</div>
+
+<div class="card">
+<h3>Transferencias</h3>
+<p>Adivina por trayectoria</p>
+</div>
+
+<div class="card">
+<h3>Adivina el club</h3>
+<p>Por nacionalidades</p>
+</div>
+</section>
+
+</body>
+</html>
