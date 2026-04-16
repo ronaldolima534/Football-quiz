@@ -9,98 +9,121 @@
 body{
 margin:0;
 font-family:Arial, sans-serif;
-background:#0d0d0d;
+background:url('background.png');
+background-size:cover;
+background-position:center;
+min-height:100vh;
 color:white;
-text-align:center;
 }
 
-header{
-padding:20px;
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px 40px;
+}
+
+.logo{
 font-size:32px;
 font-weight:bold;
 }
 
+.menu{
+display:flex;
+gap:20px;
+font-size:18px;
+align-items:center;
+}
+
+.menu a{
+color:white;
+text-decoration:none;
+cursor:pointer;
+}
+
 .hero{
-padding:80px 20px;
-background:
-linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
-url('background.jpg');
-background-size:cover;
-background-position:center;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+height:80vh;
+padding:20px;
 }
 
-h1{
-font-size:52px;
-margin-bottom:20px;
+.hero h1{
+font-size:58px;
+max-width:900px;
+margin:0;
 }
 
-p{
-font-size:20px;
-color:#ccc;
+.hero p{
+font-size:22px;
+color:#e8e8e8;
+margin-top:18px;
 }
 
 button{
+margin-top:30px;
 background:#00c853;
 color:white;
 border:none;
-padding:18px 35px;
-font-size:22px;
-border-radius:12px;
+padding:18px 38px;
+font-size:24px;
+border-radius:14px;
 cursor:pointer;
-margin-top:25px;
 }
 
 button:hover{
 background:#00e676;
 }
 
-.preview{
-padding:50px 20px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
-max-width:1000px;
-margin:auto;
+@media(max-width:768px){
+.top{
+padding:20px;
 }
 
-.card{
-background:#1a1a1a;
-padding:30px;
-border-radius:16px;
+.logo{
+font-size:24px;
 }
 
-.card h3{
-margin:0 0 10px;
+.menu{
+font-size:16px;
+gap:12px;
+}
+
+.hero h1{
+font-size:38px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+button{
+font-size:20px;
+padding:15px 28px;
+}
 }
 </style>
 </head>
 
 <body>
 
-<header>FQ | Football Quiz</header>
+<div class="top">
+<div class="logo">FQ</div>
 
-<section class="hero">
+<div class="menu">
+<a>Iniciar sesión</a>
+<a>ES | EN</a>
+</div>
+</div>
+
+<div class="hero">
 <h1>Demuestra cuánto sabes de fútbol</h1>
 <p>Juega quizzes interactivos y reta tu conocimiento.</p>
 <button>Jugar Ahora</button>
-</section>
-
-<section class="preview">
-<div class="card">
-<h3>Adivina el jugador</h3>
-<p>Por club, país y posición</p>
 </div>
-
-<div class="card">
-<h3>Transferencias</h3>
-<p>Adivina por trayectoria</p>
-</div>
-
-<div class="card">
-<h3>Adivina el club</h3>
-<p>Por nacionalidades</p>
-</div>
-</section>
 
 </body>
 </html>
