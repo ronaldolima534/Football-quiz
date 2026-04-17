@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guess The Player By Transfers</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial, sans-serif;
+background:url('background.jpg') no-repeat center center fixed;
+background-size:cover;
+color:white;
+text-align:center;
+}
+
+/* top bar */
+.topbar{
+background:rgba(0,0,0,0.55);
+padding:20px 10px;
+backdrop-filter:blur(4px);
+}
+
+.title{
+font-size:34px;
+font-weight:900;
+line-height:1.1;
+}
+
+/* main */
+.container{
+width:92%;
+max-width:460px;
+margin:auto;
+padding:28px 0 40px;
+}
+
+/* image area */
+.viewer{
+background:rgba(10,10,25,0.75);
+border-radius:24px;
+padding:18px;
+min-height:420px;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 14px 28px rgba(0,0,0,0.45);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.viewer img{
+max-width:100%;
+max-height:380px;
+object-fit:contain;
+}
+
+/* buttons */
+.buttons{
+margin-top:24px;
+display:grid;
+gap:14px;
+}
+
+.btn{
+width:100%;
+border:none;
+border-radius:18px;
+padding:18px;
+font-size:30px;
+font-weight:900;
+cursor:pointer;
+}
+
+.green{
+background:#39ff14;
+color:black;
+box-shadow:0 7px #1f9d09;
+}
+
+.green:active{
+transform:translateY(4px);
+box-shadow:0 2px #1f9d09;
+}
+
+.blue{
+background:#2d7cff;
+color:white;
+box-shadow:0 7px #1249a8;
+}
+
+.blue:active{
+transform:translateY(4px);
+box-shadow:0 2px #1249a8;
+}
+
+.gray{
+background:#222;
+color:white;
+box-shadow:0 7px #111;
+}
+
+.gray:active{
+transform:translateY(4px);
+box-shadow:0 2px #111;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+<div class="title">GUESS THE PLAYER BY HIS TRANSFERS</div>
+</div>
+
+<div class="container">
+
+<div class="viewer">
+<img id="quizImage" src="career1.png" alt="quiz image">
+</div>
+
+<div class="buttons">
+<button class="btn green" onclick="showAnswer()">ANSWER</button>
+<button class="btn blue" onclick="nextPlayer()">NEXT</button>
+<button class="btn gray" onclick="goHome()">BACK HOME</button>
+</div>
+
+</div>
+
+<script>
+let current = 1;
+let showingAnswer = false;
+const total = 5; // change later
+
+function showAnswer(){
+document.getElementById('quizImage').src = 'player' + current + '.png';
+showingAnswer = true;
+}
+
+function nextPlayer(){
+current++;
+
+if(current > total){
+goHome();
+return;
+}
+
+document.getElementById('quizImage').src = 'career' + current + '.png';
+showingAnswer = false;
+}
+
+function goHome(){
+window.location.href='index.html';
+}
+</script>
+
+</body>
+</html>
