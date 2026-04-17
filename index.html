@@ -1,129 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Football Quiz</title>
+export default function FootballQuiz(){return (<div className='min-h-screen bg-[#10367d] text-white font-sans'>
 
-<style>
-body{
-margin:0;
-font-family:Arial, sans-serif;
-background:url('background.jpg');
-background-size:cover;
-background-position:center;
-min-height:100vh;
-color:white;
-}
-
-.top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:25px 40px;
-}
-
-.logo{
-font-size:32px;
-font-weight:bold;
-}
-
-.menu{
-display:flex;
-gap:20px;
-font-size:18px;
-align-items:center;
-}
-
-.menu a{
-color:white;
-text-decoration:none;
-cursor:pointer;
-}
-
-.hero{
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-height:80vh;
-padding:20px;
-}
-
-.hero h1{
-font-size:58px;
-max-width:900px;
-margin:0;
-}
-
-.hero p{
-font-size:22px;
-color:#e8e8e8;
-margin-top:18px;
-}
-
-button{
-margin-top:30px;
-background:#00c853;
-color:white;
-border:none;
-padding:18px 38px;
-font-size:24px;
-border-radius:14px;
-cursor:pointer;
-}
-
-button:hover{
-background:#00e676;
-}
-
-@media(max-width:768px){
-.top{
-padding:20px;
-}
-
-.logo{
-font-size:24px;
-}
-
-.menu{
-font-size:16px;
-gap:12px;
-}
-
-.hero h1{
-font-size:38px;
-}
-
-.hero p{
-font-size:18px;
-}
-
-button{
-font-size:20px;
-padding:15px 28px;
-}
-}
-</style>
-</head>
-
-<body>
-
-<div class="top">
-<div class="logo">FQ</div>
-
-<div class="menu">
-<a>Iniciar sesión</a>
-<a>ES | EN</a>
-</div>
-</div>
-
-<div class="hero">
-<h1>Demuestra cuánto sabes de fútbol</h1>
-<p>Juega quizzes interactivos y reta tu conocimiento.</p>
-<button>Jugar Ahora</button>
-</div>
-
-</body>
-</html>
+<main className='max-w-md mx-auto px-4 py-8'>
+<section className='text-center mb-10'>
+<div className='text-4xl font-black tracking-tight'>⚽ Football Quiz</div>
+<p className='mt-6 text-3xl font-extrabold leading-tight'>PROVE YOU KNOW FOOTBALL</p>
+<p className='mt-2 text-white/80 text-sm'>Play daily quizzes and challenge yourself.</p>
+</section>
+<section className='grid gap-5'>
+{['Quiz 1','Quiz 2','Quiz 3'].map((q,i)=>(<div key={i} className='bg-[#1b2f63] rounded-2xl p-4 shadow-xl border border-white/10'>
+<div className='h-36 rounded-xl bg-white/10 border border-dashed border-white/20 flex items-center justify-center text-white/60 text-sm'>Miniatura del Quiz</div>
+<h3 className='mt-4 text-2xl font-extrabold'>{q}</h3>
+<button className='mt-4 w-full bg-yellow-400 text-black font-black py-3 rounded-xl shadow-[0_6px_0_#b38f00] active:translate-y-1 active:shadow-[0_2px_0_#b38f00]'>PLAY</button>
+</div>))}
+</section>
+</main>
+</div>)}
