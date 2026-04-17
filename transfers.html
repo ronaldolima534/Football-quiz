@@ -23,7 +23,7 @@ text-align:center;
 /* top bar */
 .topbar{
 background:rgba(0,0,0,0.55);
-padding:20px 10px;
+padding:22px 10px;
 backdrop-filter:blur(4px);
 }
 
@@ -33,30 +33,31 @@ font-weight:900;
 line-height:1.1;
 }
 
-/* main */
+/* container */
 .container{
 width:92%;
-max-width:460px;
+max-width:480px;
 margin:auto;
 padding:28px 0 40px;
 }
 
-/* image area */
+/* youtube style frame */
 .viewer{
-background:rgba(10,10,25,0.75);
+background:rgba(10,10,25,0.78);
 border-radius:24px;
-padding:18px;
-min-height:420px;
+padding:14px;
+aspect-ratio:16/9;
 display:flex;
 align-items:center;
 justify-content:center;
 box-shadow:0 14px 28px rgba(0,0,0,0.45);
 border:1px solid rgba(255,255,255,0.08);
+overflow:hidden;
 }
 
 .viewer img{
 max-width:100%;
-max-height:380px;
+max-height:100%;
 object-fit:contain;
 }
 
@@ -72,7 +73,7 @@ width:100%;
 border:none;
 border-radius:18px;
 padding:18px;
-font-size:30px;
+font-size:28px;
 font-weight:900;
 cursor:pointer;
 }
@@ -88,19 +89,8 @@ transform:translateY(4px);
 box-shadow:0 2px #1f9d09;
 }
 
-.blue{
-background:#2d7cff;
-color:white;
-box-shadow:0 7px #1249a8;
-}
-
-.blue:active{
-transform:translateY(4px);
-box-shadow:0 2px #1249a8;
-}
-
 .gray{
-background:#222;
+background:#1f1f1f;
 color:white;
 box-shadow:0 7px #111;
 }
@@ -108,6 +98,13 @@ box-shadow:0 7px #111;
 .gray:active{
 transform:translateY(4px);
 box-shadow:0 2px #111;
+}
+
+.counter{
+margin-top:16px;
+font-size:18px;
+font-weight:700;
+color:white;
 }
 </style>
 </head>
@@ -121,12 +118,13 @@ box-shadow:0 2px #111;
 <div class="container">
 
 <div class="viewer">
-<img id="quizImage" src="career1.png" alt="quiz image">
+<img id="quizImage" src="career1.png" alt="quiz">
 </div>
 
+<div class="counter" id="counter">Player 1 / 5</div>
+
 <div class="buttons">
-<button class="btn green" onclick="showAnswer()">ANSWER</button>
-<button class="btn blue" onclick="nextPlayer()">NEXT</button>
+<button class="btn green" id="mainBtn" onclick="mainAction()">ANSWER</button>
 <button class="btn gray" onclick="goHome()">BACK HOME</button>
 </div>
 
@@ -134,15 +132,16 @@ box-shadow:0 2px #111;
 
 <script>
 let current = 1;
+let total = 5; // later you can change this
 let showingAnswer = false;
-const total = 5; // change later
 
-function showAnswer(){
+function mainAction(){
+
+if(showingAnswer === false){
 document.getElementById('quizImage').src = 'player' + current + '.png';
+document.getElementById('mainBtn').innerText = 'NEXT';
 showingAnswer = true;
-}
-
-function nextPlayer(){
+}else{
 current++;
 
 if(current > total){
@@ -151,7 +150,11 @@ return;
 }
 
 document.getElementById('quizImage').src = 'career' + current + '.png';
+document.getElementById('mainBtn').innerText = 'ANSWER';
+document.getElementById('counter').innerText = 'Player ' + current + ' / ' + total;
 showingAnswer = false;
+}
+
 }
 
 function goHome(){
