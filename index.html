@@ -6,7 +6,11 @@
 <title>Football Quiz</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 font-family:Arial,sans-serif;
@@ -19,14 +23,17 @@ color:white;
 .topbar{
 background:rgba(0,0,0,.55);
 padding:28px 10px;
+backdrop-filter:blur(4px);
 }
 
 .logo{
 font-size:72px;
 font-weight:900;
+letter-spacing:1px;
 }
 
-.adtop,.adbottom{
+/* ad spaces */
+.adbox{
 width:94%;
 max-width:620px;
 height:100px;
@@ -40,6 +47,7 @@ font-size:22px;
 font-weight:900;
 }
 
+/* container */
 .container{
 width:94%;
 max-width:620px;
@@ -47,6 +55,7 @@ margin:auto;
 padding-bottom:50px;
 }
 
+/* cards */
 .card{
 background:rgba(15,20,45,.88);
 padding:22px;
@@ -102,29 +111,56 @@ box-shadow:0 2px #1f9d09;
 <div class="logo">⚽ FOOTBALL QUIZ</div>
 </div>
 
-<div class="adtop">TOP AD SPACE</div>
+<div class="adbox">TOP AD SPACE</div>
 
 <div class="container">
 
+<!-- QUIZ 1 -->
 <div class="card">
-<div class="thumb"><img src="quiz1.jpg"></div>
-<div class="quiz-title">GUESS THE PLAYER BY THEIR TRANSFERS</div>
-<button class="play" onclick="goQuiz('transfers.html')">PLAY</button>
+<div class="thumb">
+<img src="quiz1.jpg" alt="Quiz 1">
 </div>
 
-<div class="card">
-<div class="thumb"><img src="quiz2.jpg"></div>
-<div class="quiz-title">GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION</div>
-<button class="play">PLAY</button>
+<div class="quiz-title">
+GUESS THE PLAYER BY THEIR TRANSFERS
 </div>
 
-<div class="card">
-<div class="thumb"><img src="quiz3.jpg"></div>
-<div class="quiz-title">GUESS THE CLUB BY PLAYERS NATIONALITY</div>
-<button class="play">PLAY</button>
+<button class="play" onclick="goQuiz('transfers.html')">
+PLAY
+</button>
 </div>
 
-<div class="adbottom">BOTTOM AD SPACE</div>
+<!-- QUIZ 2 -->
+<div class="card">
+<div class="thumb">
+<img src="quiz2.jpg" alt="Quiz 2">
+</div>
+
+<div class="quiz-title">
+GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION
+</div>
+
+<button class="play" onclick="goQuiz('player-clues.html')">
+PLAY
+</button>
+</div>
+
+<!-- QUIZ 3 -->
+<div class="card">
+<div class="thumb">
+<img src="quiz3.jpg" alt="Quiz 3">
+</div>
+
+<div class="quiz-title">
+GUESS THE CLUB BY PLAYERS NATIONALITY
+</div>
+
+<button class="play" onclick="goQuiz('nationality-club.html')">
+PLAY
+</button>
+</div>
+
+<div class="adbox">BOTTOM AD SPACE</div>
 
 </div>
 
