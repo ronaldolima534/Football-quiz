@@ -20,32 +20,60 @@ color:white;
 text-align:center;
 }
 
-/* top bar */
+/* top area */
 .topbar{
 background:rgba(0,0,0,0.55);
-padding:22px 10px;
+padding:24px 12px;
 backdrop-filter:blur(4px);
 }
 
 .title{
-font-size:34px;
+font-size:40px;
 font-weight:900;
 line-height:1.1;
 }
 
-/* container */
-.container{
+/* ad space top */
+.adspace{
 width:92%;
-max-width:480px;
-margin:auto;
-padding:28px 0 40px;
+max-width:520px;
+height:90px;
+margin:18px auto 0;
+background:rgba(0,0,0,0.35);
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:18px;
+font-weight:700;
+color:white;
 }
 
-/* youtube style frame */
+/* content */
+.container{
+width:94%;
+max-width:540px;
+margin:auto;
+padding:24px 0 50px;
+}
+
+/* difficulty badge */
+.badge{
+display:inline-block;
+padding:10px 18px;
+border-radius:999px;
+font-size:22px;
+font-weight:900;
+margin-bottom:18px;
+background:#39ff14;
+color:black;
+}
+
+/* video style */
 .viewer{
 background:rgba(10,10,25,0.78);
-border-radius:24px;
-padding:14px;
+border-radius:26px;
+padding:16px;
 aspect-ratio:16/9;
 display:flex;
 align-items:center;
@@ -61,19 +89,25 @@ max-height:100%;
 object-fit:contain;
 }
 
-/* buttons */
+/* info */
+.counter{
+margin-top:18px;
+font-size:26px;
+font-weight:900;
+}
+
 .buttons{
-margin-top:24px;
+margin-top:22px;
 display:grid;
-gap:14px;
+gap:16px;
 }
 
 .btn{
 width:100%;
 border:none;
-border-radius:18px;
-padding:18px;
-font-size:28px;
+border-radius:20px;
+padding:20px;
+font-size:34px;
 font-weight:900;
 cursor:pointer;
 }
@@ -81,7 +115,7 @@ cursor:pointer;
 .green{
 background:#39ff14;
 color:black;
-box-shadow:0 7px #1f9d09;
+box-shadow:0 8px #1f9d09;
 }
 
 .green:active{
@@ -92,7 +126,7 @@ box-shadow:0 2px #1f9d09;
 .gray{
 background:#1f1f1f;
 color:white;
-box-shadow:0 7px #111;
+box-shadow:0 8px #111;
 }
 
 .gray:active{
@@ -100,11 +134,18 @@ transform:translateY(4px);
 box-shadow:0 2px #111;
 }
 
-.counter{
-margin-top:16px;
+/* ad bottom */
+.adbottom{
+width:100%;
+height:120px;
+margin-top:24px;
+background:rgba(0,0,0,0.35);
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
 font-size:18px;
 font-weight:700;
-color:white;
 }
 </style>
 </head>
@@ -115,33 +156,56 @@ color:white;
 <div class="title">GUESS THE PLAYER BY HIS TRANSFERS</div>
 </div>
 
+<div class="adspace">TOP AD SPACE</div>
+
 <div class="container">
+
+<div class="badge" id="difficulty">EASY</div>
 
 <div class="viewer">
 <img id="quizImage" src="career1.png" alt="quiz">
 </div>
 
-<div class="counter" id="counter">Player 1 / 5</div>
+<div class="counter" id="counter">QUESTION 1 / 15</div>
 
 <div class="buttons">
 <button class="btn green" id="mainBtn" onclick="mainAction()">ANSWER</button>
 <button class="btn gray" onclick="goHome()">BACK HOME</button>
 </div>
 
+<div class="adbottom">BOTTOM AD SPACE</div>
+
 </div>
 
 <script>
 let current = 1;
-let total = 5; // later you can change this
+let total = 15;
 let showingAnswer = false;
+
+function updateDifficulty(){
+let text = 'EASY';
+
+if(current >= 6 && current <= 10){
+text = 'MEDIUM';
+}
+
+if(current >= 11){
+text = 'HARD';
+}
+
+document.getElementById('difficulty').innerText = text;
+}
 
 function mainAction(){
 
 if(showingAnswer === false){
+
 document.getElementById('quizImage').src = 'player' + current + '.png';
 document.getElementById('mainBtn').innerText = 'NEXT';
 showingAnswer = true;
+
 }else{
+
 current++;
 
 if(current > total){
@@ -151,7 +215,10 @@ return;
 
 document.getElementById('quizImage').src = 'career' + current + '.png';
 document.getElementById('mainBtn').innerText = 'ANSWER';
-document.getElementById('counter').innerText = 'Player ' + current + ' / ' + total;
+document.getElementById('counter').innerText = 'QUESTION ' + current + ' / ' + total;
+
+updateDifficulty();
+
 showingAnswer = false;
 }
 
@@ -160,6 +227,8 @@ showingAnswer = false;
 function goHome(){
 window.location.href='index.html';
 }
+
+updateDifficulty();
 </script>
 
 </body>
