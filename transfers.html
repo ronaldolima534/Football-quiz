@@ -26,7 +26,7 @@ font-size:42px;
 font-weight:900;
 }
 
-.adtop,.adbottom{
+.adbox{
 width:94%;
 max-width:620px;
 height:100px;
@@ -106,25 +106,19 @@ color:black;
 box-shadow:0 8px #1f9d09;
 }
 
-.green:active{
-transform:translateY(4px);
-box-shadow:0 2px #1f9d09;
-}
-
 .gray{
 background:#222;
 color:white;
 box-shadow:0 8px #111;
 }
 
-.gray:active{
+.green:active,.gray:active{
 transform:translateY(4px);
 box-shadow:0 2px #111;
 }
 
-/* suggestions */
 .suggest-title{
-margin-top:28px;
+margin-top:24px;
 font-size:28px;
 font-weight:900;
 }
@@ -132,15 +126,33 @@ font-weight:900;
 .suggest{
 margin-top:16px;
 display:grid;
-gap:14px;
+gap:18px;
 }
 
-.s-card{
+.card{
 background:rgba(15,20,45,.88);
 padding:18px;
-border-radius:22px;
+border-radius:24px;
+}
+
+.thumb{
+height:180px;
+border-radius:18px;
+overflow:hidden;
+margin-bottom:14px;
+background:rgba(255,255,255,.08);
+}
+
+.thumb img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.s-title{
 font-size:22px;
 font-weight:900;
+line-height:1.15;
 }
 </style>
 </head>
@@ -151,7 +163,7 @@ font-weight:900;
 <div class="title">GUESS THE PLAYER BY THEIR TRANSFERS</div>
 </div>
 
-<div class="adtop">TOP AD SPACE</div>
+<div class="adbox">TOP AD SPACE</div>
 
 <div class="container">
 
@@ -168,41 +180,43 @@ font-weight:900;
 <button class="btn gray" onclick="goHome()">BACK HOME</button>
 </div>
 
+<div class="adbox">MID AD SPACE</div>
+
 <div class="suggest-title">SIMILAR QUIZZES</div>
 
 <div class="suggest">
-<div class="s-card">GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION</div>
-<div class="s-card">GUESS THE CLUB BY PLAYERS NATIONALITY</div>
+
+<div class="card">
+<div class="thumb"><img src="quiz2.jpg"></div>
+<div class="s-title">GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION</div>
 </div>
 
-<div class="adbottom">BOTTOM AD SPACE</div>
+<div class="card">
+<div class="thumb"><img src="quiz3.jpg"></div>
+<div class="s-title">GUESS THE CLUB BY PLAYERS NATIONALITY</div>
+</div>
+
+</div>
+
+<div class="adbox">BOTTOM AD SPACE</div>
 
 </div>
 
 <script>
-let current=1;
-let total=15;
-let showing=false;
+let current=1,total=15,showing=false;
 
-function fakeAd(nextAction){
-alert("ADVERTISEMENT");
-nextAction();
+function fakeAd(next){
+alert('ADVERTISEMENT');
+next();
 }
 
 function updateDifficulty(){
-let badge=document.getElementById('difficulty');
-badge.className='badge';
+let b=document.getElementById('difficulty');
+b.className='badge';
 
-if(current<=5){
-badge.innerText='EASY';
-badge.classList.add('easy');
-}else if(current<=10){
-badge.innerText='MEDIUM';
-badge.classList.add('medium');
-}else{
-badge.innerText='HARD';
-badge.classList.add('hard');
-}
+if(current<=5){b.innerText='EASY';b.classList.add('easy');}
+else if(current<=10){b.innerText='MEDIUM';b.classList.add('medium');}
+else{b.innerText='HARD';b.classList.add('hard');}
 }
 
 function mainAction(){
@@ -222,26 +236,22 @@ showing=true;
 }else{
 
 if(current===total){
-fakeAd(function(){
-location.reload();
-});
+fakeAd(function(){location.reload();});
 return;
 }
 
 current++;
-
 document.getElementById('quizImage').src='career'+current+'.png';
 document.getElementById('mainBtn').innerText='ANSWER';
 document.getElementById('counter').innerText='QUESTION '+current+' / '+total;
 showing=false;
 updateDifficulty();
+
 }
 }
 
 function goHome(){
-fakeAd(function(){
-window.location.href='index.html';
-});
+fakeAd(function(){window.location.href='index.html';});
 }
 
 updateDifficulty();
