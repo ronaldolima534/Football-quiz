@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Football Quiz</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:Arial,sans-serif;
+background:url('background.jpg') no-repeat center center fixed;
+background-size:cover;
+text-align:center;
+color:white;
+}
+
+.topbar{
+background:rgba(0,0,0,.55);
+padding:24px 10px;
+}
+
+.title{
+font-size:40px;
+font-weight:900;
+line-height:1.1;
+}
+
+.adbox{
+width:94%;
+max-width:620px;
+height:100px;
+margin:18px auto;
+background:rgba(0,0,0,.35);
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:900;
+}
+
+.container{
+width:94%;
+max-width:620px;
+margin:auto;
+padding-bottom:50px;
+}
+
+.badge{
+display:inline-block;
+padding:12px 24px;
+border-radius:999px;
+font-size:28px;
+font-weight:900;
+margin-bottom:18px;
+color:white;
+}
+
+.easy{background:#22c55e;}
+.medium{background:#f59e0b;}
+.hard{background:#ef4444;}
+
+.viewer{
+background:rgba(10,10,25,.78);
+border-radius:28px;
+padding:16px;
+aspect-ratio:16/9;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+}
+
+.viewer img{
+max-width:100%;
+max-height:100%;
+object-fit:contain;
+}
+
+.counter{
+margin-top:18px;
+font-size:30px;
+font-weight:900;
+}
+
+.buttons{
+margin-top:20px;
+display:grid;
+gap:16px;
+}
+
+.btn{
+width:100%;
+padding:22px;
+font-size:34px;
+font-weight:900;
+border:none;
+border-radius:18px;
+cursor:pointer;
+}
+
+.green{
+background:#39ff14;
+color:black;
+box-shadow:0 8px #1f9d09;
+}
+
+.gray{
+background:#222;
+color:white;
+box-shadow:0 8px #111;
+}
+
+.suggest-title{
+margin-top:24px;
+font-size:28px;
+font-weight:900;
+}
+
+.suggest{
+margin-top:16px;
+display:grid;
+gap:18px;
+}
+
+.card{
+background:rgba(15,20,45,.88);
+padding:18px;
+border-radius:24px;
+}
+
+.thumb{
+height:180px;
+border-radius:18px;
+overflow:hidden;
+margin-bottom:14px;
+}
+
+.thumb img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.s-title{
+font-size:22px;
+font-weight:900;
+line-height:1.15;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+<div class="title" id="quizTitle"></div>
+</div>
+
+<div class="adbox">TOP AD SPACE</div>
+
+<div class="container">
+
+<div id="difficulty" class="badge easy">EASY</div>
+
+<div class="viewer">
+<img id="quizImage" src="">
+</div>
+
+<div class="counter" id="counter">QUESTION 1 / 15</div>
+
+<div class="buttons">
+<button id="mainBtn" class="btn green" onclick="mainAction()">ANSWER</button>
+<button class="btn gray" onclick="goHome()">BACK HOME</button>
+</div>
+
+<div class="adbox">MID AD SPACE</div>
+
+<div class="suggest-title">SIMILAR QUIZZES</div>
+<div class="suggest" id="suggestions"></div>
+
+<div class="adbox">BOTTOM AD SPACE</div>
+
+</div>
+
+<script>
+const params=new URLSearchParams(window.location.search);
+const mode=params.get("mode");
+
+const data={
+"transfers":{
+title:"GUESS THE PLAYER BY THEIR TRANSFERS",
+folder:"images/transfers",
+thumb:"quiz1.jpg",
+others:[
+["player-clues","quiz2.jpg","GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION"],
+["nationality-club","quiz3.jpg","GUESS THE CLUB BY PLAYERS NATIONALITY"]
+]
+},
+"player-clues":{
+title:"GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION",
+folder:"images/player-clues",
+thumb:"quiz2.jpg",
+others:[
+["transfers","quiz1.jpg","GUESS THE PLAYER BY THEIR TRANSFERS"],
+["nationality-club","quiz3.jpg","GUESS THE CLUB BY PLAYERS NATIONALITY"]
+]
+},
+"nationality-club":{
+title:"GUESS THE CLUB BY PLAYERS NATIONALITY",
+folder:"images/nationality-club",
+thumb:"quiz3.jpg",
+others:[
+["transfers","quiz1.jpg","GUESS THE PLAYER BY THEIR TRANSFERS"],
+["player-clues","quiz2.jpg","GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION"]
+]
+}
+};
+
+const quiz=data[mode];
+
+let current=1,total=15,showing=false;
+
+document.getElementById("quizTitle").innerText=quiz.title;
+
+function folderByDifficulty(){
+if(current<=5)return "easy";
+if(current<=10)return "medium";
+return "hard";
+}
+
+function loadCareer(){
+let diff=folderByDifficulty();
+document.getElementById("quizImage").src=
+quiz.folder+"/"+diff+"/career"+current+".png";
+}
+
+function loadAnswer(){
+let diff=folderByDifficulty();
+document.getElementById("quizImage").src=
+quiz.folder+"/"+diff+"/player"+current+".png";
+}
+
+function updateDifficulty(){
+let b=document.getElementById("difficulty");
+b.className="badge";
+
+if(current<=5){b.innerText="EASY";b.classList.add("easy");}
+else if(current<=10){b.innerText="MEDIUM";b.classList.add("medium");}
+else{b.innerText="HARD";b.classList.add("hard");}
+}
+
+function fakeAd(next){
+alert("ADVERTISEMENT");
+next();
+}
+
+function mainAction(){
+
+if(!showing){
+
+loadAnswer();
+
+if(current===total){
+document.getElementById("mainBtn").innerText="PLAY AGAIN";
+}else{
+document.getElementById("mainBtn").innerText="NEXT";
+}
+
+showing=true;
+
+}else{
+
+if(current===total){
+fakeAd(()=>location.reload());
+return;
+}
+
+current++;
+loadCareer();
+document.getElementById("counter").innerText="QUESTION "+current+" / "+total;
+document.getElementById("mainBtn").innerText="ANSWER";
+showing=false;
+updateDifficulty();
+
+}
+
+}
+
+function goHome(){
+fakeAd(()=>window.location.href="index.html");
+}
+
+function buildSuggestions(){
+let html="";
+quiz.others.forEach(q=>{
+html+=`
+<div class="card">
+<div class="thumb"><img src="${q[1]}"></div>
+<div class="s-title">${q[2]}</div>
+<button class="btn green" style="margin-top:14px;font-size:26px;padding:16px"
+onclick="fakeAd(()=>window.location.href='${q[0]}.html')">PLAY</button>
+</div>`;
+});
+document.getElementById("suggestions").innerHTML=html;
+}
+
+updateDifficulty();
+loadCareer();
+buildSuggestions();
+</script>
+
+</body>
+</html>
