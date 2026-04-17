@@ -6,88 +6,102 @@
 <title>Football Quiz</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-font-family:Arial, sans-serif;
-color:white;
-text-align:center;
+font-family:Arial,sans-serif;
 background:url('background.jpg') no-repeat center center fixed;
 background-size:cover;
+text-align:center;
+color:white;
 }
 
-/* top bar */
 .topbar{
 background:rgba(0,0,0,0.55);
-padding:24px 10px;
-backdrop-filter:blur(4px);
+padding:28px 10px;
 }
 
 .logo{
-font-size:64px;
+font-size:72px;
 font-weight:900;
-letter-spacing:1px;
 }
 
-/* container */
-.container{
-width:92%;
-max-width:460px;
-margin:auto;
-padding-top:28px;
-padding-bottom:40px;
-}
-
-/* cards */
-.card{
-background:rgba(15,20,45,0.88);
-border-radius:26px;
-padding:18px;
-margin-bottom:28px;
-box-shadow:0 14px 28px rgba(0,0,0,0.45);
-border:1px solid rgba(255,255,255,0.08);
-}
-
-.thumb{
-height:210px;
+.adtop{
+width:94%;
+max-width:620px;
+height:100px;
+margin:18px auto;
+background:rgba(0,0,0,0.35);
 border-radius:18px;
-background:rgba(255,255,255,0.08);
 display:flex;
 align-items:center;
 justify-content:center;
 font-size:22px;
 font-weight:900;
+}
+
+.container{
+width:94%;
+max-width:620px;
+margin:auto;
+padding-bottom:50px;
+}
+
+.card{
+background:rgba(15,20,45,0.88);
+padding:22px;
+border-radius:28px;
+margin-bottom:28px;
+box-shadow:0 14px 28px rgba(0,0,0,.45);
+}
+
+.thumb{
+height:260px;
+border-radius:20px;
+background:rgba(255,255,255,0.08);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+font-weight:900;
 margin-bottom:18px;
 }
 
 .quiz-title{
-font-size:28px;
+font-size:30px;
 font-weight:900;
 line-height:1.15;
 margin-bottom:18px;
 }
 
-/* green button with relief */
 .play{
 width:100%;
-background:#39ff14;
-color:black;
+padding:22px;
+font-size:38px;
+font-weight:900;
 border:none;
 border-radius:18px;
-padding:18px;
-font-size:34px;
-font-weight:900;
-box-shadow:0 7px #1f9d09;
+background:#39ff14;
+color:black;
+box-shadow:0 8px #1f9d09;
 cursor:pointer;
 }
 
 .play:active{
 transform:translateY(4px);
 box-shadow:0 2px #1f9d09;
+}
+
+.adbottom{
+height:120px;
+margin-top:20px;
+background:rgba(0,0,0,0.35);
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+font-weight:900;
 }
 </style>
 </head>
@@ -98,27 +112,29 @@ box-shadow:0 2px #1f9d09;
 <div class="logo">⚽ FOOTBALL QUIZ</div>
 </div>
 
+<div class="adtop">TOP AD SPACE</div>
+
 <div class="container">
 
 <div class="card">
 <div class="thumb">QUIZ IMAGE</div>
-<div class="quiz-title">GUESS THE PLAYER BY HIS TRANSFERS</div>
-<a href="transfers.html">
-<button class="play">PLAY</button>
-</a>
+<div class="quiz-title">GUESS THE PLAYER BY THEIR TRANSFERS</div>
+<a href="transfers.html"><button class="play">PLAY</button></a>
 </div>
 
 <div class="card">
 <div class="thumb">QUIZ IMAGE</div>
-<div class="quiz-title">GUESS THE PLAYER BY CLUB + COUNTRY + SHIRT NUMBER + POSITION</div>
+<div class="quiz-title">GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION</div>
 <button class="play">PLAY</button>
 </div>
 
 <div class="card">
 <div class="thumb">QUIZ IMAGE</div>
-<div class="quiz-title">GUESS THE CLUB BY THE NATIONALITY OF ITS PLAYERS</div>
+<div class="quiz-title">GUESS THE CLUB BY PLAYERS NATIONALITY</div>
 <button class="play">PLAY</button>
 </div>
+
+<div class="adbottom">BOTTOM AD SPACE</div>
 
 </div>
 
