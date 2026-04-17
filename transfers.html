@@ -17,7 +17,7 @@ color:white;
 }
 
 .topbar{
-background:rgba(0,0,0,0.55);
+background:rgba(0,0,0,.55);
 padding:24px 10px;
 }
 
@@ -26,12 +26,12 @@ font-size:42px;
 font-weight:900;
 }
 
-.adtop{
+.adtop,.adbottom{
 width:94%;
 max-width:620px;
 height:100px;
 margin:18px auto;
-background:rgba(0,0,0,0.35);
+background:rgba(0,0,0,.35);
 border-radius:18px;
 display:flex;
 align-items:center;
@@ -62,7 +62,7 @@ color:white;
 .hard{background:#ef4444;}
 
 .viewer{
-background:rgba(10,10,25,0.78);
+background:rgba(10,10,25,.78);
 border-radius:28px;
 padding:16px;
 aspect-ratio:16/9;
@@ -93,7 +93,7 @@ gap:16px;
 .btn{
 width:100%;
 padding:22px;
-font-size:38px;
+font-size:34px;
 font-weight:900;
 border:none;
 border-radius:18px;
@@ -122,14 +122,23 @@ transform:translateY(4px);
 box-shadow:0 2px #111;
 }
 
-.adbottom{
-height:120px;
-margin-top:20px;
-background:rgba(0,0,0,0.35);
-border-radius:18px;
-display:flex;
-align-items:center;
-justify-content:center;
+/* suggestions */
+.suggest-title{
+margin-top:28px;
+font-size:28px;
+font-weight:900;
+}
+
+.suggest{
+margin-top:16px;
+display:grid;
+gap:14px;
+}
+
+.s-card{
+background:rgba(15,20,45,.88);
+padding:18px;
+border-radius:22px;
 font-size:22px;
 font-weight:900;
 }
@@ -159,6 +168,13 @@ font-weight:900;
 <button class="btn gray" onclick="goHome()">BACK HOME</button>
 </div>
 
+<div class="suggest-title">SIMILAR QUIZZES</div>
+
+<div class="suggest">
+<div class="s-card">GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION</div>
+<div class="s-card">GUESS THE CLUB BY PLAYERS NATIONALITY</div>
+</div>
+
 <div class="adbottom">BOTTOM AD SPACE</div>
 
 </div>
@@ -168,9 +184,13 @@ let current=1;
 let total=15;
 let showing=false;
 
+function fakeAd(nextAction){
+alert("ADVERTISEMENT");
+nextAction();
+}
+
 function updateDifficulty(){
 let badge=document.getElementById('difficulty');
-
 badge.className='badge';
 
 if(current<=5){
@@ -188,16 +208,27 @@ badge.classList.add('hard');
 function mainAction(){
 
 if(!showing){
-document.getElementById('quizImage').src='player'+current+'.png';
-document.getElementById('mainBtn').innerText='NEXT';
-showing=true;
-}else{
-current++;
 
-if(current>total){
-goHome();
+document.getElementById('quizImage').src='player'+current+'.png';
+
+if(current===total){
+document.getElementById('mainBtn').innerText='PLAY AGAIN';
+}else{
+document.getElementById('mainBtn').innerText='NEXT';
+}
+
+showing=true;
+
+}else{
+
+if(current===total){
+fakeAd(function(){
+location.reload();
+});
 return;
 }
+
+current++;
 
 document.getElementById('quizImage').src='career'+current+'.png';
 document.getElementById('mainBtn').innerText='ANSWER';
@@ -208,7 +239,9 @@ updateDifficulty();
 }
 
 function goHome(){
+fakeAd(function(){
 window.location.href='index.html';
+});
 }
 
 updateDifficulty();
