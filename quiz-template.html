@@ -21,9 +21,9 @@ padding:24px 10px;
 }
 
 .title{
-font-size:40px;
+font-size:38px;
 font-weight:900;
-line-height:1.1;
+line-height:1.15;
 }
 
 .container{
@@ -135,19 +135,19 @@ object-fit:cover;
 }
 
 .s-title{
-font-size:26px;
+font-size:24px;
 font-weight:900;
 line-height:1.15;
 margin-bottom:16px;
 }
 
-/* zona futura adsense */
 .ad-slot{
 margin:20px 0;
 min-height:90px;
 }
 </style>
 </head>
+
 <body>
 
 <div class="topbar">
@@ -166,15 +166,18 @@ min-height:90px;
 
 <div class="buttons">
 <button id="mainBtn" class="btn green" onclick="mainAction()">ANSWER</button>
-<button class="btn gray" onclick="goHome()">BACK HOME</button>
+<button class="btn gray" onclick="window.location.href='index.html'">
+BACK HOME
+</button>
 </div>
 
-<div class="ad-slot"><!-- Adsense future block --></div>
+<div class="ad-slot"></div>
 
 <div class="suggest-title">SIMILAR QUIZZES</div>
+
 <div class="suggest" id="suggestions"></div>
 
-<div class="ad-slot"><!-- Adsense future block --></div>
+<div class="ad-slot"></div>
 
 </div>
 
@@ -183,82 +186,141 @@ const params=new URLSearchParams(window.location.search);
 const mode=params.get("mode");
 
 const data={
+
 "transfers":{
 title:"GUESS THE PLAYER BY THEIR TRANSFERS",
 folder:"images/transfers",
 others:[
-["player-clues","quiz2.jpg","GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION"],
-["nationality-club","quiz3.jpg","GUESS THE CLUB BY PLAYERS NATIONALITY"]
-]},
+["player-clues","images/thumbnails/quiz2.jpg","GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION"],
+["nationality-club","images/thumbnails/quiz3.jpg","GUESS THE CLUB BY PLAYERS NATIONALITY"]
+]
+},
+
 "player-clues":{
 title:"GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION",
 folder:"images/player-clues",
 others:[
-["transfers","quiz1.jpg","GUESS THE PLAYER BY THEIR TRANSFERS"],
-["nationality-club","quiz3.jpg","GUESS THE CLUB BY PLAYERS NATIONALITY"]
-]},
+["transfers","images/thumbnails/quiz1.jpg","GUESS THE PLAYER BY THEIR TRANSFERS"],
+["nationality-club","images/thumbnails/quiz3.jpg","GUESS THE CLUB BY PLAYERS NATIONALITY"]
+]
+},
+
 "nationality-club":{
 title:"GUESS THE CLUB BY PLAYERS NATIONALITY",
 folder:"images/nationality-club",
 others:[
-["transfers","quiz1.jpg","GUESS THE PLAYER BY THEIR TRANSFERS"],
-["player-clues","quiz2.jpg","GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION"]
-]}
+["transfers","images/thumbnails/quiz1.jpg","GUESS THE PLAYER BY THEIR TRANSFERS"],
+["player-clues","images/thumbnails/quiz2.jpg","GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION"]
+]
+}
+
 };
 
 const quiz=data[mode];
-let current=1,total=15,showing=false;
+
+let current=1;
+let total=15;
+let showing=false;
 
 document.getElementById("quizTitle").innerText=quiz.title;
 
-function diff(){ if(current<=5)return"easy"; if(current<=10)return"medium"; return"hard"; }
+function diff(){
+if(current<=5)return "easy";
+if(current<=10)return "medium";
+return "hard";
+}
 
-function loadCareer(){ document.getElementById("quizImage").src=quiz.folder+"/"+diff()+"/career"+current+".png"; }
-function loadAnswer(){ document.getElementById("quizImage").src=quiz.folder+"/"+diff()+"/player"+current+".png"; }
+function loadCareer(){
+document.getElementById("quizImage").src=
+quiz.folder+"/"+diff()+"/career"+current+".png";
+}
+
+function loadAnswer(){
+document.getElementById("quizImage").src=
+quiz.folder+"/"+diff()+"/player"+current+".png";
+}
 
 function updateDifficulty(){
 let b=document.getElementById("difficulty");
 b.className="badge";
-if(current<=5){b.innerText="EASY";b.classList.add("easy");}
-else if(current<=10){b.innerText="MEDIUM";b.classList.add("medium");}
-else{b.innerText="HARD";b.classList.add("hard");}
+
+if(current<=5){
+b.innerText="EASY";
+b.classList.add("easy");
+}else if(current<=10){
+b.innerText="MEDIUM";
+b.classList.add("medium");
+}else{
+b.innerText="HARD";
+b.classList.add("hard");
+}
 }
 
 function mainAction(){
+
 if(!showing){
+
 loadAnswer();
-document.getElementById("mainBtn").innerText=(current===total)?"PLAY AGAIN":"NEXT";
-showing=true;
+
+if(current===total){
+document.getElementById("mainBtn").innerText="PLAY AGAIN";
 }else{
-if(current===total){location.reload();return;}
+document.getElementById("mainBtn").innerText="NEXT";
+}
+
+showing=true;
+
+}else{
+
+if(current===total){
+location.reload();
+return;
+}
+
 current++;
 loadCareer();
-document.getElementById("counter").innerText="QUESTION "+current+" / "+total;
+document.getElementById("counter").innerText="QUESTION "+current+" / 15";
 document.getElementById("mainBtn").innerText="ANSWER";
 showing=false;
 updateDifficulty();
-}
+
 }
 
-function goHome(){ window.location.href="index.html"; }
+}
 
 function buildSuggestions(){
+
 let html="";
+
 quiz.others.forEach(q=>{
+
 html+=`
 <div class="card">
-<div class="thumb"><img src="${q[1]}"></div>
+
+<div class="thumb">
+<img src="${q[1]}">
+</div>
+
 <div class="s-title">${q[2]}</div>
+
 <button class="btn green" style="font-size:28px;padding:18px"
-onclick="window.location.href='${q[0]}.html'">PLAY</button>
-</div>`;
+onclick="window.location.href='${q[0]}.html'">
+PLAY
+</button>
+
+</div>
+`;
+
 });
+
 document.getElementById("suggestions").innerHTML=html;
+
 }
 
 updateDifficulty();
 loadCareer();
 buildSuggestions();
+
 </script>
 
 </body>
