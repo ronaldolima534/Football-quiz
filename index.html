@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Football Quiz</title>
 
+<!-- AQUÍ PEGARÁS LUEGO EL SCRIPT DE ADSENSE -->
+
 <style>
 *{
 margin:0;
@@ -14,62 +16,46 @@ box-sizing:border-box;
 
 body{
 font-family:Arial,sans-serif;
-background:url('background.jpg') no-repeat center center fixed;
-background-size:cover;
+background:#f0ede5;
 text-align:center;
 color:white;
 }
 
 .topbar{
-background:rgba(0,0,0,.55);
+background:#004643;
 padding:28px 10px;
-backdrop-filter:blur(4px);
 }
 
 .logo{
 font-size:72px;
 font-weight:900;
 letter-spacing:1px;
+line-height:1;
 }
 
-/* ad spaces */
-.adbox{
-width:94%;
-max-width:620px;
-height:100px;
-margin:18px auto;
-background:rgba(0,0,0,.35);
-border-radius:18px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-font-weight:900;
-}
-
-/* container */
 .container{
 width:94%;
 max-width:620px;
 margin:auto;
-padding-bottom:50px;
+padding:20px 0 50px;
 }
 
-/* cards */
+/* tarjetas */
 .card{
-background:rgba(15,20,45,.88);
+background:#004643;
 padding:22px;
 border-radius:28px;
 margin-bottom:28px;
-box-shadow:0 14px 28px rgba(0,0,0,.45);
+box-shadow:0 10px 20px rgba(0,0,0,.15);
 }
 
+/* miniaturas */
 .thumb{
 height:260px;
 border-radius:20px;
 overflow:hidden;
 margin-bottom:18px;
-background:rgba(255,255,255,.08);
+background:#0b5a56;
 }
 
 .thumb img{
@@ -78,6 +64,7 @@ height:100%;
 object-fit:cover;
 }
 
+/* título */
 .quiz-title{
 font-size:30px;
 font-weight:900;
@@ -85,6 +72,7 @@ line-height:1.15;
 margin-bottom:18px;
 }
 
+/* botón */
 .play{
 width:100%;
 padding:22px;
@@ -102,6 +90,12 @@ cursor:pointer;
 transform:translateY(4px);
 box-shadow:0 2px #1f9d09;
 }
+
+/* espacios futuros para adsense */
+.ad-slot{
+margin:20px 0;
+min-height:90px;
+}
 </style>
 </head>
 
@@ -111,12 +105,13 @@ box-shadow:0 2px #1f9d09;
 <div class="logo">⚽ FOOTBALL QUIZ</div>
 </div>
 
-<div class="adbox">TOP AD SPACE</div>
-
 <div class="container">
+
+<div class="ad-slot"><!-- ADSENSE AUTO / BLOQUE --></div>
 
 <!-- QUIZ 1 -->
 <div class="card">
+
 <div class="thumb">
 <img src="quiz1.jpg" alt="Quiz 1">
 </div>
@@ -128,10 +123,12 @@ GUESS THE PLAYER BY THEIR TRANSFERS
 <button class="play" onclick="goQuiz('transfers.html')">
 PLAY
 </button>
+
 </div>
 
 <!-- QUIZ 2 -->
 <div class="card">
+
 <div class="thumb">
 <img src="quiz2.jpg" alt="Quiz 2">
 </div>
@@ -143,10 +140,14 @@ GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION
 <button class="play" onclick="goQuiz('player-clues.html')">
 PLAY
 </button>
+
 </div>
+
+<div class="ad-slot"><!-- ADSENSE BLOQUE --></div>
 
 <!-- QUIZ 3 -->
 <div class="card">
+
 <div class="thumb">
 <img src="quiz3.jpg" alt="Quiz 3">
 </div>
@@ -158,16 +159,16 @@ GUESS THE CLUB BY PLAYERS NATIONALITY
 <button class="play" onclick="goQuiz('nationality-club.html')">
 PLAY
 </button>
+
 </div>
 
-<div class="adbox">BOTTOM AD SPACE</div>
+<div class="ad-slot"><!-- ADSENSE BLOQUE --></div>
 
 </div>
 
 <script>
 function goQuiz(link){
-alert("ADVERTISEMENT");
-window.location.href=link;
+window.location.href = link;
 }
 </script>
 
