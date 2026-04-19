@@ -6,7 +6,11 @@
 <title>Football Quiz</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 font-family:Arial,sans-serif;
@@ -15,32 +19,33 @@ text-align:center;
 color:white;
 }
 
-/* LOGO SOLO */
+/* LOGO */
 .top-logo{
-padding:16px 10px 8px;
+padding:18px 10px 10px;
 }
 
 .logo{
-width:260px;
-max-width:86%;
+width:270px;
+max-width:88%;
 display:block;
 margin:auto;
 }
 
-/* TITULO SEPARADO */
+/* TITLE BAR */
 .title-bar{
-background:rgba(39,24,126,.92);
-padding:16px;
-border-radius:22px;
-font-size:26px;
-font-weight:900;
-line-height:1.15;
 width:94%;
 max-width:620px;
 margin:auto;
+background:rgba(39,24,126,.92);
+padding:16px;
+border-radius:24px;
+font-size:28px;
+font-weight:900;
+line-height:1.15;
+color:white;
 }
 
-/* CONTENIDO */
+/* MAIN AREA */
 .container{
 width:94%;
 max-width:620px;
@@ -48,25 +53,26 @@ margin:auto;
 padding:18px 0 50px;
 }
 
-/* DIFICULTAD */
+/* DIFFICULTY */
 .badge{
 display:inline-block;
-padding:10px 22px;
+padding:10px 24px;
 border-radius:999px;
 font-size:24px;
 font-weight:900;
 margin-bottom:16px;
+color:white;
 }
 
 .easy{background:#22c55e;}
 .medium{background:#f59e0b;}
 .hard{background:#ef4444;}
 
-/* VISOR */
+/* IMAGE BOX */
 .viewer{
 background:#27187e;
 padding:14px;
-border-radius:22px;
+border-radius:24px;
 aspect-ratio:16/9;
 display:flex;
 justify-content:center;
@@ -80,15 +86,15 @@ max-height:100%;
 object-fit:contain;
 }
 
-/* QUESTION COLOR */
+/* QUESTION TEXT */
 .counter{
-margin-top:16px;
-font-size:28px;
+margin-top:18px;
+font-size:34px;
 font-weight:900;
-color:#ffe600;
-text-shadow:0 2px 6px rgba(0,0,0,.35);
+color:#000000;
 }
 
+/* BUTTONS */
 .buttons{
 display:grid;
 gap:14px;
@@ -116,16 +122,17 @@ color:white;
 box-shadow:0 8px #1d115b;
 }
 
-/* TITULO SUGERENCIAS */
+/* SUGGESTIONS TITLE */
 .suggest-title{
-margin-top:30px;
-font-size:26px;
+margin-top:34px;
+padding-top:26px;
+border-top:4px solid rgba(0,0,0,.35);
+font-size:34px;
 font-weight:900;
-color:#ffe600;
-text-shadow:0 2px 6px rgba(0,0,0,.35);
+color:#000000;
 }
 
-/* TARJETAS SUGERIDAS */
+/* SUGGESTION CARDS */
 .suggest{
 display:grid;
 gap:16px;
@@ -136,6 +143,7 @@ margin-top:16px;
 background:#27187e;
 padding:14px;
 border-radius:22px;
+box-shadow:0 10px 18px rgba(0,0,0,.22);
 }
 
 .thumb{
@@ -156,44 +164,52 @@ font-size:22px;
 font-weight:900;
 line-height:1.15;
 margin-bottom:12px;
+color:white;
 }
 </style>
 </head>
 
 <body>
 
+<!-- LOGO -->
 <div class="top-logo">
 <img src="LOGO.png" class="logo">
 </div>
 
+<!-- QUIZ TITLE -->
 <div class="title-bar" id="quizTitle"></div>
 
 <div class="container">
 
+<!-- DIFFICULTY -->
 <div id="difficulty" class="badge easy">EASY</div>
 
+<!-- IMAGE -->
 <div class="viewer">
 <img id="quizImage" src="">
 </div>
 
+<!-- COUNTER -->
 <div class="counter" id="counter">QUESTION 1 / 15</div>
 
+<!-- BUTTONS -->
 <div class="buttons">
 <button class="btn green" id="mainBtn" onclick="mainAction()">ANSWER</button>
 <button class="btn gray" onclick="location.href='index.html'">BACK HOME</button>
 </div>
 
-<div class="suggest-title">SIMILAR QUIZZES</div>
+<!-- SUGGESTIONS -->
+<div class="suggest-title">QUIZZES SIMILAR</div>
 
 <div class="suggest" id="suggestions"></div>
 
 </div>
 
 <script>
-const params=new URLSearchParams(location.search);
-const mode=params.get("mode");
+const params = new URLSearchParams(location.search);
+const mode = params.get("mode");
 
-const data={
+const data = {
 
 "transfers":{
 title:"GUESS THE PLAYER BY THEIR TRANSFERS",
@@ -220,83 +236,90 @@ others:[
 ]}
 };
 
-const quiz=data[mode];
+const quiz = data[mode];
 
-let current=1;
-let showing=false;
+let current = 1;
+let showing = false;
 
-document.getElementById("quizTitle").innerText=quiz.title;
+document.getElementById("quizTitle").innerText = quiz.title;
 
-function diff(){
-if(current<=5)return "easy";
-if(current<=10)return "medium";
+/* difficulty by question */
+function getDiff(){
+if(current <= 5) return "easy";
+if(current <= 10) return "medium";
 return "hard";
 }
 
+/* update badge */
 function updateDiff(){
-let b=document.getElementById("difficulty");
-b.className="badge";
+const badge = document.getElementById("difficulty");
+badge.className = "badge";
 
-if(current<=5){
-b.innerText="EASY";
-b.classList.add("easy");
-}else if(current<=10){
-b.innerText="MEDIUM";
-b.classList.add("medium");
-}else{
-b.innerText="HARD";
-b.classList.add("hard");
+if(current <= 5){
+badge.innerText = "EASY";
+badge.classList.add("easy");
+}
+else if(current <= 10){
+badge.innerText = "MEDIUM";
+badge.classList.add("medium");
+}
+else{
+badge.innerText = "HARD";
+badge.classList.add("hard");
 }
 }
 
+/* load images */
 function loadCareer(){
-document.getElementById("quizImage").src=
-quiz.folder+"/"+diff()+"/career"+current+".png";
+document.getElementById("quizImage").src =
+quiz.folder + "/" + getDiff() + "/career" + current + ".png";
 }
 
 function loadPlayer(){
-document.getElementById("quizImage").src=
-quiz.folder+"/"+diff()+"/player"+current+".png";
+document.getElementById("quizImage").src =
+quiz.folder + "/" + getDiff() + "/player" + current + ".png";
 }
 
+/* main button */
 function mainAction(){
 
 if(!showing){
 
 loadPlayer();
 
-document.getElementById("mainBtn").innerText=
-(current===15)?"PLAY AGAIN":"NEXT";
+document.getElementById("mainBtn").innerText =
+(current === 15) ? "PLAY AGAIN" : "NEXT";
 
-showing=true;
+showing = true;
 
 }else{
 
-if(current===15){
+if(current === 15){
 location.reload();
 return;
 }
 
 current++;
-showing=false;
+showing = false;
 
 loadCareer();
 updateDiff();
 
-document.getElementById("counter").innerText=
-"QUESTION "+current+" / 15";
+document.getElementById("counter").innerText =
+"QUESTION " + current + " / 15";
 
-document.getElementById("mainBtn").innerText="ANSWER";
+document.getElementById("mainBtn").innerText = "ANSWER";
 }
 }
 
+/* build suggestions */
 function buildSuggestions(){
 
-let html="";
+let html = "";
 
-quiz.others.forEach(q=>{
+quiz.others.forEach(q => {
 
-html+=`
+html += `
 <div class="card">
 <div class="thumb">
 <img src="${q[1]}">
@@ -311,7 +334,7 @@ PLAY
 
 });
 
-document.getElementById("suggestions").innerHTML=html;
+document.getElementById("suggestions").innerHTML = html;
 }
 
 updateDiff();
