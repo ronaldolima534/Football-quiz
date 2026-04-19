@@ -6,11 +6,7 @@
 <title>Football Quiz</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:Arial,sans-serif;
@@ -20,14 +16,17 @@ text-align:center;
 color:white;
 }
 
+/* FRANJA */
 .topbar{
-padding:20px 10px 10px;
-text-align:center;
+background:rgba(39,24,126,.82);
+padding:18px 10px;
+backdrop-filter:blur(6px);
 }
 
+/* LOGO GRANDE */
 .logo{
-width:220px;
-max-width:80%;
+width:320px;
+max-width:92%;
 height:auto;
 display:block;
 margin:auto;
@@ -37,7 +36,7 @@ margin:auto;
 width:94%;
 max-width:620px;
 margin:auto;
-padding:10px 0 50px;
+padding:18px 0 50px;
 display:grid;
 gap:22px;
 }
@@ -82,11 +81,6 @@ color:black;
 box-shadow:0 8px #1f9d09;
 cursor:pointer;
 }
-
-.play:active{
-transform:translateY(4px);
-box-shadow:0 2px #1f9d09;
-}
 </style>
 </head>
 
@@ -99,32 +93,20 @@ box-shadow:0 2px #1f9d09;
 <div class="container">
 
 <div class="card">
-<div class="thumb">
-<img src="images/thumbnails/quiz1.jpg">
-</div>
-<div class="quiz-title">
-GUESS THE PLAYER BY THEIR TRANSFERS
-</div>
+<div class="thumb"><img src="images/thumbnails/quiz1.jpg"></div>
+<div class="quiz-title">GUESS THE PLAYER BY THEIR TRANSFERS</div>
 <button class="play" onclick="window.location.href='transfers.html'">PLAY</button>
 </div>
 
 <div class="card">
-<div class="thumb">
-<img src="images/thumbnails/quiz2.jpg">
-</div>
-<div class="quiz-title">
-GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION
-</div>
+<div class="thumb"><img src="images/thumbnails/quiz2.jpg"></div>
+<div class="quiz-title">GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION</div>
 <button class="play" onclick="window.location.href='player-clues.html'">PLAY</button>
 </div>
 
 <div class="card">
-<div class="thumb">
-<img src="images/thumbnails/quiz3.jpg">
-</div>
-<div class="quiz-title">
-GUESS THE CLUB BY PLAYERS NATIONALITY
-</div>
+<div class="thumb"><img src="images/thumbnails/quiz3.jpg"></div>
+<div class="quiz-title">GUESS THE CLUB BY PLAYERS NATIONALITY</div>
 <button class="play" onclick="window.location.href='nationality-club.html'">PLAY</button>
 </div>
 
