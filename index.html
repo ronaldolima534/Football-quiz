@@ -2,33 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Football Quiz</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:Arial,sans-serif;
-background:url('background.png') no-repeat center center fixed;
-background-size:cover;
+background:url('background.png') center/cover fixed;
 text-align:center;
 color:white;
 }
 
 .topbar{
-padding:20px 10px 10px;
-text-align:center;
+padding:18px 10px 10px;
 }
 
 .logo{
-width:220px;
-max-width:80%;
-height:auto;
+width:280px;
+max-width:88%;
 display:block;
 margin:auto;
 }
@@ -37,24 +30,23 @@ margin:auto;
 width:94%;
 max-width:620px;
 margin:auto;
-padding:10px 0 50px;
+padding:12px 0 50px;
 display:grid;
-gap:22px;
+gap:18px;
 }
 
 .card{
 background:#27187e;
-padding:20px;
-border-radius:28px;
-box-shadow:0 12px 24px rgba(0,0,0,.25);
+padding:16px;
+border-radius:24px;
+box-shadow:0 10px 20px rgba(0,0,0,.22);
 }
 
 .thumb{
-height:260px;
-border-radius:20px;
+height:220px;
+border-radius:18px;
 overflow:hidden;
-margin-bottom:16px;
-background:rgba(255,255,255,.08);
+margin-bottom:14px;
 }
 
 .thumb img{
@@ -64,32 +56,25 @@ object-fit:cover;
 }
 
 .quiz-title{
-font-size:28px;
+font-size:24px;
 font-weight:900;
 line-height:1.15;
-margin-bottom:16px;
+margin-bottom:14px;
 }
 
 .play{
 width:100%;
-padding:22px;
-font-size:38px;
+padding:18px;
+font-size:32px;
 font-weight:900;
 border:none;
-border-radius:18px;
+border-radius:16px;
 background:#39ff14;
 color:black;
 box-shadow:0 8px #1f9d09;
-cursor:pointer;
-}
-
-.play:active{
-transform:translateY(4px);
-box-shadow:0 2px #1f9d09;
 }
 </style>
 </head>
-
 <body>
 
 <div class="topbar">
@@ -99,36 +84,23 @@ box-shadow:0 2px #1f9d09;
 <div class="container">
 
 <div class="card">
-<div class="thumb">
-<img src="images/thumbnails/quiz1.jpg">
-</div>
-<div class="quiz-title">
-GUESS THE PLAYER BY THEIR TRANSFERS
-</div>
-<button class="play" onclick="window.location.href='transfers.html'">PLAY</button>
+<div class="thumb"><img src="images/thumbnails/quiz1.jpg"></div>
+<div class="quiz-title">GUESS THE PLAYER BY THEIR TRANSFERS</div>
+<button class="play" onclick="location.href='transfers.html'">PLAY</button>
 </div>
 
 <div class="card">
-<div class="thumb">
-<img src="images/thumbnails/quiz2.jpg">
-</div>
-<div class="quiz-title">
-GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION
-</div>
-<button class="play" onclick="window.location.href='player-clues.html'">PLAY</button>
+<div class="thumb"><img src="images/thumbnails/quiz2.jpg"></div>
+<div class="quiz-title">GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION</div>
+<button class="play" onclick="location.href='player-clues.html'">PLAY</button>
 </div>
 
 <div class="card">
-<div class="thumb">
-<img src="images/thumbnails/quiz3.jpg">
-</div>
-<div class="quiz-title">
-GUESS THE CLUB BY PLAYERS NATIONALITY
-</div>
-<button class="play" onclick="window.location.href='nationality-club.html'">PLAY</button>
+<div class="thumb"><img src="images/thumbnails/quiz3.jpg"></div>
+<div class="quiz-title">GUESS THE CLUB BY PLAYERS NATIONALITY</div>
+<button class="play" onclick="location.href='nationality-club.html'">PLAY</button>
 </div>
 
 </div>
-
 </body>
 </html>
