@@ -10,66 +10,68 @@
 
 body{
 font-family:Arial,sans-serif;
-background:url('background.png') no-repeat center center fixed;
-background-size:cover;
+background:url('background.png') center/cover fixed;
 text-align:center;
 color:white;
 }
 
-.topbar{
-padding:18px 10px 10px;
+/* LOGO SOLO */
+.top-logo{
+padding:16px 10px 8px;
 }
 
 .logo{
-width:180px;
-max-width:75%;
-height:auto;
+width:260px;
+max-width:86%;
 display:block;
-margin:auto auto 12px;
+margin:auto;
 }
 
-.title{
-background:#27187e;
-padding:14px;
+/* TITULO SEPARADO */
+.title-bar{
+background:rgba(39,24,126,.92);
+padding:16px;
 border-radius:22px;
-font-size:28px;
+font-size:26px;
 font-weight:900;
 line-height:1.15;
+width:94%;
 max-width:620px;
 margin:auto;
 }
 
+/* CONTENIDO */
 .container{
 width:94%;
 max-width:620px;
 margin:auto;
-padding:16px 0 50px;
+padding:18px 0 50px;
 }
 
+/* DIFICULTAD */
 .badge{
 display:inline-block;
-padding:12px 24px;
+padding:10px 22px;
 border-radius:999px;
-font-size:28px;
+font-size:24px;
 font-weight:900;
-margin-bottom:18px;
-color:white;
+margin-bottom:16px;
 }
 
 .easy{background:#22c55e;}
 .medium{background:#f59e0b;}
 .hard{background:#ef4444;}
 
+/* VISOR */
 .viewer{
 background:#27187e;
-border-radius:28px;
-padding:16px;
+padding:14px;
+border-radius:22px;
 aspect-ratio:16/9;
 display:flex;
-align-items:center;
 justify-content:center;
+align-items:center;
 overflow:hidden;
-box-shadow:0 10px 20px rgba(0,0,0,.2);
 }
 
 .viewer img{
@@ -78,25 +80,27 @@ max-height:100%;
 object-fit:contain;
 }
 
+/* QUESTION COLOR */
 .counter{
-margin-top:18px;
+margin-top:16px;
 font-size:28px;
 font-weight:900;
+color:#ffe600;
+text-shadow:0 2px 6px rgba(0,0,0,.35);
 }
 
 .buttons{
-margin-top:20px;
 display:grid;
-gap:16px;
+gap:14px;
+margin-top:18px;
 }
 
 .btn{
-width:100%;
-padding:22px;
-font-size:34px;
+padding:20px;
+font-size:30px;
 font-weight:900;
 border:none;
-border-radius:18px;
+border-radius:16px;
 cursor:pointer;
 }
 
@@ -112,31 +116,33 @@ color:white;
 box-shadow:0 8px #1d115b;
 }
 
+/* TITULO SUGERENCIAS */
 .suggest-title{
-margin-top:28px;
-font-size:28px;
+margin-top:30px;
+font-size:26px;
 font-weight:900;
+color:#ffe600;
+text-shadow:0 2px 6px rgba(0,0,0,.35);
 }
 
+/* TARJETAS SUGERIDAS */
 .suggest{
-margin-top:16px;
 display:grid;
-gap:22px;
+gap:16px;
+margin-top:16px;
 }
 
 .card{
 background:#27187e;
-padding:20px;
-border-radius:28px;
-box-shadow:0 10px 20px rgba(0,0,0,.2);
+padding:14px;
+border-radius:22px;
 }
 
 .thumb{
-height:260px;
-border-radius:20px;
+height:205px;
+border-radius:16px;
 overflow:hidden;
-margin-bottom:16px;
-background:rgba(255,255,255,.08);
+margin-bottom:12px;
 }
 
 .thumb img{
@@ -146,20 +152,21 @@ object-fit:cover;
 }
 
 .s-title{
-font-size:24px;
+font-size:22px;
 font-weight:900;
 line-height:1.15;
-margin-bottom:16px;
+margin-bottom:12px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="topbar">
+<div class="top-logo">
 <img src="LOGO.png" class="logo">
-<div class="title" id="quizTitle"></div>
 </div>
+
+<div class="title-bar" id="quizTitle"></div>
 
 <div class="container">
 
@@ -172,20 +179,22 @@ margin-bottom:16px;
 <div class="counter" id="counter">QUESTION 1 / 15</div>
 
 <div class="buttons">
-<button id="mainBtn" class="btn green" onclick="mainAction()">ANSWER</button>
-<button class="btn gray" onclick="window.location.href='index.html'">BACK HOME</button>
+<button class="btn green" id="mainBtn" onclick="mainAction()">ANSWER</button>
+<button class="btn gray" onclick="location.href='index.html'">BACK HOME</button>
 </div>
 
 <div class="suggest-title">SIMILAR QUIZZES</div>
+
 <div class="suggest" id="suggestions"></div>
 
 </div>
 
 <script>
-const params=new URLSearchParams(window.location.search);
+const params=new URLSearchParams(location.search);
 const mode=params.get("mode");
 
 const data={
+
 "transfers":{
 title:"GUESS THE PLAYER BY THEIR TRANSFERS",
 folder:"images/transfers",
@@ -193,6 +202,7 @@ others:[
 ["player-clues","images/thumbnails/quiz2.jpg","GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION"],
 ["nationality-club","images/thumbnails/quiz3.jpg","GUESS THE CLUB BY PLAYERS NATIONALITY"]
 ]},
+
 "player-clues":{
 title:"GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION",
 folder:"images/player-clues",
@@ -200,6 +210,7 @@ others:[
 ["transfers","images/thumbnails/quiz1.jpg","GUESS THE PLAYER BY THEIR TRANSFERS"],
 ["nationality-club","images/thumbnails/quiz3.jpg","GUESS THE CLUB BY PLAYERS NATIONALITY"]
 ]},
+
 "nationality-club":{
 title:"GUESS THE CLUB BY PLAYERS NATIONALITY",
 folder:"images/nationality-club",
@@ -210,14 +221,32 @@ others:[
 };
 
 const quiz=data[mode];
-let current=1,total=15,showing=false;
+
+let current=1;
+let showing=false;
 
 document.getElementById("quizTitle").innerText=quiz.title;
 
 function diff(){
-if(current<=5)return"easy";
-if(current<=10)return"medium";
-return"hard";
+if(current<=5)return "easy";
+if(current<=10)return "medium";
+return "hard";
+}
+
+function updateDiff(){
+let b=document.getElementById("difficulty");
+b.className="badge";
+
+if(current<=5){
+b.innerText="EASY";
+b.classList.add("easy");
+}else if(current<=10){
+b.innerText="MEDIUM";
+b.classList.add("medium");
+}else{
+b.innerText="HARD";
+b.classList.add("hard");
+}
 }
 
 function loadCareer(){
@@ -225,50 +254,67 @@ document.getElementById("quizImage").src=
 quiz.folder+"/"+diff()+"/career"+current+".png";
 }
 
-function loadAnswer(){
+function loadPlayer(){
 document.getElementById("quizImage").src=
 quiz.folder+"/"+diff()+"/player"+current+".png";
 }
 
-function updateDifficulty(){
-let b=document.getElementById("difficulty");
-b.className="badge";
-if(current<=5){b.innerText="EASY";b.classList.add("easy");}
-else if(current<=10){b.innerText="MEDIUM";b.classList.add("medium");}
-else{b.innerText="HARD";b.classList.add("hard");}
+function mainAction(){
+
+if(!showing){
+
+loadPlayer();
+
+document.getElementById("mainBtn").innerText=
+(current===15)?"PLAY AGAIN":"NEXT";
+
+showing=true;
+
+}else{
+
+if(current===15){
+location.reload();
+return;
 }
 
-function mainAction(){
-if(!showing){
-loadAnswer();
-document.getElementById("mainBtn").innerText=(current===total)?"PLAY AGAIN":"NEXT";
-showing=true;
-}else{
-if(current===total){location.reload();return;}
 current++;
-loadCareer();
-document.getElementById("counter").innerText="QUESTION "+current+" / 15";
-document.getElementById("mainBtn").innerText="ANSWER";
 showing=false;
-updateDifficulty();
+
+loadCareer();
+updateDiff();
+
+document.getElementById("counter").innerText=
+"QUESTION "+current+" / 15";
+
+document.getElementById("mainBtn").innerText="ANSWER";
 }
 }
 
 function buildSuggestions(){
+
 let html="";
+
 quiz.others.forEach(q=>{
+
 html+=`
 <div class="card">
-<div class="thumb"><img src="${q[1]}"></div>
+<div class="thumb">
+<img src="${q[1]}">
+</div>
 <div class="s-title">${q[2]}</div>
-<button class="btn green" style="font-size:28px;padding:18px"
-onclick="window.location.href='${q[0]}.html'">PLAY</button>
-</div>`;
+<button class="btn green"
+onclick="location.href='quiz-template.html?mode=${q[0]}'">
+PLAY
+</button>
+</div>
+`;
+
 });
+
 document.getElementById("suggestions").innerHTML=html;
 }
 
-updateDifficulty();
+updateDiff();
 loadCareer();
 buildSuggestions();
 </script>
