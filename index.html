@@ -19,24 +19,27 @@ color:white;
 text-align:center;
 }
 
-/* Brand */
+/* HEADER */
 .brand{
-padding:28px 15px 10px;
-font-size:38px;
+padding:26px 15px;
+font-size:44px;
 font-weight:900;
 letter-spacing:1px;
+background:#151515;
+border-bottom:1px solid #2a2a2a;
+box-shadow:0 4px 10px rgba(0,0,0,.25);
 }
 
-/* Hero */
+/* HERO */
 .hero{
-padding:8px 20px 28px;
+padding:30px 20px 28px;
 }
 
 .hero h1{
 font-size:42px;
 font-weight:900;
 line-height:1.1;
-margin-bottom:10px;
+margin-bottom:12px;
 }
 
 .hero p{
@@ -47,7 +50,7 @@ margin:auto;
 line-height:1.5;
 }
 
-/* Layout */
+/* CONTAINER */
 .container{
 width:94%;
 max-width:720px;
@@ -57,7 +60,7 @@ display:grid;
 gap:22px;
 }
 
-/* Cards */
+/* CARD */
 .card{
 background:#171717;
 border:1px solid #2b2b2b;
@@ -92,7 +95,7 @@ line-height:1.2;
 margin-bottom:14px;
 }
 
-/* Button */
+/* BUTTON */
 .play{
 width:100%;
 padding:16px;
@@ -110,18 +113,23 @@ transition:.2s;
 transform:scale(1.02);
 }
 
-/* Footer */
+/* FOOTER */
 .footer{
 padding:30px 15px;
 font-size:14px;
 color:#999;
 }
 
-/* Mobile */
+/* MOBILE */
 @media(max-width:600px){
 
 .brand{
-font-size:32px;
+font-size:34px;
+padding:22px 10px;
+}
+
+.hero{
+padding:26px 16px;
 }
 
 .hero h1{
@@ -157,52 +165,4 @@ Football Quiz
 <div class="container">
 
 <!-- Quiz 1 -->
-<div class="card">
-<div class="thumb">
-<img src="images/thumbnails/quiz1.jpg">
-</div>
-<div class="quiz-title">
-GUESS THE PLAYER BY THEIR TRANSFERS
-</div>
-<button class="play"
-onclick="location.href='quiz-template.html?mode=transfers'">
-PLAY NOW
-</button>
-</div>
-
-<!-- Quiz 2 -->
-<div class="card">
-<div class="thumb">
-<img src="images/thumbnails/quiz2.jpg">
-</div>
-<div class="quiz-title">
-GUESS THE PLAYER BY NATIONALITY + CLUB + NUMBER + POSITION
-</div>
-<button class="play"
-onclick="location.href='quiz-template.html?mode=player-clues'">
-PLAY NOW
-</button>
-</div>
-
-<!-- Quiz 3 -->
-<div class="card">
-<div class="thumb">
-<img src="images/thumbnails/quiz3.jpg">
-</div>
-<div class="quiz-title">
-GUESS THE CLUB BY PLAYERS NATIONALITY
-</div>
-<button class="play"
-onclick="location.href='quiz-template.html?mode=nationality-club'">
-PLAY NOW
-</button>
-</div>
-
-</div>
-
-<div class="footer">
-© Football Quiz
-</div>
-
-</body>
-</html>
+<div
