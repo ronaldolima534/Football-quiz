@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football Quiz - Daily Quiz</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:#0f0f0f;
+color:white;
+text-align:center;
+}
+
+/* HEADER */
+.brand{
+padding:26px 15px;
+font-size:42px;
+font-weight:900;
+letter-spacing:1px;
+background:#151515;
+border-bottom:1px solid #2a2a2a;
+box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+
+/* HERO */
+.hero{
+padding:34px 20px 26px;
+}
+
+.hero h1{
+font-size:40px;
+font-weight:900;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:18px;
+color:#cfcfcf;
+max-width:650px;
+margin:auto;
+line-height:1.5;
+}
+
+/* BOX */
+.container{
+width:94%;
+max-width:760px;
+margin:auto;
+padding-bottom:60px;
+}
+
+.daily-box{
+background:#171717;
+border:1px solid #2b2b2b;
+border-radius:26px;
+padding:22px;
+box-shadow:0 10px 28px rgba(0,0,0,.35);
+}
+
+.badge{
+display:inline-block;
+padding:10px 22px;
+border-radius:999px;
+background:#39ff14;
+color:black;
+font-size:18px;
+font-weight:900;
+margin-bottom:18px;
+}
+
+.image-box{
+height:280px;
+border-radius:20px;
+overflow:hidden;
+background:#222;
+margin-bottom:18px;
+}
+
+.image-box img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+.question{
+font-size:28px;
+font-weight:900;
+line-height:1.3;
+margin-bottom:18px;
+}
+
+/* ANSWERS */
+.answers{
+display:grid;
+gap:14px;
+margin-top:12px;
+}
+
+.answer{
+padding:18px;
+font-size:22px;
+font-weight:900;
+border:none;
+border-radius:16px;
+cursor:pointer;
+background:#232323;
+color:white;
+border:1px solid #333;
+transition:.2s;
+}
+
+.answer:hover{
+border-color:#39ff14;
+transform:translateY(-2px);
+}
+
+/* NAV */
+.nav{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+margin-top:22px;
+}
+
+.nav button{
+padding:16px;
+font-size:18px;
+font-weight:900;
+border:none;
+border-radius:14px;
+cursor:pointer;
+}
+
+.home-btn{
+background:#232323;
+color:white;
+border:1px solid #333;
+}
+
+.cat-btn{
+background:#39ff14;
+color:black;
+}
+
+/* RESULT */
+.result{
+margin-top:18px;
+font-size:24px;
+font-weight:900;
+display:none;
+}
+
+/* FOOTER */
+.footer{
+padding:34px 15px;
+font-size:14px;
+color:#999;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+.brand{
+font-size:34px;
+padding:22px 10px;
+}
+
+.hero h1{
+font-size:30px;
+}
+
+.hero p{
+font-size:16px;
+}
+
+.image-box{
+height:220px;
+}
+
+.question{
+font-size:22px;
+}
+
+.answer{
+font-size:19px;
+padding:16px;
+}
+
+.nav{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="brand">
+Football Quiz
+</div>
+
+<div class="hero">
+<h1>Daily Quiz</h1>
+<p>One challenge today. Come back tomorrow for a new one.</p>
+</div>
+
+<div class="container">
+
+<div class="daily-box">
+
+<div class="badge">
+TODAY'S CHALLENGE
+</div>
+
+<div class="image-box">
+<img src="images/thumbnails/quiz1.jpg">
+</div>
+
+<div class="question">
+Which player made these transfers?
+</div>
+
+<div class="answers">
+
+<button class="answer" onclick="checkAnswer(this,false)">
+Luis Suárez
+</button>
+
+<button class="answer" onclick="checkAnswer(this,true)">
+Zlatan Ibrahimović
+</button>
+
+<button class="answer" onclick="checkAnswer(this,false)">
+Karim Benzema
+</button>
+
+<button class="answer" onclick="checkAnswer(this,false)">
+Edinson Cavani
+</button>
+
+</div>
+
+<div class="result" id="result"></div>
+
+<div class="nav">
+<button class="home-btn" onclick="location.href='index.html'">
+HOME
+</button>
+
+<button class="cat-btn" onclick="location.href='categories.html'">
+CATEGORIES
+</button>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+© Football Quiz
+</div>
+
+<script>
+let answered = false;
+
+function checkAnswer(button, correct){
+
+if(answered) return;
+
+answered = true;
+
+const result = document.getElementById("result");
+
+if(correct){
+button.style.background = "#39ff14";
+button.style.color = "black";
+result.innerText = "✅ Correct!";
+result.style.color = "#39ff14";
+}else{
+button.style.background = "#ef4444";
+result.innerText = "❌ Wrong Answer";
+result.style.color = "#ef4444";
+}
+
+result.style.display = "block";
+}
+</script>
+
+</body>
+</html>
