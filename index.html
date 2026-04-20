@@ -6,47 +6,78 @@
 <title>Football Quiz</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
-font-family:Arial,sans-serif;
-background:url('background.png') center/cover fixed;
-text-align:center;
+font-family:Arial, sans-serif;
+background:
+linear-gradient(rgba(0,0,0,.78),rgba(0,0,0,.88)),
+url('background.png') center/cover fixed;
 color:white;
+text-align:center;
 }
 
 .top-logo{
-padding:16px 10px 10px;
+padding:22px 15px 10px;
 }
 
 .logo{
-width:260px;
-max-width:86%;
+width:240px;
+max-width:85%;
 display:block;
+margin:auto;
+}
+
+.hero{
+padding:10px 20px 28px;
+}
+
+.hero h1{
+font-size:38px;
+font-weight:900;
+line-height:1.1;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:18px;
+color:#d8d8d8;
+max-width:620px;
 margin:auto;
 }
 
 .container{
 width:94%;
-max-width:620px;
+max-width:720px;
 margin:auto;
-padding:8px 0 50px;
+padding-bottom:60px;
 display:grid;
-gap:16px;
+gap:22px;
 }
 
 .card{
-background:#27187e;
-padding:14px;
-border-radius:22px;
-box-shadow:0 10px 18px rgba(0,0,0,.22);
+background:#121212;
+border:1px solid #2d2d2d;
+padding:16px;
+border-radius:24px;
+box-shadow:0 10px 30px rgba(0,0,0,.35);
+transition:.25s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+border-color:#39ff14;
 }
 
 .thumb{
-height:205px;
-border-radius:16px;
+height:220px;
+border-radius:18px;
 overflow:hidden;
-margin-bottom:12px;
+margin-bottom:14px;
 }
 
 .thumb img{
@@ -56,23 +87,48 @@ object-fit:cover;
 }
 
 .quiz-title{
-font-size:22px;
+font-size:24px;
 font-weight:900;
-line-height:1.15;
-margin-bottom:12px;
+line-height:1.2;
+margin-bottom:14px;
 }
 
 .play{
 width:100%;
-padding:18px;
-font-size:30px;
+padding:16px;
+font-size:22px;
 font-weight:900;
 border:none;
 border-radius:16px;
 background:#39ff14;
 color:black;
-box-shadow:0 8px #1f9d09;
 cursor:pointer;
+transition:.2s;
+}
+
+.play:hover{
+transform:scale(1.02);
+}
+
+.footer{
+padding:30px 15px;
+font-size:14px;
+color:#bdbdbd;
+}
+
+@media(max-width:600px){
+
+.hero h1{
+font-size:30px;
+}
+
+.quiz-title{
+font-size:21px;
+}
+
+.play{
+font-size:20px;
+}
 }
 </style>
 </head>
@@ -83,26 +139,35 @@ cursor:pointer;
 <img src="LOGO.png" class="logo">
 </div>
 
+<div class="hero">
+<h1>Test Your Football Knowledge</h1>
+<p>Play fun football quizzes and prove you're a real fan.</p>
+</div>
+
 <div class="container">
 
 <div class="card">
 <div class="thumb"><img src="images/thumbnails/quiz1.jpg"></div>
 <div class="quiz-title">GUESS THE PLAYER BY THEIR TRANSFERS</div>
-<button class="play" onclick="location.href='quiz-template.html?mode=transfers'">PLAY</button>
+<button class="play" onclick="location.href='quiz-template.html?mode=transfers'">PLAY NOW</button>
 </div>
 
 <div class="card">
 <div class="thumb"><img src="images/thumbnails/quiz2.jpg"></div>
-<div class="quiz-title">GUESS THE PLAYER BY NATIONALITY + CLUB + JERSEY NUMBER + POSITION</div>
-<button class="play" onclick="location.href='quiz-template.html?mode=player-clues'">PLAY</button>
+<div class="quiz-title">GUESS THE PLAYER BY NATIONALITY + CLUB + NUMBER + POSITION</div>
+<button class="play" onclick="location.href='quiz-template.html?mode=player-clues'">PLAY NOW</button>
 </div>
 
 <div class="card">
 <div class="thumb"><img src="images/thumbnails/quiz3.jpg"></div>
 <div class="quiz-title">GUESS THE CLUB BY PLAYERS NATIONALITY</div>
-<button class="play" onclick="location.href='quiz-template.html?mode=nationality-club'">PLAY</button>
+<button class="play" onclick="location.href='quiz-template.html?mode=nationality-club'">PLAY NOW</button>
 </div>
 
+</div>
+
+<div class="footer">
+© Football Quiz
 </div>
 
 </body>
