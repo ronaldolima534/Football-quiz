@@ -20,14 +20,47 @@ text-align:center;
 }
 
 /* HEADER */
-.brand{
-padding:26px 15px;
-font-size:42px;
-font-weight:900;
-letter-spacing:1px;
+.header{
 background:#151515;
 border-bottom:1px solid #2a2a2a;
 box-shadow:0 4px 10px rgba(0,0,0,.25);
+padding:18px 12px;
+}
+
+.brand{
+font-size:38px;
+font-weight:900;
+margin-bottom:14px;
+}
+
+.nav{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.nav button{
+padding:10px 16px;
+font-size:15px;
+font-weight:900;
+border:none;
+border-radius:12px;
+cursor:pointer;
+background:#232323;
+color:white;
+border:1px solid #333;
+transition:.2s;
+}
+
+.nav button:hover{
+border-color:#39ff14;
+}
+
+.nav .active{
+background:#39ff14;
+color:black;
+border:none;
 }
 
 /* HERO */
@@ -102,34 +135,6 @@ line-height:1.5;
 word-break:break-word;
 }
 
-/* NAV */
-.nav{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-margin-top:24px;
-}
-
-.nav button{
-padding:16px;
-font-size:18px;
-font-weight:900;
-border:none;
-border-radius:14px;
-cursor:pointer;
-}
-
-.home-btn{
-background:#232323;
-color:white;
-border:1px solid #333;
-}
-
-.about-btn{
-background:#39ff14;
-color:black;
-}
-
 /* FOOTER */
 .footer{
 padding:34px 15px;
@@ -141,8 +146,7 @@ color:#999;
 @media(max-width:600px){
 
 .brand{
-font-size:34px;
-padding:22px 10px;
+font-size:30px;
 }
 
 .hero h1{
@@ -166,7 +170,12 @@ font-size:16px;
 }
 
 .nav{
-grid-template-columns:1fr;
+gap:8px;
+}
+
+.nav button{
+font-size:13px;
+padding:9px 12px;
 }
 }
 </style>
@@ -174,8 +183,20 @@ grid-template-columns:1fr;
 
 <body>
 
+<div class="header">
+
 <div class="brand">
 Football Quiz
+</div>
+
+<div class="nav">
+<button onclick="location.href='index.html'">HOME</button>
+<button onclick="location.href='categories.html'">CATEGORIES</button>
+<button onclick="location.href='daily-quiz.html'">DAILY QUIZ</button>
+<button onclick="location.href='about.html'">ABOUT</button>
+<button class="active" onclick="location.href='contact.html'">CONTACT</button>
+</div>
+
 </div>
 
 <div class="hero">
@@ -196,7 +217,7 @@ Use the contact details below to send suggestions, report issues or share ideas 
 <div class="contact-grid">
 
 <div class="contact-item">
-📧 Email: your@email.com
+📧 Email: ronaldolimaymanta5@gmail.com
 </div>
 
 <div class="contact-item">
@@ -213,21 +234,9 @@ Use the contact details below to send suggestions, report issues or share ideas 
 <div class="section">
 <h2>Help Us Grow</h2>
 <p>
-Your feedback helps improve Football Quiz and create better challenges for football fans around the world.
+Your feedback helps improve Football Quiz and helps create better challenges for football fans around the world.
 </p>
 </div>
-
-</div>
-
-<div class="nav">
-
-<button class="home-btn" onclick="location.href='index.html'">
-HOME
-</button>
-
-<button class="about-btn" onclick="location.href='about.html'">
-ABOUT
-</button>
 
 </div>
 
