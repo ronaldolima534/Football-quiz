@@ -20,19 +20,47 @@ text-align:center;
 }
 
 /* HEADER */
-.brand{
-padding:26px 15px;
-font-size:42px;
-font-weight:900;
-letter-spacing:1px;
+.header{
 background:#151515;
 border-bottom:1px solid #2a2a2a;
 box-shadow:0 4px 10px rgba(0,0,0,.25);
+padding:18px 12px;
+}
+
+.brand{
+font-size:38px;
+font-weight:900;
+margin-bottom:14px;
+}
+
+.nav{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.nav button{
+padding:10px 16px;
+font-size:15px;
+font-weight:900;
+border:none;
+border-radius:12px;
+cursor:pointer;
+background:#232323;
+color:white;
+border:1px solid #333;
+}
+
+.nav .active{
+background:#39ff14;
+color:black;
+border:none;
 }
 
 /* TITLE */
 .title-wrap{
-padding:26px 15px 14px;
+padding:28px 15px 14px;
 }
 
 .title-bar{
@@ -56,6 +84,22 @@ margin:auto;
 padding-bottom:60px;
 }
 
+/* PROGRESS */
+.progress-wrap{
+height:14px;
+background:#222;
+border-radius:999px;
+overflow:hidden;
+margin-bottom:18px;
+}
+
+.progress{
+height:100%;
+width:6%;
+background:#39ff14;
+transition:.3s;
+}
+
 /* BADGE */
 .badge{
 display:inline-block;
@@ -63,12 +107,12 @@ padding:10px 24px;
 border-radius:999px;
 font-size:22px;
 font-weight:900;
-margin:6px 0 18px;
+margin-bottom:18px;
 }
 
-.easy{background:#22c55e;color:white;}
-.medium{background:#f59e0b;color:white;}
-.hard{background:#ef4444;color:white;}
+.easy{background:#22c55e;}
+.medium{background:#f59e0b;}
+.hard{background:#ef4444;}
 
 /* VIEWER */
 .viewer{
@@ -94,7 +138,6 @@ object-fit:contain;
 margin-top:18px;
 font-size:30px;
 font-weight:900;
-color:white;
 }
 
 /* BUTTONS */
@@ -111,16 +154,11 @@ font-weight:900;
 border:none;
 border-radius:16px;
 cursor:pointer;
-transition:.2s;
 }
 
 .green{
 background:#39ff14;
 color:black;
-}
-
-.green:hover{
-transform:scale(1.02);
 }
 
 .gray{
@@ -129,8 +167,52 @@ color:white;
 border:1px solid #333;
 }
 
-.gray:hover{
-background:#2d2d2d;
+/* FINAL SCREEN */
+.final-box{
+display:none;
+background:#171717;
+border:1px solid #2b2b2b;
+padding:24px;
+border-radius:24px;
+margin-top:24px;
+}
+
+.final-box h2{
+font-size:34px;
+margin-bottom:20px;
+}
+
+.guess-options{
+display:grid;
+gap:12px;
+margin-bottom:18px;
+}
+
+.guess-btn{
+padding:16px;
+font-size:22px;
+font-weight:900;
+border:none;
+border-radius:14px;
+cursor:pointer;
+background:#232323;
+color:white;
+border:1px solid #333;
+}
+
+.guess-btn:hover{
+border-color:#39ff14;
+}
+
+.after-choice{
+display:none;
+margin-top:18px;
+}
+
+.after-choice p{
+font-size:24px;
+font-weight:900;
+margin-bottom:16px;
 }
 
 /* SUGGESTIONS */
@@ -153,12 +235,6 @@ background:#171717;
 border:1px solid #2b2b2b;
 padding:14px;
 border-radius:22px;
-transition:.25s;
-}
-
-.card:hover{
-border-color:#39ff14;
-transform:translateY(-4px);
 }
 
 .thumb{
@@ -189,17 +265,17 @@ font-size:14px;
 color:#999;
 }
 
-/* MOBILE */
 @media(max-width:600px){
 
-.brand{
-font-size:34px;
-padding:22px 10px;
+.brand{font-size:30px;}
+
+.nav button{
+font-size:13px;
+padding:9px 12px;
 }
 
 .title-bar{
 font-size:22px;
-padding:16px;
 }
 
 .counter{
@@ -211,12 +287,12 @@ font-size:21px;
 padding:16px;
 }
 
-.suggest-title{
-font-size:24px;
+.final-box h2{
+font-size:28px;
 }
 
-.s-title{
-font-size:20px;
+.guess-btn{
+font-size:18px;
 }
 
 .thumb{
@@ -228,8 +304,18 @@ height:180px;
 
 <body>
 
-<div class="brand">
-Football Quiz
+<div class="header">
+
+<div class="brand">Football Quiz</div>
+
+<div class="nav">
+<button onclick="location.href='index.html'">HOME</button>
+<button onclick="location.href='categories.html'">CATEGORIES</button>
+<button onclick="location.href='daily-quiz.html'">DAILY QUIZ</button>
+<button onclick="location.href='about.html'">ABOUT</button>
+<button onclick="location.href='contact.html'">CONTACT</button>
+</div>
+
 </div>
 
 <div class="title-wrap">
@@ -237,6 +323,10 @@ Football Quiz
 </div>
 
 <div class="container">
+
+<div class="progress-wrap">
+<div class="progress" id="progressBar"></div>
+</div>
 
 <div id="difficulty" class="badge easy">EASY</div>
 
@@ -246,20 +336,44 @@ Football Quiz
 
 <div class="counter" id="counter">QUESTION 1 / 15</div>
 
-<div class="buttons">
+<div class="buttons" id="gameButtons">
 <button class="btn green" id="mainBtn" onclick="mainAction()">ANSWER</button>
 <button class="btn gray" onclick="location.href='index.html'">BACK HOME</button>
 </div>
 
-<div class="suggest-title">MORE QUIZZES</div>
+<div class="final-box" id="finalBox">
 
+<h2>How many did you guess?</h2>
+
+<div class="guess-options">
+
+<button class="guess-btn" onclick="finishChoice()">0 - 5</button>
+<button class="guess-btn" onclick="finishChoice()">6 - 10</button>
+<button class="guess-btn" onclick="finishChoice()">11 - 14</button>
+<button class="guess-btn" onclick="finishChoice()">I GOT ALL 15 🔥</button>
+
+</div>
+
+<div class="after-choice" id="afterChoice">
+
+<p>Great job! Play another quiz.</p>
+
+<div class="buttons">
+<button class="btn green" onclick="location.reload()">PLAY AGAIN</button>
+<button class="btn gray" onclick="location.href='categories.html'">NEW QUIZ</button>
+<button class="btn gray" onclick="location.href='index.html'">HOME</button>
+</div>
+
+</div>
+
+</div>
+
+<div class="suggest-title">MORE QUIZZES</div>
 <div class="suggest" id="suggestions"></div>
 
 </div>
 
-<div class="footer">
-© Football Quiz
-</div>
+<div class="footer">© Football Quiz</div>
 
 <script>
 const params = new URLSearchParams(location.search);
@@ -310,17 +424,20 @@ const badge = document.getElementById("difficulty");
 badge.className = "badge";
 
 if(current <= 5){
-badge.innerText = "EASY";
+badge.innerText="EASY";
 badge.classList.add("easy");
-}
-else if(current <= 10){
-badge.innerText = "MEDIUM";
+}else if(current <= 10){
+badge.innerText="MEDIUM";
 badge.classList.add("medium");
-}
-else{
-badge.innerText = "HARD";
+}else{
+badge.innerText="HARD";
 badge.classList.add("hard");
 }
+}
+
+function updateProgress(){
+document.getElementById("progressBar").style.width =
+(current/15*100) + "%";
 }
 
 function loadCareer(){
@@ -340,35 +457,48 @@ if(!showing){
 loadPlayer();
 
 document.getElementById("mainBtn").innerText =
-(current === 15) ? "PLAY AGAIN" : "NEXT";
+(current===15) ? "FINISH" : "NEXT";
 
 showing = true;
 
 }else{
 
-if(current === 15){
-location.reload();
+if(current===15){
+endQuiz();
 return;
 }
 
 current++;
-showing = false;
+showing=false;
 
 loadCareer();
 updateDiff();
+updateProgress();
 
 document.getElementById("counter").innerText =
 "QUESTION " + current + " / 15";
 
-document.getElementById("mainBtn").innerText = "ANSWER";
+document.getElementById("mainBtn").innerText="ANSWER";
 }
+}
+
+function endQuiz(){
+document.getElementById("difficulty").style.display="none";
+document.querySelector(".viewer").style.display="none";
+document.getElementById("counter").style.display="none";
+document.getElementById("gameButtons").style.display="none";
+document.getElementById("finalBox").style.display="block";
+}
+
+function finishChoice(){
+document.getElementById("afterChoice").style.display="block";
 }
 
 function buildSuggestions(){
 
-let html = "";
+let html="";
 
-quiz.others.forEach(q => {
+quiz.others.forEach(q=>{
 
 html += `
 <div class="card">
@@ -385,10 +515,11 @@ PLAY NOW
 
 });
 
-document.getElementById("suggestions").innerHTML = html;
+document.getElementById("suggestions").innerHTML=html;
 }
 
 updateDiff();
+updateProgress();
 loadCareer();
 buildSuggestions();
 </script>
