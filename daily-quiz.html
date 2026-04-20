@@ -20,14 +20,47 @@ text-align:center;
 }
 
 /* HEADER */
-.brand{
-padding:26px 15px;
-font-size:42px;
-font-weight:900;
-letter-spacing:1px;
+.header{
 background:#151515;
 border-bottom:1px solid #2a2a2a;
 box-shadow:0 4px 10px rgba(0,0,0,.25);
+padding:18px 12px;
+}
+
+.brand{
+font-size:38px;
+font-weight:900;
+margin-bottom:14px;
+}
+
+.nav{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.nav button{
+padding:10px 16px;
+font-size:15px;
+font-weight:900;
+border:none;
+border-radius:12px;
+cursor:pointer;
+background:#232323;
+color:white;
+border:1px solid #333;
+transition:.2s;
+}
+
+.nav button:hover{
+border-color:#39ff14;
+}
+
+.nav .active{
+background:#39ff14;
+color:black;
+border:none;
 }
 
 /* HERO */
@@ -49,7 +82,7 @@ margin:auto;
 line-height:1.5;
 }
 
-/* BOX */
+/* CONTENT */
 .container{
 width:94%;
 max-width:760px;
@@ -123,35 +156,6 @@ border-color:#39ff14;
 transform:translateY(-2px);
 }
 
-/* NAV */
-.nav{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-margin-top:22px;
-}
-
-.nav button{
-padding:16px;
-font-size:18px;
-font-weight:900;
-border:none;
-border-radius:14px;
-cursor:pointer;
-}
-
-.home-btn{
-background:#232323;
-color:white;
-border:1px solid #333;
-}
-
-.cat-btn{
-background:#39ff14;
-color:black;
-}
-
-/* RESULT */
 .result{
 margin-top:18px;
 font-size:24px;
@@ -170,8 +174,7 @@ color:#999;
 @media(max-width:600px){
 
 .brand{
-font-size:34px;
-padding:22px 10px;
+font-size:30px;
 }
 
 .hero h1{
@@ -196,7 +199,12 @@ padding:16px;
 }
 
 .nav{
-grid-template-columns:1fr;
+gap:8px;
+}
+
+.nav button{
+font-size:13px;
+padding:9px 12px;
 }
 }
 </style>
@@ -204,8 +212,20 @@ grid-template-columns:1fr;
 
 <body>
 
+<div class="header">
+
 <div class="brand">
 Football Quiz
+</div>
+
+<div class="nav">
+<button onclick="location.href='index.html'">HOME</button>
+<button onclick="location.href='categories.html'">CATEGORIES</button>
+<button class="active" onclick="location.href='daily-quiz.html'">DAILY QUIZ</button>
+<button onclick="location.href='about.html'">ABOUT</button>
+<button onclick="location.href='contact.html'">CONTACT</button>
+</div>
+
 </div>
 
 <div class="hero">
@@ -251,16 +271,6 @@ Edinson Cavani
 
 <div class="result" id="result"></div>
 
-<div class="nav">
-<button class="home-btn" onclick="location.href='index.html'">
-HOME
-</button>
-
-<button class="cat-btn" onclick="location.href='categories.html'">
-CATEGORIES
-</button>
-</div>
-
 </div>
 
 </div>
@@ -280,20 +290,4 @@ answered = true;
 
 const result = document.getElementById("result");
 
-if(correct){
-button.style.background = "#39ff14";
-button.style.color = "black";
-result.innerText = "✅ Correct!";
-result.style.color = "#39ff14";
-}else{
-button.style.background = "#ef4444";
-result.innerText = "❌ Wrong Answer";
-result.style.color = "#ef4444";
-}
-
-result.style.display = "block";
-}
-</script>
-
-</body>
-</html>
+if
