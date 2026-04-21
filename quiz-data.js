@@ -6,7 +6,10 @@ const quizData = {
     answerPrefix: "player",
     totalEasy: 20,
     totalMedium: 20,
-    totalHard: 20
+    totalHard: 20,
+    thumbnail: "images/thumbnails/quiz1.jpg",
+    showOnHome: true,
+    homeOrder: 1
   },
 
   "player-clues": {
@@ -16,7 +19,10 @@ const quizData = {
     answerPrefix: "answer",
     totalEasy: 20,
     totalMedium: 20,
-    totalHard: 20
+    totalHard: 20,
+    thumbnail: "images/thumbnails/quiz2.jpg",
+    showOnHome: true,
+    homeOrder: 2
   },
 
   "nationality-club": {
@@ -26,6 +32,9 @@ const quizData = {
     answerPrefix: "club",
     totalEasy: 20,
     totalMedium: 20,
-    totalHard: 20
+    totalHard: 20,
+    thumbnail: "images/thumbnails/quiz3.jpg",
+    showOnHome: true,
+    homeOrder: 3
   }
 };
