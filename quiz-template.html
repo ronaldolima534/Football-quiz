@@ -21,12 +21,75 @@ font-family:Arial,sans-serif;
 background:linear-gradient(180deg,#080808,#111);
 color:#fff;
 text-align:center;
-padding-top:110px;
+padding-top:170px;
+}
+
+.lang-top{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:100;
+padding:12px 14px 0;
+background:rgba(10,10,10,.92);
+backdrop-filter:blur(10px);
+transition:transform .35s ease;
+}
+
+.lang-top.hide{
+transform:translateY(-100%);
+}
+
+.lang-wrap{
+width:94%;
+max-width:760px;
+margin:auto;
+display:flex;
+justify-content:flex-end;
+align-items:center;
+gap:10px;
+flex-wrap:wrap;
+padding-bottom:10px;
+}
+
+.lang-label{
+font-size:12px;
+font-weight:900;
+color:#cfcfcf;
+letter-spacing:.6px;
+}
+
+.lang-buttons{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.lang-btn{
+width:42px;
+height:42px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-size:20px;
+background:#1d1d1d;
+border:1px solid #333;
+transition:.2s;
+}
+
+.lang-btn:hover{
+transform:translateY(-2px);
+border-color:var(--green);
+}
+
+.lang-btn.active{
+background:linear-gradient(145deg,var(--green),var(--green2));
+border-color:transparent;
 }
 
 .header{
 position:fixed;
-top:0;
+top:64px;
 left:0;
 width:100%;
 z-index:99;
@@ -66,9 +129,7 @@ color:#fff;
 border:1px solid var(--line);
 }
 
-.title-wrap{
-padding:24px 14px 14px;
-}
+.title-wrap{padding:24px 14px 14px;}
 
 .title-bar{
 width:94%;
@@ -221,25 +282,35 @@ color:#888;
 }
 
 @media(max-width:600px){
+body{padding-top:190px;}
 .brand{font-size:28px;}
 .title-bar{font-size:22px;}
 .counter{font-size:22px;}
 .btn{font-size:19px;padding:16px;}
+.lang-wrap{justify-content:center;}
+.header{top:78px;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-<div class="brand">Football Quiz</div>
+<div class="lang-top" id="langTop">
+  <div class="lang-wrap">
+    <div class="lang-label" id="langLabel"></div>
+    <div class="lang-buttons" id="languageSelector"></div>
+  </div>
+</div>
+
+<div class="header" id="mainHeader">
+<div class="brand" id="siteName"></div>
 
 <div class="nav">
-<button onclick="location.href='index.html'">HOME</button>
-<button onclick="location.href='categories.html'">CATEGORIES</button>
-<button onclick="location.href='daily-quiz.html'">DAILY QUIZ</button>
-<button onclick="location.href='about.html'">ABOUT</button>
-<button onclick="location.href='contact.html'">CONTACT</button>
+<button onclick="location.href='index.html'" id="navHome"></button>
+<button onclick="location.href='categories.html'" id="navCategories"></button>
+<button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
+<button onclick="location.href='about.html'" id="navAbout"></button>
+<button onclick="location.href='contact.html'" id="navContact"></button>
 </div>
 </div>
 
@@ -263,23 +334,23 @@ color:#888;
 
 <div class="buttons" id="gameButtons">
 <button class="btn green" id="mainBtn" onclick="mainAction()">ANSWER</button>
-<button class="btn gray" onclick="location.href='index.html'">BACK HOME</button>
+<button class="btn gray" onclick="location.href='index.html'" id="backHomeBtn"></button>
 </div>
 
 <div class="final-box" id="finalBox">
-<h2>How many did you guess?</h2>
+<h2 id="finalTitle"></h2>
 
 <div class="guess-options">
-<button class="guess-btn" onclick="finishChoice()">0 - 5</button>
-<button class="guess-btn" onclick="finishChoice()">6 - 10</button>
-<button class="guess-btn" onclick="finishChoice()">11 - 14</button>
-<button class="guess-btn" onclick="finishChoice()">I GOT ALL 15 🔥</button>
+<button class="guess-btn" onclick="finishChoice()" id="finalOption1"></button>
+<button class="guess-btn" onclick="finishChoice()" id="finalOption2"></button>
+<button class="guess-btn" onclick="finishChoice()" id="finalOption3"></button>
+<button class="guess-btn" onclick="finishChoice()" id="finalOption4"></button>
 </div>
 
 <div class="after-choice" id="afterChoice">
 <div class="buttons">
-<button class="btn green" onclick="location.reload()">PLAY AGAIN</button>
-<button class="btn gray" onclick="location.href='index.html'">HOME</button>
+<button class="btn green" onclick="location.reload()" id="playAgainBtn"></button>
+<button class="btn gray" onclick="location.href='index.html'" id="homeBtn"></button>
 </div>
 </div>
 </div>
@@ -289,6 +360,8 @@ color:#888;
 <div class="footer">© Football Quiz</div>
 
 <script src="quiz-data.js"></script>
+<script src="translations.js"></script>
+<script src="language.js"></script>
 
 <script>
 const params = new URLSearchParams(location.search);
@@ -300,11 +373,29 @@ if (!quiz) {
   location.href = "index.html";
 }
 
-document.getElementById("quizTitle").innerText = quiz.title;
-
 let current = 1;
 let showing = false;
 let selectedQuestions = [];
+
+function applyQuizTranslations(){
+  document.documentElement.lang = getSavedLanguage();
+  document.getElementById("langLabel").innerText = t("language_label");
+  document.getElementById("siteName").innerText = t("site_name");
+  document.getElementById("navHome").innerText = t("nav_home");
+  document.getElementById("navCategories").innerText = t("nav_categories");
+  document.getElementById("navDailyQuiz").innerText = t("nav_daily_quiz");
+  document.getElementById("navAbout").innerText = t("nav_about");
+  document.getElementById("navContact").innerText = t("nav_contact");
+  document.getElementById("quizTitle").innerText = t(quiz.titleKey);
+  document.getElementById("backHomeBtn").innerText = t("back_home");
+  document.getElementById("finalTitle").innerText = t("final_title");
+  document.getElementById("finalOption1").innerText = t("final_option_1");
+  document.getElementById("finalOption2").innerText = t("final_option_2");
+  document.getElementById("finalOption3").innerText = t("final_option_3");
+  document.getElementById("finalOption4").innerText = t("final_option_4");
+  document.getElementById("playAgainBtn").innerText = t("play_again");
+  document.getElementById("homeBtn").innerText = t("home");
+}
 
 function shuffleArray(array){
   const arr = [...array];
@@ -324,21 +415,9 @@ function pickRandomNumbers(total, count){
 }
 
 function buildQuestionSet(){
-  const easySet = pickRandomNumbers(quiz.totalEasy, 5).map(num => ({
-    level: "easy",
-    number: num
-  }));
-
-  const mediumSet = pickRandomNumbers(quiz.totalMedium, 5).map(num => ({
-    level: "medium",
-    number: num
-  }));
-
-  const hardSet = pickRandomNumbers(quiz.totalHard, 5).map(num => ({
-    level: "hard",
-    number: num
-  }));
-
+  const easySet = pickRandomNumbers(quiz.totalEasy, 5).map(num => ({ level: "easy", number: num }));
+  const mediumSet = pickRandomNumbers(quiz.totalMedium, 5).map(num => ({ level: "medium", number: num }));
+  const hardSet = pickRandomNumbers(quiz.totalHard, 5).map(num => ({ level: "hard", number: num }));
   selectedQuestions = [...easySet, ...mediumSet, ...hardSet];
 }
 
@@ -357,24 +436,35 @@ function getNumber(){
 function updateBadge(){
   const badge = document.getElementById("difficulty");
   const level = getLevel();
-
   badge.className = "badge";
 
   if(level === "easy"){
-    badge.innerText = "EASY";
+    badge.innerText = t("easy");
     badge.classList.add("easy");
   }else if(level === "medium"){
-    badge.innerText = "MEDIUM";
+    badge.innerText = t("medium");
     badge.classList.add("medium");
   }else{
-    badge.innerText = "HARD";
+    badge.innerText = t("hard");
     badge.classList.add("hard");
   }
 }
 
 function updateProgress(){
-  document.getElementById("progressBar").style.width =
-    (current / 15 * 100) + "%";
+  document.getElementById("progressBar").style.width = (current / 15 * 100) + "%";
+}
+
+function updateCounter(){
+  document.getElementById("counter").innerText = `${t("question_label")} ${current} / 15`;
+}
+
+function updateMainButton(){
+  const btn = document.getElementById("mainBtn");
+  if(!showing){
+    btn.innerText = t("answer");
+  }else{
+    btn.innerText = current === 15 ? t("finish") : t("next");
+  }
 }
 
 function preloadImage(src){
@@ -385,14 +475,12 @@ function preloadImage(src){
 function preloadCurrentPair(){
   const level = getLevel();
   const number = getNumber();
-
   preloadImage(`${quiz.folder}/${level}/${quiz.questionPrefix}${number}.png`);
   preloadImage(`${quiz.folder}/${level}/${quiz.answerPrefix}${number}.png`);
 }
 
 function preloadNextQuestion(){
   if(current >= 15) return;
-
   const nextQuestion = selectedQuestions[current];
   if(!nextQuestion) return;
 
@@ -402,11 +490,10 @@ function preloadNextQuestion(){
 
 function swapImage(src){
   const img = document.getElementById("quizImage");
-
   const preload = new Image();
+
   preload.onload = function(){
     img.classList.add("fade");
-
     setTimeout(() => {
       img.src = src;
       img.classList.remove("fade");
@@ -417,15 +504,11 @@ function swapImage(src){
 }
 
 function loadQuestion(){
-  swapImage(
-    `${quiz.folder}/${getLevel()}/${quiz.questionPrefix}${getNumber()}.png`
-  );
+  swapImage(`${quiz.folder}/${getLevel()}/${quiz.questionPrefix}${getNumber()}.png`);
 }
 
 function loadAnswer(){
-  swapImage(
-    `${quiz.folder}/${getLevel()}/${quiz.answerPrefix}${getNumber()}.png`
-  );
+  swapImage(`${quiz.folder}/${getLevel()}/${quiz.answerPrefix}${getNumber()}.png`);
 }
 
 function mainAction(){
@@ -433,8 +516,8 @@ function mainAction(){
 
   if(!showing){
     loadAnswer();
-    btn.innerText = current === 15 ? "FINISH" : "NEXT";
     showing = true;
+    updateMainButton();
     preloadNextQuestion();
   }else{
     if(current === 15){
@@ -447,14 +530,11 @@ function mainAction(){
 
     updateBadge();
     updateProgress();
+    updateCounter();
+    updateMainButton();
     loadQuestion();
     preloadCurrentPair();
     preloadNextQuestion();
-
-    document.getElementById("counter").innerText =
-      "QUESTION " + current + " / 15";
-
-    btn.innerText = "ANSWER";
   }
 }
 
@@ -470,26 +550,32 @@ function finishChoice(){
   document.getElementById("afterChoice").style.display = "block";
 }
 
+buildLanguageSelector("languageSelector");
 buildQuestionSet();
+applyQuizTranslations();
 updateBadge();
 updateProgress();
+updateCounter();
+updateMainButton();
 preloadCurrentPair();
 preloadNextQuestion();
 loadQuestion();
 
-/* header inteligente */
 let lastScroll = 0;
-const header = document.querySelector(".header");
+const header = document.getElementById("mainHeader");
+const langTop = document.getElementById("langTop");
 
 window.addEventListener("scroll", () => {
   let currentScroll = window.pageYOffset;
 
   if(currentScroll > lastScroll && currentScroll > 80){
     header.classList.add("hide");
+    langTop.classList.add("hide");
   }
 
   if(currentScroll < 20){
     header.classList.remove("hide");
+    langTop.classList.remove("hide");
   }
 
   lastScroll = currentScroll;
