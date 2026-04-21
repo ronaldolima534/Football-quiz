@@ -51,19 +51,27 @@ flex-wrap:wrap;
 }
 
 .lang-btn{
-width:42px;
-height:42px;
+width:48px;
+height:48px;
 border:none;
 border-radius:12px;
 cursor:pointer;
-font-size:20px;
-line-height:1;
 background:#1d1d1d;
 border:1px solid #333;
 transition:.2s;
 display:flex;
 align-items:center;
 justify-content:center;
+padding:0;
+overflow:hidden;
+}
+
+.lang-btn img{
+width:28px;
+height:20px;
+display:block;
+border-radius:3px;
+object-fit:cover;
 }
 
 .lang-btn:hover{
@@ -298,6 +306,14 @@ color:#999;
 .nav{gap:8px;}
 .nav button{font-size:13px;padding:9px 12px;}
 .lang-wrap{justify-content:center;}
+.lang-btn{
+width:46px;
+height:46px;
+}
+.lang-btn img{
+width:26px;
+height:18px;
+}
 }
 </style>
 </head>
