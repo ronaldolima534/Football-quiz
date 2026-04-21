@@ -34,11 +34,11 @@ function buildLanguageSelector(containerId) {
   if (!container) return;
 
   container.innerHTML = `
-    <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')">🇬🇧</button>
-    <button class="lang-btn" data-lang="es" onclick="changeLanguage('es')">🇪🇸</button>
-    <button class="lang-btn" data-lang="pt" onclick="changeLanguage('pt')">🇵🇹</button>
-    <button class="lang-btn" data-lang="fr" onclick="changeLanguage('fr')">🇫🇷</button>
-    <button class="lang-btn" data-lang="it" onclick="changeLanguage('it')">🇮🇹</button>
+    <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')" aria-label="English">🇬🇧</button>
+    <button class="lang-btn" data-lang="es" onclick="changeLanguage('es')" aria-label="Español">🇪🇸</button>
+    <button class="lang-btn" data-lang="pt" onclick="changeLanguage('pt')" aria-label="Português">🇵🇹</button>
+    <button class="lang-btn" data-lang="fr" onclick="changeLanguage('fr')" aria-label="Français">🇫🇷</button>
+    <button class="lang-btn" data-lang="it" onclick="changeLanguage('it')" aria-label="Italiano">🇮🇹</button>
   `;
 
   updateLanguageButtons();
