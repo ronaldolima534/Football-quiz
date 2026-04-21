@@ -1,6 +1,6 @@
 const quizData = {
   "transfers": {
-    title: "GUESS THE PLAYER BY THEIR TRANSFERS",
+    titleKey: "quiz_transfers_title",
     folder: "images/transfers",
     questionPrefix: "career",
     answerPrefix: "player",
@@ -13,7 +13,7 @@ const quizData = {
   },
 
   "player-clues": {
-    title: "GUESS THE PLAYER BY CLUB + NATIONALITY + NUMBER + POSITION",
+    titleKey: "quiz_player_clues_title",
     folder: "images/player-clues",
     questionPrefix: "clue",
     answerPrefix: "answer",
@@ -26,7 +26,7 @@ const quizData = {
   },
 
   "nationality-club": {
-    title: "GUESS THE CLUB BY PLAYERS NATIONALITY",
+    titleKey: "quiz_nationality_club_title",
     folder: "images/nationality-club",
     questionPrefix: "nation",
     answerPrefix: "club",
