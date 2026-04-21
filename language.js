@@ -34,11 +34,25 @@ function buildLanguageSelector(containerId) {
   if (!container) return;
 
   container.innerHTML = `
-    <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')" aria-label="English">🇬🇧</button>
-    <button class="lang-btn" data-lang="es" onclick="changeLanguage('es')" aria-label="Español">🇪🇸</button>
-    <button class="lang-btn" data-lang="pt" onclick="changeLanguage('pt')" aria-label="Português">🇵🇹</button>
-    <button class="lang-btn" data-lang="fr" onclick="changeLanguage('fr')" aria-label="Français">🇫🇷</button>
-    <button class="lang-btn" data-lang="it" onclick="changeLanguage('it')" aria-label="Italiano">🇮🇹</button>
+    <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')" aria-label="English">
+      <img src="https://flagcdn.com/w40/gb.png" alt="English">
+    </button>
+
+    <button class="lang-btn" data-lang="es" onclick="changeLanguage('es')" aria-label="Español">
+      <img src="https://flagcdn.com/w40/es.png" alt="Español">
+    </button>
+
+    <button class="lang-btn" data-lang="pt" onclick="changeLanguage('pt')" aria-label="Português">
+      <img src="https://flagcdn.com/w40/pt.png" alt="Português">
+    </button>
+
+    <button class="lang-btn" data-lang="fr" onclick="changeLanguage('fr')" aria-label="Français">
+      <img src="https://flagcdn.com/w40/fr.png" alt="Français">
+    </button>
+
+    <button class="lang-btn" data-lang="it" onclick="changeLanguage('it')" aria-label="Italiano">
+      <img src="https://flagcdn.com/w40/it.png" alt="Italiano">
+    </button>
   `;
 
   updateLanguageButtons();
