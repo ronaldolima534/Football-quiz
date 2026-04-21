@@ -21,12 +21,9 @@ font-family:Arial,sans-serif;
 background:linear-gradient(180deg,#080808,#111);
 color:#fff;
 text-align:center;
-
-/* 👇 espacio para header fijo */
 padding-top:110px;
 }
 
-/* HEADER */
 .header{
 position:fixed;
 top:0;
@@ -69,7 +66,9 @@ color:#fff;
 border:1px solid var(--line);
 }
 
-.title-wrap{padding:24px 14px 14px;}
+.title-wrap{
+padding:24px 14px 14px;
+}
 
 .title-bar{
 width:94%;
@@ -220,6 +219,13 @@ padding:28px;
 font-size:14px;
 color:#888;
 }
+
+@media(max-width:600px){
+.brand{font-size:28px;}
+.title-bar{font-size:22px;}
+.counter{font-size:22px;}
+.btn{font-size:19px;padding:16px;}
+}
 </style>
 </head>
 
@@ -282,157 +288,211 @@ color:#888;
 
 <div class="footer">© Football Quiz</div>
 
+<script src="quiz-data.js"></script>
+
 <script>
-const params=new URLSearchParams(location.search);
-const mode=params.get("mode")||"transfers";
+const params = new URLSearchParams(location.search);
+const mode = params.get("mode") || "transfers";
+const quiz = quizData[mode];
 
-const data={
-transfers:{
-title:"GUESS THE PLAYER BY THEIR TRANSFERS",
-folder:"images/transfers"
-},
-"player-clues":{
-title:"GUESS THE PLAYER BY CLUB + NATIONALITY + NUMBER + POSITION",
-folder:"images/player-clues"
-},
-"nationality-club":{
-title:"GUESS THE CLUB BY PLAYERS NATIONALITY",
-folder:"images/nationality-club"
+if (!quiz) {
+  alert("Quiz not found");
+  location.href = "index.html";
 }
-};
 
-const quiz=data[mode];
-document.getElementById("quizTitle").innerText=quiz.title;
+document.getElementById("quizTitle").innerText = quiz.title;
 
-let current=1;
-let showing=false;
+let current = 1;
+let showing = false;
+let selectedQuestions = [];
+
+function shuffleArray(array){
+  const arr = [...array];
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function pickRandomNumbers(total, count){
+  const numbers = [];
+  for(let i = 1; i <= total; i++){
+    numbers.push(i);
+  }
+  return shuffleArray(numbers).slice(0, count);
+}
+
+function buildQuestionSet(){
+  const easySet = pickRandomNumbers(quiz.totalEasy, 5).map(num => ({
+    level: "easy",
+    number: num
+  }));
+
+  const mediumSet = pickRandomNumbers(quiz.totalMedium, 5).map(num => ({
+    level: "medium",
+    number: num
+  }));
+
+  const hardSet = pickRandomNumbers(quiz.totalHard, 5).map(num => ({
+    level: "hard",
+    number: num
+  }));
+
+  selectedQuestions = [...easySet, ...mediumSet, ...hardSet];
+}
+
+function getCurrentQuestion(){
+  return selectedQuestions[current - 1];
+}
 
 function getLevel(){
-if(current<=5)return"easy";
-if(current<=10)return"medium";
-return"hard";
+  return getCurrentQuestion().level;
 }
 
 function getNumber(){
-return 1;
+  return getCurrentQuestion().number;
 }
 
 function updateBadge(){
-const badge=document.getElementById("difficulty");
-badge.className="badge";
+  const badge = document.getElementById("difficulty");
+  const level = getLevel();
 
-if(current<=5){
-badge.innerText="EASY";
-badge.classList.add("easy");
-}else if(current<=10){
-badge.innerText="MEDIUM";
-badge.classList.add("medium");
-}else{
-badge.innerText="HARD";
-badge.classList.add("hard");
-}
+  badge.className = "badge";
+
+  if(level === "easy"){
+    badge.innerText = "EASY";
+    badge.classList.add("easy");
+  }else if(level === "medium"){
+    badge.innerText = "MEDIUM";
+    badge.classList.add("medium");
+  }else{
+    badge.innerText = "HARD";
+    badge.classList.add("hard");
+  }
 }
 
 function updateProgress(){
-document.getElementById("progressBar").style.width=
-(current/15*100)+"%";
+  document.getElementById("progressBar").style.width =
+    (current / 15 * 100) + "%";
+}
+
+function preloadImage(src){
+  const img = new Image();
+  img.src = src;
+}
+
+function preloadCurrentPair(){
+  const level = getLevel();
+  const number = getNumber();
+
+  preloadImage(`${quiz.folder}/${level}/${quiz.questionPrefix}${number}.png`);
+  preloadImage(`${quiz.folder}/${level}/${quiz.answerPrefix}${number}.png`);
+}
+
+function preloadNextQuestion(){
+  if(current >= 15) return;
+
+  const nextQuestion = selectedQuestions[current];
+  if(!nextQuestion) return;
+
+  preloadImage(`${quiz.folder}/${nextQuestion.level}/${quiz.questionPrefix}${nextQuestion.number}.png`);
+  preloadImage(`${quiz.folder}/${nextQuestion.level}/${quiz.answerPrefix}${nextQuestion.number}.png`);
 }
 
 function swapImage(src){
-const img=document.getElementById("quizImage");
+  const img = document.getElementById("quizImage");
 
-const preload=new Image();
-preload.onload=function(){
+  const preload = new Image();
+  preload.onload = function(){
+    img.classList.add("fade");
 
-img.classList.add("fade");
+    setTimeout(() => {
+      img.src = src;
+      img.classList.remove("fade");
+    }, 150);
+  };
 
-setTimeout(()=>{
-img.src=src;
-img.classList.remove("fade");
-},150);
-
-};
-
-preload.src=src;
+  preload.src = src;
 }
 
 function loadQuestion(){
-swapImage(
-quiz.folder+"/"+getLevel()+"/career"+getNumber()+".png"
-);
+  swapImage(
+    `${quiz.folder}/${getLevel()}/${quiz.questionPrefix}${getNumber()}.png`
+  );
 }
 
 function loadAnswer(){
-swapImage(
-quiz.folder+"/"+getLevel()+"/player"+getNumber()+".png"
-);
+  swapImage(
+    `${quiz.folder}/${getLevel()}/${quiz.answerPrefix}${getNumber()}.png`
+  );
 }
 
 function mainAction(){
+  const btn = document.getElementById("mainBtn");
 
-const btn=document.getElementById("mainBtn");
+  if(!showing){
+    loadAnswer();
+    btn.innerText = current === 15 ? "FINISH" : "NEXT";
+    showing = true;
+    preloadNextQuestion();
+  }else{
+    if(current === 15){
+      endQuiz();
+      return;
+    }
 
-if(!showing){
+    current++;
+    showing = false;
 
-loadAnswer();
-btn.innerText=current===15?"FINISH":"NEXT";
-showing=true;
+    updateBadge();
+    updateProgress();
+    loadQuestion();
+    preloadCurrentPair();
+    preloadNextQuestion();
 
-}else{
+    document.getElementById("counter").innerText =
+      "QUESTION " + current + " / 15";
 
-if(current===15){
-endQuiz();
-return;
-}
-
-current++;
-showing=false;
-
-updateBadge();
-updateProgress();
-loadQuestion();
-
-document.getElementById("counter").innerText=
-"QUESTION "+current+" / 15";
-
-btn.innerText="ANSWER";
-}
+    btn.innerText = "ANSWER";
+  }
 }
 
 function endQuiz(){
-document.getElementById("difficulty").style.display="none";
-document.querySelector(".viewer").style.display="none";
-document.getElementById("counter").style.display="none";
-document.getElementById("gameButtons").style.display="none";
-document.getElementById("finalBox").style.display="block";
+  document.getElementById("difficulty").style.display = "none";
+  document.querySelector(".viewer").style.display = "none";
+  document.getElementById("counter").style.display = "none";
+  document.getElementById("gameButtons").style.display = "none";
+  document.getElementById("finalBox").style.display = "block";
 }
 
 function finishChoice(){
-document.getElementById("afterChoice").style.display="block";
+  document.getElementById("afterChoice").style.display = "block";
 }
 
+buildQuestionSet();
 updateBadge();
 updateProgress();
+preloadCurrentPair();
+preloadNextQuestion();
 loadQuestion();
 
-/* 🔥 HEADER INTELIGENTE */
-let lastScroll=0;
-const header=document.querySelector(".header");
+/* header inteligente */
+let lastScroll = 0;
+const header = document.querySelector(".header");
 
-window.addEventListener("scroll",()=>{
-let currentScroll=window.pageYOffset;
+window.addEventListener("scroll", () => {
+  let currentScroll = window.pageYOffset;
 
-// bajar → ocultar
-if(currentScroll>lastScroll && currentScroll>80){
-header.classList.add("hide");
-}
+  if(currentScroll > lastScroll && currentScroll > 80){
+    header.classList.add("hide");
+  }
 
-// subir arriba → mostrar
-if(currentScroll<20){
-header.classList.remove("hide");
-}
+  if(currentScroll < 20){
+    header.classList.remove("hide");
+  }
 
-lastScroll=currentScroll;
+  lastScroll = currentScroll;
 });
 </script>
 
