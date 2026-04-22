@@ -21,7 +21,7 @@ font-family:Arial,sans-serif;
 background:linear-gradient(180deg,#080808,#111);
 color:#fff;
 text-align:center;
-padding-top:170px;
+padding-top:158px;
 }
 
 .top-ui{
@@ -29,9 +29,11 @@ position:fixed;
 top:0;
 left:0;
 width:100%;
-z-index:100;
+z-index:999;
 background:rgba(10,10,10,.92);
 backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+transform:translateY(0);
 transition:transform .35s ease;
 }
 
@@ -41,7 +43,7 @@ transform:translateY(-100%);
 
 .lang-top{
 padding:12px 14px 10px;
-border-bottom:1px solid rgba(255,255,255,.04);
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .lang-wrap{
@@ -278,12 +280,25 @@ color:#888;
 }
 
 @media(max-width:600px){
-body{padding-top:185px;}
-.brand{font-size:28px;}
-.title-bar{font-size:22px;}
-.counter{font-size:22px;}
-.btn{font-size:19px;padding:16px;}
-.lang-wrap{justify-content:center;}
+body{
+padding-top:178px;
+}
+.brand{
+font-size:28px;
+}
+.title-bar{
+font-size:22px;
+}
+.counter{
+font-size:22px;
+}
+.btn{
+font-size:19px;
+padding:16px;
+}
+.lang-wrap{
+justify-content:center;
+}
 .lang-btn{
 width:46px;
 height:46px;
@@ -319,45 +334,45 @@ height:18px;
 </div>
 
 <div class="title-wrap">
-<div class="title-bar" id="quizTitle"></div>
+  <div class="title-bar" id="quizTitle"></div>
 </div>
 
 <div class="container">
 
-<div class="progress-wrap">
-<div class="progress" id="progressBar"></div>
-</div>
+  <div class="progress-wrap">
+    <div class="progress" id="progressBar"></div>
+  </div>
 
-<div id="difficulty" class="badge easy">EASY</div>
+  <div id="difficulty" class="badge easy">EASY</div>
 
-<div class="viewer">
-<img id="quizImage" src="">
-</div>
+  <div class="viewer">
+    <img id="quizImage" src="">
+  </div>
 
-<div class="counter" id="counter">QUESTION 1 / 15</div>
+  <div class="counter" id="counter">QUESTION 1 / 15</div>
 
-<div class="buttons" id="gameButtons">
-<button class="btn green" id="mainBtn" onclick="mainAction()"></button>
-<button class="btn gray" onclick="location.href='index.html'" id="backHomeBtn"></button>
-</div>
+  <div class="buttons" id="gameButtons">
+    <button class="btn green" id="mainBtn" onclick="mainAction()"></button>
+    <button class="btn gray" onclick="location.href='index.html'" id="backHomeBtn"></button>
+  </div>
 
-<div class="final-box" id="finalBox">
-<h2 id="finalTitle"></h2>
+  <div class="final-box" id="finalBox">
+    <h2 id="finalTitle"></h2>
 
-<div class="guess-options">
-<button class="guess-btn" onclick="finishChoice()" id="finalOption1"></button>
-<button class="guess-btn" onclick="finishChoice()" id="finalOption2"></button>
-<button class="guess-btn" onclick="finishChoice()" id="finalOption3"></button>
-<button class="guess-btn" onclick="finishChoice()" id="finalOption4"></button>
-</div>
+    <div class="guess-options">
+      <button class="guess-btn" onclick="finishChoice()" id="finalOption1"></button>
+      <button class="guess-btn" onclick="finishChoice()" id="finalOption2"></button>
+      <button class="guess-btn" onclick="finishChoice()" id="finalOption3"></button>
+      <button class="guess-btn" onclick="finishChoice()" id="finalOption4"></button>
+    </div>
 
-<div class="after-choice" id="afterChoice">
-<div class="buttons">
-<button class="btn green" onclick="location.reload()" id="playAgainBtn"></button>
-<button class="btn gray" onclick="location.href='index.html'" id="homeBtn"></button>
-</div>
-</div>
-</div>
+    <div class="after-choice" id="afterChoice">
+      <div class="buttons">
+        <button class="btn green" onclick="location.reload()" id="playAgainBtn"></button>
+        <button class="btn gray" onclick="location.href='index.html'" id="homeBtn"></button>
+      </div>
+    </div>
+  </div>
 
 </div>
 
@@ -566,18 +581,16 @@ let lastScroll = 0;
 const topUI = document.getElementById("topUI");
 
 window.addEventListener("scroll", () => {
-  const currentScroll = window.pageYOffset;
+  const currentScroll = window.scrollY || window.pageYOffset;
 
   if(currentScroll > lastScroll && currentScroll > 80){
     topUI.classList.add("hide");
-  }
-
-  if(currentScroll < 20){
+  }else if(currentScroll < 10){
     topUI.classList.remove("hide");
   }
 
-  lastScroll = currentScroll;
-});
+  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+}, { passive: true });
 </script>
 
 </body>
