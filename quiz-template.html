@@ -28,7 +28,6 @@ text-align:center;
 padding-top:var(--top-ui-height);
 }
 
-/* TODO EL BLOQUE SUPERIOR */
 .top-ui{
 position:fixed;
 top:0;
@@ -39,17 +38,14 @@ background:rgba(10,10,10,.95);
 backdrop-filter:blur(10px);
 -webkit-backdrop-filter:blur(10px);
 transform:translateY(0);
-opacity:1;
-transition:transform .35s ease, opacity .25s ease;
+transition:transform .35s ease;
 will-change:transform;
 }
 
 .top-ui.hide{
 transform:translateY(calc(-1 * var(--top-ui-height)));
-opacity:.98;
 }
 
-/* IDIOMAS */
 .lang-top{
 padding:12px 14px 10px;
 border-bottom:1px solid rgba(255,255,255,.05);
@@ -84,14 +80,7 @@ align-items:center;
 justify-content:center;
 padding:0;
 overflow:hidden;
-}
-
-.lang-btn img{
-width:28px;
-height:20px;
-display:block;
-border-radius:3px;
-object-fit:cover;
+font-size:0;
 }
 
 .lang-btn:hover{
@@ -104,7 +93,6 @@ background:linear-gradient(145deg,var(--green),var(--green2));
 border-color:transparent;
 }
 
-/* HEADER */
 .header{
 padding:18px 12px;
 border-bottom:1px solid var(--line);
@@ -135,7 +123,6 @@ color:#fff;
 border:1px solid var(--line);
 }
 
-/* TITULO */
 .title-wrap{
 padding:24px 14px 14px;
 }
@@ -153,7 +140,6 @@ font-weight:900;
 box-shadow:0 14px 30px rgba(0,0,0,.35);
 }
 
-/* MAIN */
 .container{
 width:94%;
 max-width:760px;
@@ -320,16 +306,6 @@ padding:16px;
 .lang-wrap{
 justify-content:center;
 }
-
-.lang-btn{
-width:46px;
-height:46px;
-}
-
-.lang-btn img{
-width:26px;
-height:18px;
-}
 }
 </style>
 </head>
@@ -475,4 +451,142 @@ function getNumber(){
 }
 
 function updateBadge(){
-  const badge = document.getElementById("
+  const badge = document.getElementById("difficulty");
+  const level = getLevel();
+  badge.className = "badge";
+
+  if(level === "easy"){
+    badge.innerText = t("easy");
+    badge.classList.add("easy");
+  }else if(level === "medium"){
+    badge.innerText = t("medium");
+    badge.classList.add("medium");
+  }else{
+    badge.innerText = t("hard");
+    badge.classList.add("hard");
+  }
+}
+
+function updateProgress(){
+  document.getElementById("progressBar").style.width = (current / 15 * 100) + "%";
+}
+
+function updateCounter(){
+  document.getElementById("counter").innerText = `${t("question_label")} ${current} / 15`;
+}
+
+function updateMainButton(){
+  const btn = document.getElementById("mainBtn");
+  btn.innerText = !showing ? t("answer") : (current === 15 ? t("finish") : t("next"));
+}
+
+function preloadImage(src){
+  const img = new Image();
+  img.src = src;
+}
+
+function preloadCurrentPair(){
+  const level = getLevel();
+  const number = getNumber();
+  preloadImage(`${quiz.folder}/${level}/${quiz.questionPrefix}${number}.png`);
+  preloadImage(`${quiz.folder}/${level}/${quiz.answerPrefix}${number}.png`);
+}
+
+function preloadNextQuestion(){
+  if(current >= 15) return;
+  const nextQuestion = selectedQuestions[current];
+  if(!nextQuestion) return;
+
+  preloadImage(`${quiz.folder}/${nextQuestion.level}/${quiz.questionPrefix}${nextQuestion.number}.png`);
+  preloadImage(`${quiz.folder}/${nextQuestion.level}/${quiz.answerPrefix}${nextQuestion.number}.png`);
+}
+
+function swapImage(src){
+  const img = document.getElementById("quizImage");
+  const preload = new Image();
+
+  preload.onload = function(){
+    img.classList.add("fade");
+    setTimeout(() => {
+      img.src = src;
+      img.classList.remove("fade");
+    }, 150);
+  };
+
+  preload.src = src;
+}
+
+function loadQuestion(){
+  swapImage(`${quiz.folder}/${getLevel()}/${quiz.questionPrefix}${getNumber()}.png`);
+}
+
+function loadAnswer(){
+  swapImage(`${quiz.folder}/${getLevel()}/${quiz.answerPrefix}${getNumber()}.png`);
+}
+
+function mainAction(){
+  if(!showing){
+    loadAnswer();
+    showing = true;
+    updateMainButton();
+    preloadNextQuestion();
+  }else{
+    if(current === 15){
+      endQuiz();
+      return;
+    }
+
+    current++;
+    showing = false;
+
+    updateBadge();
+    updateProgress();
+    updateCounter();
+    updateMainButton();
+    loadQuestion();
+    preloadCurrentPair();
+    preloadNextQuestion();
+  }
+}
+
+function endQuiz(){
+  document.getElementById("difficulty").style.display = "none";
+  document.querySelector(".viewer").style.display = "none";
+  document.getElementById("counter").style.display = "none";
+  document.getElementById("gameButtons").style.display = "none";
+  document.getElementById("finalBox").style.display = "block";
+}
+
+function finishChoice(){
+  document.getElementById("afterChoice").style.display = "block";
+}
+
+buildLanguageSelector("languageSelector");
+buildQuestionSet();
+applyQuizTranslations();
+updateBadge();
+updateProgress();
+updateCounter();
+updateMainButton();
+preloadCurrentPair();
+preloadNextQuestion();
+loadQuestion();
+
+let lastScroll = 0;
+const topUI = document.getElementById("topUI");
+
+window.addEventListener("scroll", () => {
+  const currentScroll = window.scrollY || window.pageYOffset;
+
+  if(currentScroll > lastScroll && currentScroll > 80){
+    topUI.classList.add("hide");
+  }else if(currentScroll < 10){
+    topUI.classList.remove("hide");
+  }
+
+  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+}, { passive: true });
+</script>
+
+</body>
+</html>
