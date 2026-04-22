@@ -1,9 +1,10 @@
 const quizData = {
+
   "transfers": {
     titleKey: "quiz_transfers_title",
     folder: "images/transfers",
-    questionPrefix: "career",
-    answerPrefix: "player",
+    questionPrefix: "q",
+    answerPrefix: "a",
     totalEasy: 20,
     totalMedium: 20,
     totalHard: 20,
@@ -15,8 +16,8 @@ const quizData = {
   "player-clues": {
     titleKey: "quiz_player_clues_title",
     folder: "images/player-clues",
-    questionPrefix: "clue",
-    answerPrefix: "answer",
+    questionPrefix: "q",
+    answerPrefix: "a",
     totalEasy: 20,
     totalMedium: 20,
     totalHard: 20,
@@ -28,8 +29,8 @@ const quizData = {
   "nationality-club": {
     titleKey: "quiz_nationality_club_title",
     folder: "images/nationality-club",
-    questionPrefix: "nation",
-    answerPrefix: "club",
+    questionPrefix: "q",
+    answerPrefix: "a",
     totalEasy: 20,
     totalMedium: 20,
     totalHard: 20,
@@ -37,4 +38,5 @@ const quizData = {
     showOnHome: true,
     homeOrder: 3
   }
+
 };
