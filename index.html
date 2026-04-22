@@ -28,11 +28,31 @@ font-family:Arial,sans-serif;
 background:linear-gradient(180deg,#080808,#111111);
 color:var(--white);
 text-align:center;
+padding-top:158px;
 }
 
-/* SOLO BANDERAS */
+/* TOP UI */
+.top-ui{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:999;
+background:rgba(10,10,10,.94);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+transform:translateY(0);
+transition:transform .35s ease;
+}
+
+.top-ui.hide{
+transform:translateY(-100%);
+}
+
+/* LANG */
 .lang-top{
-padding:12px 14px 0;
+padding:12px 14px 10px;
+border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .lang-wrap{
@@ -86,14 +106,9 @@ border-color:transparent;
 
 /* HEADER */
 .header{
-background:rgba(10,10,10,.94);
+padding:18px 12px;
 border-bottom:1px solid var(--line);
 box-shadow:0 4px 14px rgba(0,0,0,.28);
-padding:18px 12px;
-position:sticky;
-top:0;
-z-index:20;
-backdrop-filter:blur(8px);
 }
 
 .brand{
@@ -294,18 +309,47 @@ color:#999;
 }
 
 @media(max-width:600px){
-.brand{font-size:30px;}
-.hero{padding:28px 16px 24px;}
-.hero-box{padding:24px 16px;border-radius:22px;}
-.hero h1{font-size:32px;}
-.hero p{font-size:16px;}
-.section-title{font-size:24px;}
-.quiz-title{font-size:21px;}
-.play{font-size:20px;}
-.thumb{height:200px;}
-.nav{gap:8px;}
-.nav button{font-size:13px;padding:9px 12px;}
-.lang-wrap{justify-content:center;}
+body{
+padding-top:178px;
+}
+.brand{
+font-size:30px;
+}
+.hero{
+padding:28px 16px 24px;
+}
+.hero-box{
+padding:24px 16px;
+border-radius:22px;
+}
+.hero h1{
+font-size:32px;
+}
+.hero p{
+font-size:16px;
+}
+.section-title{
+font-size:24px;
+}
+.quiz-title{
+font-size:21px;
+}
+.play{
+font-size:20px;
+}
+.thumb{
+height:200px;
+}
+.nav{
+gap:8px;
+}
+.nav button{
+font-size:13px;
+padding:9px 12px;
+}
+.lang-wrap{
+justify-content:center;
+}
 .lang-btn{
 width:46px;
 height:46px;
@@ -320,22 +364,24 @@ height:18px;
 
 <body>
 
-<div class="lang-top">
-  <div class="lang-wrap">
-    <div class="lang-buttons" id="languageSelector"></div>
+<div class="top-ui" id="topUI">
+  <div class="lang-top">
+    <div class="lang-wrap">
+      <div class="lang-buttons" id="languageSelector"></div>
+    </div>
   </div>
-</div>
 
-<div class="header">
-<div class="brand" id="siteName"></div>
+  <div class="header">
+    <div class="brand" id="siteName"></div>
 
-<div class="nav">
-<button class="active" onclick="location.href='index.html'" id="navHome"></button>
-<button onclick="location.href='categories.html'" id="navCategories"></button>
-<button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
-<button onclick="location.href='about.html'" id="navAbout"></button>
-<button onclick="location.href='contact.html'" id="navContact"></button>
-</div>
+    <div class="nav">
+      <button class="active" onclick="location.href='index.html'" id="navHome"></button>
+      <button onclick="location.href='categories.html'" id="navCategories"></button>
+      <button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
+      <button onclick="location.href='about.html'" id="navAbout"></button>
+      <button onclick="location.href='contact.html'" id="navContact"></button>
+    </div>
+  </div>
 </div>
 
 <div class="hero">
@@ -355,9 +401,7 @@ height:18px;
 
 <div class="container" id="homeQuizList"></div>
 
-<div class="footer">
-© Football Quiz
-</div>
+<div class="footer">© Football Quiz</div>
 
 <script src="quiz-data.js"></script>
 <script src="translations.js"></script>
@@ -411,9 +455,8 @@ function buildHomeQuizzes(){
           <div class="meta-pill">${t("pill_play_now")}</div>
         </div>
 
-        <button class="play"
-        onclick="location.href='quiz-template.html?mode=${mode}'">
-        ${t("play_now")}
+        <button class="play" onclick="location.href='quiz-template.html?mode=${mode}'">
+          ${t("play_now")}
         </button>
       </div>
     `;
@@ -425,6 +468,21 @@ function buildHomeQuizzes(){
 buildLanguageSelector("languageSelector");
 applyIndexTranslations();
 buildHomeQuizzes();
+
+let lastScroll = 0;
+const topUI = document.getElementById("topUI");
+
+window.addEventListener("scroll", () => {
+  const currentScroll = window.scrollY || window.pageYOffset;
+
+  if(currentScroll > lastScroll && currentScroll > 80){
+    topUI.classList.add("hide");
+  }else if(currentScroll < 10){
+    topUI.classList.remove("hide");
+  }
+
+  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+}, { passive: true });
 </script>
 
 </body>
