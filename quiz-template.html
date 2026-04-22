@@ -17,7 +17,6 @@ box-sizing:border-box;
 --line:#2a2a2a;
 --green:#22c55e;
 --green2:#15803d;
---top-ui-height:158px;
 }
 
 body{
@@ -25,7 +24,7 @@ font-family:Arial,sans-serif;
 background:linear-gradient(180deg,#080808,#111);
 color:#fff;
 text-align:center;
-padding-top:var(--top-ui-height);
+padding-top:170px;
 }
 
 .top-ui{
@@ -37,13 +36,8 @@ z-index:9999;
 background:rgba(10,10,10,.95);
 backdrop-filter:blur(10px);
 -webkit-backdrop-filter:blur(10px);
-transform:translateY(0);
 transition:transform .35s ease;
 will-change:transform;
-}
-
-.top-ui.hide{
-transform:translateY(calc(-1 * var(--top-ui-height)));
 }
 
 .lang-top{
@@ -278,12 +272,8 @@ color:#888;
 }
 
 @media(max-width:600px){
-:root{
---top-ui-height:178px;
-}
-
 body{
-padding-top:var(--top-ui-height);
+padding-top:190px;
 }
 
 .brand{
@@ -572,16 +562,36 @@ preloadCurrentPair();
 preloadNextQuestion();
 loadQuestion();
 
-let lastScroll = 0;
+/* ALTURA REAL DEL BLOQUE SUPERIOR */
 const topUI = document.getElementById("topUI");
+
+function updateTopPadding(){
+  const realHeight = topUI.offsetHeight;
+  document.body.style.paddingTop = realHeight + 12 + "px";
+}
+
+function hideTopUI(){
+  const realHeight = topUI.offsetHeight;
+  topUI.style.transform = `translateY(-${realHeight}px)`;
+}
+
+function showTopUI(){
+  topUI.style.transform = "translateY(0)";
+}
+
+updateTopPadding();
+window.addEventListener("load", updateTopPadding);
+window.addEventListener("resize", updateTopPadding);
+
+let lastScroll = 0;
 
 window.addEventListener("scroll", () => {
   const currentScroll = window.scrollY || window.pageYOffset;
 
   if(currentScroll > lastScroll && currentScroll > 80){
-    topUI.classList.add("hide");
+    hideTopUI();
   }else if(currentScroll < 10){
-    topUI.classList.remove("hide");
+    showTopUI();
   }
 
   lastScroll = currentScroll <= 0 ? 0 : currentScroll;
