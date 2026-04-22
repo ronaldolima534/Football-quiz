@@ -6,7 +6,6 @@ const translations = {
     nav_daily_quiz: "DAILY QUIZ",
     nav_about: "ABOUT",
     nav_contact: "CONTACT",
-    language_label: "LANGUAGE",
 
     hero_title: "Test Your Football Knowledge",
     hero_subtitle: "Play visual football quizzes, reveal the answer, and challenge yourself across easy, medium and hard levels.",
@@ -54,7 +53,6 @@ const translations = {
     nav_daily_quiz: "QUIZ DIARIO",
     nav_about: "NOSOTROS",
     nav_contact: "CONTACTO",
-    language_label: "IDIOMA",
 
     hero_title: "Pon a prueba tus conocimientos de fútbol",
     hero_subtitle: "Juega quizzes visuales de fútbol, revela la respuesta y desafíate en niveles fácil, medio y difícil.",
@@ -102,7 +100,6 @@ const translations = {
     nav_daily_quiz: "QUIZ DIÁRIO",
     nav_about: "SOBRE",
     nav_contact: "CONTATO",
-    language_label: "IDIOMA",
 
     hero_title: "Teste seu conhecimento de futebol",
     hero_subtitle: "Jogue quizzes visuais de futebol, revele a resposta e desafie-se nos níveis fácil, médio e difícil.",
@@ -150,7 +147,6 @@ const translations = {
     nav_daily_quiz: "QUIZ DU JOUR",
     nav_about: "À PROPOS",
     nav_contact: "CONTACT",
-    language_label: "LANGUE",
 
     hero_title: "Testez vos connaissances footballistiques",
     hero_subtitle: "Jouez à des quiz visuels de football, révélez la réponse et relevez le défi sur les niveaux facile, moyen et difficile.",
@@ -198,7 +194,6 @@ const translations = {
     nav_daily_quiz: "QUIZ DEL GIORNO",
     nav_about: "CHI SIAMO",
     nav_contact: "CONTATTO",
-    language_label: "LINGUA",
 
     hero_title: "Metti alla prova la tua conoscenza del calcio",
     hero_subtitle: "Gioca a quiz visivi sul calcio, rivela la risposta e sfidati nei livelli facile, medio e difficile.",
