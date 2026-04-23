@@ -2,6 +2,7 @@ const quizData = {
 
   "transfers": {
     titleKey: "quiz_transfers_title",
+    categories: ["players", "transfers"],
     folder: "images/transfers",
     questionPrefix: "q",
     answerPrefix: "a",
@@ -15,6 +16,7 @@ const quizData = {
 
   "player-clues": {
     titleKey: "quiz_player_clues_title",
+    categories: ["players"],
     folder: "images/player-clues",
     questionPrefix: "q",
     answerPrefix: "a",
@@ -28,6 +30,7 @@ const quizData = {
 
   "nationality-club": {
     titleKey: "quiz_nationality_club_title",
+    categories: ["clubs", "national-teams"],
     folder: "images/nationality-club",
     questionPrefix: "q",
     answerPrefix: "a",
