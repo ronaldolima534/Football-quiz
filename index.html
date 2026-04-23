@@ -39,10 +39,7 @@ width:100%;
 z-index:9999;
 background:rgba(10,10,10,.94);
 backdrop-filter:blur(8px);
--webkit-backdrop-filter:blur(8px);
-transform:translateY(0);
 transition:.35s;
-will-change:transform;
 }
 
 .lang-top{
@@ -186,14 +183,36 @@ font-weight:900;
 margin-bottom:14px;
 }
 
+/* BOTÓN PRO */
 .play{
 width:100%;
-padding:14px;
-border-radius:14px;
+padding:18px;
+border-radius:18px;
 background:linear-gradient(145deg,var(--green),var(--green2));
 border:none;
 font-weight:900;
+font-size:22px;
 cursor:pointer;
+
+box-shadow:
+0 8px 0 #0f5f2d,
+0 14px 24px rgba(34,197,94,.25);
+
+transition:.15s;
+}
+
+.play:hover{
+transform:translateY(-2px);
+box-shadow:
+0 10px 0 #0f5f2d,
+0 18px 28px rgba(34,197,94,.30);
+}
+
+.play:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 #0f5f2d,
+0 8px 16px rgba(34,197,94,.2);
 }
 
 .footer{
@@ -202,58 +221,42 @@ color:#999;
 font-size:14px;
 }
 
-@media(max-width:600px){
-body{
-padding-top:178px;
-}
-.hero h1{
-font-size:32px;
-}
-.hero p{
-font-size:16px;
-}
-.brand{
-font-size:30px;
-}
-}
 </style>
 </head>
 
 <body>
 
 <div class="top-ui" id="topUI">
+<div class="lang-top">
+<div class="lang-wrap">
+<div class="lang-buttons" id="languageSelector"></div>
+</div>
+</div>
 
-  <div class="lang-top">
-    <div class="lang-wrap">
-      <div class="lang-buttons" id="languageSelector"></div>
-    </div>
-  </div>
+<div class="header">
+<div class="brand" id="siteName"></div>
 
-  <div class="header">
-    <div class="brand" id="siteName"></div>
-
-    <div class="nav">
-      <button onclick="location.href='index.html'" id="navHome"></button>
-      <button onclick="location.href='categories.html'" id="navCategories"></button>
-      <button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
-      <button onclick="location.href='about.html'" id="navAbout"></button>
-      <button onclick="location.href='contact.html'" id="navContact"></button>
-    </div>
-  </div>
-
+<div class="nav">
+<button onclick="location.href='index.html'" id="navHome"></button>
+<button onclick="location.href='categories.html'" id="navCategories"></button>
+<button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
+<button onclick="location.href='about.html'" id="navAbout"></button>
+<button onclick="location.href='contact.html'" id="navContact"></button>
+</div>
+</div>
 </div>
 
 <div class="hero">
-  <div class="hero-box">
-    <h1 id="heroTitle"></h1>
-    <p id="heroSub"></p>
+<div class="hero-box">
+<h1 id="heroTitle"></h1>
+<p id="heroSub"></p>
 
-    <div class="hero-stats">
-      <div class="stat" id="stat1"></div>
-      <div class="stat" id="stat2"></div>
-      <div class="stat" id="stat3"></div>
-    </div>
-  </div>
+<div class="hero-stats">
+<div class="stat" id="stat1"></div>
+<div class="stat" id="stat2"></div>
+<div class="stat" id="stat3"></div>
+</div>
+</div>
 </div>
 
 <div class="section-title" id="featuredTitle"></div>
@@ -287,9 +290,7 @@ document.getElementById("featuredTitle").innerText = t("featured_quizzes");
 
 function buildHomeQuizzes(){
 let html = "";
-
-const quizzes = Object.entries(quizData)
-.sort((a,b)=>(a[1].homeOrder || 999) - (b[1].homeOrder || 999));
+const quizzes = Object.entries(quizData);
 
 quizzes.forEach(([mode,quiz])=>{
 if(!quiz.showOnHome) return;
@@ -297,16 +298,13 @@ if(!quiz.showOnHome) return;
 html += `
 <div class="card">
 <div class="thumb">
-<img src="${quiz.thumbnail}" alt="${t(quiz.titleKey)}">
+<img src="${quiz.thumbnail}">
 </div>
-
 <div class="quiz-title">${t(quiz.titleKey)}</div>
-
 <button class="play" onclick="location.href='quiz-template.html?mode=${mode}'">
 ${t("play")}
 </button>
-</div>
-`;
+</div>`;
 });
 
 document.getElementById("quizContainer").innerHTML = html;
@@ -315,39 +313,6 @@ document.getElementById("quizContainer").innerHTML = html;
 buildLanguageSelector("languageSelector");
 applyHomeTranslations();
 buildHomeQuizzes();
-
-/* scroll hide */
-const topUI = document.getElementById("topUI");
-
-function updateTopPadding(){
-document.body.style.paddingTop = topUI.offsetHeight + 12 + "px";
-}
-
-function hideTopUI(){
-topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`;
-}
-
-function showTopUI(){
-topUI.style.transform = "translateY(0)";
-}
-
-updateTopPadding();
-window.addEventListener("load", updateTopPadding);
-window.addEventListener("resize", updateTopPadding);
-
-let lastScroll = 0;
-
-window.addEventListener("scroll",()=>{
-let current = window.scrollY || window.pageYOffset;
-
-if(current > lastScroll && current > 80){
-hideTopUI();
-}else if(current < 10){
-showTopUI();
-}
-
-lastScroll = current <= 0 ? 0 : current;
-}, { passive:true });
 </script>
 
 </body>
