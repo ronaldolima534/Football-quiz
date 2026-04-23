@@ -292,25 +292,53 @@ transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
 transform:scale(.97);
 }
 
+/* BOTÓN VERDE CON RELIEVE */
 .green{
 background:linear-gradient(145deg,var(--green),var(--green2));
 color:#000;
-box-shadow:0 10px 24px rgba(34,197,94,.22);
+box-shadow:
+0 8px 0 #0f5f2d,
+0 14px 24px rgba(34,197,94,.25);
+transition:.15s;
 }
 
 .green:hover{
 transform:translateY(-2px);
-box-shadow:0 14px 28px rgba(34,197,94,.28);
+box-shadow:
+0 10px 0 #0f5f2d,
+0 18px 28px rgba(34,197,94,.30);
 }
 
+.green:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 #0f5f2d,
+0 8px 16px rgba(34,197,94,.2);
+}
+
+/* BOTÓN GRIS CON RELIEVE */
 .gray{
 background:#202020;
 color:#fff;
 border:1px solid var(--line);
+box-shadow:
+0 6px 0 #111,
+0 12px 20px rgba(0,0,0,.35);
+transition:.15s;
 }
 
 .gray:hover{
 transform:translateY(-2px);
+box-shadow:
+0 8px 0 #111,
+0 16px 24px rgba(0,0,0,.4);
+}
+
+.gray:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 #111,
+0 8px 16px rgba(0,0,0,.3);
 }
 
 .btn-pop{
