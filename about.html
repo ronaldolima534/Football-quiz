@@ -77,16 +77,6 @@ overflow:hidden;
 font-size:0;
 }
 
-.lang-btn:hover{
-transform:translateY(-2px);
-border-color:var(--green);
-}
-
-.lang-btn.active{
-background:linear-gradient(145deg,var(--green),var(--green2));
-border-color:transparent;
-}
-
 .header{
 padding:18px 12px;
 border-bottom:1px solid var(--line);
@@ -118,11 +108,6 @@ background:var(--card2);
 color:var(--white);
 border:1px solid #333;
 transition:.25s;
-}
-
-.nav button:hover{
-transform:translateY(-2px);
-border-color:var(--green);
 }
 
 .nav .active{
@@ -193,18 +178,6 @@ padding:30px;
 font-size:14px;
 color:#999;
 }
-
-@media(max-width:600px){
-body{padding-top:178px;}
-.brand{font-size:30px;}
-.page-title{font-size:30px;}
-.page-sub{font-size:16px;}
-.info-box h3{font-size:22px;}
-.info-box p{font-size:16px;}
-.nav{gap:8px;}
-.nav button{font-size:13px;padding:9px 12px;}
-.lang-wrap{justify-content:center;}
-}
 </style>
 </head>
 
@@ -222,7 +195,6 @@ body{padding-top:178px;}
 
     <div class="nav">
       <button onclick="location.href='index.html'" id="navHome"></button>
-      <button onclick="location.href='categories.html'" id="navCategories"></button>
       <button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
       <button class="active" id="navAbout"></button>
       <button onclick="location.href='contact.html'" id="navContact"></button>
@@ -242,12 +214,10 @@ body{padding-top:178px;}
     <h3 id="box1Title"></h3>
     <p id="box1Text"></p>
   </div>
-
   <div class="info-box">
     <h3 id="box2Title"></h3>
     <p id="box2Text"></p>
   </div>
-
   <div class="info-box">
     <h3 id="box3Title"></h3>
     <p id="box3Text"></p>
@@ -264,7 +234,6 @@ function applyAboutTranslations(){
   document.documentElement.lang = getSavedLanguage();
   document.getElementById("siteName").innerText = t("site_name");
   document.getElementById("navHome").innerText = t("nav_home");
-  document.getElementById("navCategories").innerText = t("nav_categories");
   document.getElementById("navDailyQuiz").innerText = t("nav_daily_quiz");
   document.getElementById("navAbout").innerText = t("nav_about");
   document.getElementById("navContact").innerText = t("nav_contact");
@@ -282,36 +251,19 @@ buildLanguageSelector("languageSelector");
 applyAboutTranslations();
 
 const topUI = document.getElementById("topUI");
-
-function updateTopPadding(){
-  const realHeight = topUI.offsetHeight;
-  document.body.style.paddingTop = realHeight + 12 + "px";
-}
-
-function hideTopUI(){
-  const realHeight = topUI.offsetHeight;
-  topUI.style.transform = `translateY(-${realHeight}px)`;
-}
-
-function showTopUI(){
-  topUI.style.transform = "translateY(0)";
-}
+function updateTopPadding(){ document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px"; }
+function hideTopUI(){ topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`; }
+function showTopUI(){ topUI.style.transform = "translateY(0)"; }
 
 updateTopPadding();
 window.addEventListener("load", updateTopPadding);
 window.addEventListener("resize", updateTopPadding);
 
 let lastScroll = 0;
-
 window.addEventListener("scroll", () => {
   const currentScroll = window.scrollY || window.pageYOffset;
-
-  if(currentScroll > lastScroll && currentScroll > 80){
-    hideTopUI();
-  }else if(currentScroll < 10){
-    showTopUI();
-  }
-
+  if(currentScroll > lastScroll && currentScroll > 80){ hideTopUI(); }
+  else if(currentScroll < 10){ showTopUI(); }
   lastScroll = currentScroll <= 0 ? 0 : currentScroll;
 }, { passive: true });
 </script>
