@@ -6,11 +6,7 @@
 <title>Football Quiz</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
 --card:#151515;
@@ -30,7 +26,6 @@ text-align:center;
 padding-top:158px;
 }
 
-/* TOP */
 .top-ui{
 position:fixed;
 top:0;
@@ -40,6 +35,7 @@ z-index:9999;
 background:rgba(10,10,10,.94);
 backdrop-filter:blur(8px);
 transition:.35s;
+will-change:transform;
 }
 
 .lang-top{
@@ -98,7 +94,6 @@ font-weight:900;
 cursor:pointer;
 }
 
-/* HERO */
 .hero{
 padding:36px 18px 26px;
 }
@@ -140,14 +135,12 @@ font-size:13px;
 font-weight:900;
 }
 
-/* SECTION */
 .section-title{
 margin-top:30px;
 font-size:28px;
 font-weight:900;
 }
 
-/* GRID */
 .container{
 width:94%;
 max-width:820px;
@@ -156,7 +149,6 @@ display:grid;
 gap:20px;
 }
 
-/* CARD */
 .card{
 background:linear-gradient(145deg,#141414,#1c1c1c);
 border:1px solid #2b2b2b;
@@ -183,7 +175,6 @@ font-weight:900;
 margin-bottom:14px;
 }
 
-/* BOTÓN PRO */
 .play{
 width:100%;
 padding:18px;
@@ -193,11 +184,9 @@ border:none;
 font-weight:900;
 font-size:22px;
 cursor:pointer;
-
 box-shadow:
 0 8px 0 #0f5f2d,
 0 14px 24px rgba(34,197,94,.25);
-
 transition:.15s;
 }
 
@@ -220,7 +209,6 @@ padding:30px;
 color:#999;
 font-size:14px;
 }
-
 </style>
 </head>
 
@@ -238,7 +226,6 @@ font-size:14px;
 
 <div class="nav">
 <button onclick="location.href='index.html'" id="navHome"></button>
-<button onclick="location.href='categories.html'" id="navCategories"></button>
 <button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
 <button onclick="location.href='about.html'" id="navAbout"></button>
 <button onclick="location.href='contact.html'" id="navContact"></button>
@@ -273,18 +260,14 @@ font-size:14px;
 function applyHomeTranslations(){
 document.getElementById("siteName").innerText = t("site_name");
 document.getElementById("navHome").innerText = t("nav_home");
-document.getElementById("navCategories").innerText = t("nav_categories");
 document.getElementById("navDailyQuiz").innerText = t("nav_daily_quiz");
 document.getElementById("navAbout").innerText = t("nav_about");
 document.getElementById("navContact").innerText = t("nav_contact");
-
 document.getElementById("heroTitle").innerText = t("hero_title");
 document.getElementById("heroSub").innerText = t("hero_subtitle");
-
 document.getElementById("stat1").innerText = t("hero_stat_1");
 document.getElementById("stat2").innerText = t("hero_stat_2");
 document.getElementById("stat3").innerText = t("hero_stat_3");
-
 document.getElementById("featuredTitle").innerText = t("featured_quizzes");
 }
 
@@ -294,7 +277,6 @@ const quizzes = Object.entries(quizData);
 
 quizzes.forEach(([mode,quiz])=>{
 if(!quiz.showOnHome) return;
-
 html += `
 <div class="card">
 <div class="thumb">
@@ -313,6 +295,35 @@ document.getElementById("quizContainer").innerHTML = html;
 buildLanguageSelector("languageSelector");
 applyHomeTranslations();
 buildHomeQuizzes();
+
+const topUI = document.getElementById("topUI");
+
+function updateTopPadding(){
+document.body.style.paddingTop = topUI.offsetHeight + 12 + "px";
+}
+
+function hideTopUI(){
+topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`;
+}
+
+function showTopUI(){
+topUI.style.transform = "translateY(0)";
+}
+
+updateTopPadding();
+window.addEventListener("load", updateTopPadding);
+window.addEventListener("resize", updateTopPadding);
+
+let lastScroll = 0;
+window.addEventListener("scroll",()=>{
+let current = window.scrollY || window.pageYOffset;
+if(current > lastScroll && current > 80){
+hideTopUI();
+}else if(current < 10){
+showTopUI();
+}
+lastScroll = current <= 0 ? 0 : current;
+}, { passive:true });
 </script>
 
 </body>
