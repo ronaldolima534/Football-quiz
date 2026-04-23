@@ -2,7 +2,6 @@ const translations = {
   en: {
     site_name: "Football Quiz",
     nav_home: "HOME",
-    nav_categories: "CATEGORIES",
     nav_daily_quiz: "DAILY QUIZ",
     nav_about: "ABOUT",
     nav_contact: "CONTACT",
@@ -13,17 +12,6 @@ const translations = {
     hero_stat_2: "5 EASY • 5 MEDIUM • 5 HARD",
     hero_stat_3: "RANDOM QUIZ FLOW READY",
     featured_quizzes: "Featured Quizzes",
-
-    all_quizzes_title: "Categories",
-    all_quizzes_subtitle: "Choose a category and explore quizzes",
-
-    category_players: "Players",
-    category_clubs: "Clubs",
-    category_transfers: "Transfers",
-    category_national_teams: "National Teams",
-
-    category_page_subtitle: "Quizzes in this category",
-    no_quizzes_in_category: "NO QUIZZES IN THIS CATEGORY YET",
 
     about_title: "About Football Quiz",
     about_subtitle: "A visual football quiz platform built for fans who love guessing, learning and replaying.",
@@ -40,8 +28,6 @@ const translations = {
     contact_box_1_text: "Have an idea for a new quiz? Want a new category added? Send your suggestion.",
     contact_box_2_title: "Feedback",
     contact_box_2_text: "If you find an issue or want to improve the experience, your feedback can help make Football Quiz better.",
-    contact_box_3_title: "More ways to connect",
-    contact_box_3_text: "Contact options can be expanded later with email, social links or a contact form.",
 
     play_now: "PLAY NOW",
     play: "PLAY",
@@ -75,7 +61,6 @@ const translations = {
   es: {
     site_name: "Football Quiz",
     nav_home: "INICIO",
-    nav_categories: "CATEGORÍAS",
     nav_daily_quiz: "QUIZ DIARIO",
     nav_about: "NOSOTROS",
     nav_contact: "CONTACTO",
@@ -86,17 +71,6 @@ const translations = {
     hero_stat_2: "5 FÁCIL • 5 MEDIO • 5 DIFÍCIL",
     hero_stat_3: "FLUJO ALEATORIO LISTO",
     featured_quizzes: "Quizzes Destacados",
-
-    all_quizzes_title: "Categorías",
-    all_quizzes_subtitle: "Elige una categoría y explora quizzes",
-
-    category_players: "Jugadores",
-    category_clubs: "Clubes",
-    category_transfers: "Transferencias",
-    category_national_teams: "Selecciones",
-
-    category_page_subtitle: "Quizzes en esta categoría",
-    no_quizzes_in_category: "AÚN NO HAY QUIZZES EN ESTA CATEGORÍA",
 
     about_title: "Sobre Football Quiz",
     about_subtitle: "Una plataforma de quizzes visuales de fútbol creada para aficionados que disfrutan adivinar, aprender y volver a jugar.",
@@ -113,8 +87,6 @@ const translations = {
     contact_box_1_text: "¿Tienes una idea para un nuevo quiz? ¿Quieres una nueva categoría? Envía tu sugerencia.",
     contact_box_2_title: "Feedback",
     contact_box_2_text: "Si encuentras un problema o quieres mejorar la experiencia, tus comentarios pueden ayudar a hacer Football Quiz mejor.",
-    contact_box_3_title: "Más formas de conectar",
-    contact_box_3_text: "Las opciones de contacto pueden ampliarse más adelante con email, redes sociales o un formulario.",
 
     play_now: "JUGAR AHORA",
     play: "JUGAR",
@@ -148,7 +120,6 @@ const translations = {
   pt: {
     site_name: "Football Quiz",
     nav_home: "INÍCIO",
-    nav_categories: "CATEGORIAS",
     nav_daily_quiz: "QUIZ DIÁRIO",
     nav_about: "SOBRE",
     nav_contact: "CONTATO",
@@ -159,17 +130,6 @@ const translations = {
     hero_stat_2: "5 FÁCIL • 5 MÉDIO • 5 DIFÍCIL",
     hero_stat_3: "FLUXO ALEATÓRIO PRONTO",
     featured_quizzes: "Quizzes em Destaque",
-
-    all_quizzes_title: "Categorias",
-    all_quizzes_subtitle: "Escolha uma categoria e explore quizzes",
-
-    category_players: "Jogadores",
-    category_clubs: "Clubes",
-    category_transfers: "Transferências",
-    category_national_teams: "Seleções",
-
-    category_page_subtitle: "Quizzes nesta categoria",
-    no_quizzes_in_category: "AINDA NÃO HÁ QUIZZES NESTA CATEGORIA",
 
     about_title: "Sobre o Football Quiz",
     about_subtitle: "Uma plataforma de quizzes visuais de futebol criada para fãs que gostam de adivinhar, aprender e jogar novamente.",
@@ -186,8 +146,6 @@ const translations = {
     contact_box_1_text: "Tem uma ideia para um novo quiz? Quer uma nova categoria? Envie sua sugestão.",
     contact_box_2_title: "Feedback",
     contact_box_2_text: "Se encontrar um problema ou quiser melhorar a experiência, seu feedback pode ajudar a tornar o Football Quiz melhor.",
-    contact_box_3_title: "Mais formas de conectar",
-    contact_box_3_text: "As opções de contato podem ser expandidas depois com email, redes sociais ou formulário.",
 
     play_now: "JOGAR AGORA",
     play: "JOGAR",
@@ -221,7 +179,6 @@ const translations = {
   fr: {
     site_name: "Football Quiz",
     nav_home: "ACCUEIL",
-    nav_categories: "CATÉGORIES",
     nav_daily_quiz: "QUIZ DU JOUR",
     nav_about: "À PROPOS",
     nav_contact: "CONTACT",
@@ -232,17 +189,6 @@ const translations = {
     hero_stat_2: "5 FACILE • 5 MOYEN • 5 DIFFICILE",
     hero_stat_3: "MODE ALÉATOIRE PRÊT",
     featured_quizzes: "Quiz en Vedette",
-
-    all_quizzes_title: "Catégories",
-    all_quizzes_subtitle: "Choisissez une catégorie et explorez les quiz",
-
-    category_players: "Joueurs",
-    category_clubs: "Clubs",
-    category_transfers: "Transferts",
-    category_national_teams: "Équipes Nationales",
-
-    category_page_subtitle: "Quiz dans cette catégorie",
-    no_quizzes_in_category: "AUCUN QUIZ DANS CETTE CATÉGORIE POUR LE MOMENT",
 
     about_title: "À propos de Football Quiz",
     about_subtitle: "Une plateforme de quiz visuels de football conçue pour les fans qui aiment deviner, apprendre et rejouer.",
@@ -259,8 +205,6 @@ const translations = {
     contact_box_1_text: "Vous avez une idée pour un nouveau quiz ? Vous voulez une nouvelle catégorie ? Envoyez votre suggestion.",
     contact_box_2_title: "Retour",
     contact_box_2_text: "Si vous trouvez un problème ou souhaitez améliorer l'expérience, vos retours peuvent aider à rendre Football Quiz meilleur.",
-    contact_box_3_title: "Plus de façons de nous joindre",
-    contact_box_3_text: "Les options de contact pourront être développées plus tard avec email, réseaux sociaux ou formulaire.",
 
     play_now: "JOUER",
     play: "JOUER",
@@ -294,7 +238,6 @@ const translations = {
   it: {
     site_name: "Football Quiz",
     nav_home: "HOME",
-    nav_categories: "CATEGORIE",
     nav_daily_quiz: "QUIZ DEL GIORNO",
     nav_about: "CHI SIAMO",
     nav_contact: "CONTATTO",
@@ -305,17 +248,6 @@ const translations = {
     hero_stat_2: "5 FACILE • 5 MEDIO • 5 DIFFICILE",
     hero_stat_3: "FLUSSO CASUALE PRONTO",
     featured_quizzes: "Quiz in Evidenza",
-
-    all_quizzes_title: "Categorie",
-    all_quizzes_subtitle: "Scegli una categoria ed esplora i quiz",
-
-    category_players: "Giocatori",
-    category_clubs: "Club",
-    category_transfers: "Trasferimenti",
-    category_national_teams: "Nazionali",
-
-    category_page_subtitle: "Quiz in questa categoria",
-    no_quizzes_in_category: "NESSUN QUIZ IN QUESTA CATEGORIA PER ORA",
 
     about_title: "Informazioni su Football Quiz",
     about_subtitle: "Una piattaforma di quiz calcistici visivi creata per i fan che amano indovinare, imparare e rigiocare.",
@@ -332,8 +264,6 @@ const translations = {
     contact_box_1_text: "Hai un'idea per un nuovo quiz? Vuoi una nuova categoria? Invia il tuo suggerimento.",
     contact_box_2_title: "Feedback",
     contact_box_2_text: "Se trovi un problema o vuoi migliorare l'esperienza, il tuo feedback può aiutare a rendere Football Quiz migliore.",
-    contact_box_3_title: "Altri modi per connettersi",
-    contact_box_3_text: "Le opzioni di contatto potranno essere ampliate più avanti con email, social o modulo.",
 
     play_now: "GIOCA ORA",
     play: "GIOCA",
