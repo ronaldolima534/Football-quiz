@@ -14,8 +14,16 @@ const translations = {
     hero_stat_3: "RANDOM QUIZ FLOW READY",
     featured_quizzes: "Featured Quizzes",
 
-    all_quizzes_title: "All Quizzes",
-    all_quizzes_subtitle: "Choose a quiz and start playing",
+    all_quizzes_title: "Categories",
+    all_quizzes_subtitle: "Choose a category and explore quizzes",
+
+    category_players: "Players",
+    category_clubs: "Clubs",
+    category_transfers: "Transfers",
+    category_national_teams: "National Teams",
+
+    category_page_subtitle: "Quizzes in this category",
+    no_quizzes_in_category: "NO QUIZZES IN THIS CATEGORY YET",
 
     play_now: "PLAY NOW",
     play: "PLAY",
@@ -61,8 +69,16 @@ const translations = {
     hero_stat_3: "FLUJO ALEATORIO LISTO",
     featured_quizzes: "Quizzes Destacados",
 
-    all_quizzes_title: "Todos los Quizzes",
-    all_quizzes_subtitle: "Elige un quiz y empieza a jugar",
+    all_quizzes_title: "Categorías",
+    all_quizzes_subtitle: "Elige una categoría y explora quizzes",
+
+    category_players: "Jugadores",
+    category_clubs: "Clubes",
+    category_transfers: "Transferencias",
+    category_national_teams: "Selecciones",
+
+    category_page_subtitle: "Quizzes en esta categoría",
+    no_quizzes_in_category: "AÚN NO HAY QUIZZES EN ESTA CATEGORÍA",
 
     play_now: "JUGAR AHORA",
     play: "JUGAR",
@@ -108,8 +124,16 @@ const translations = {
     hero_stat_3: "FLUXO ALEATÓRIO PRONTO",
     featured_quizzes: "Quizzes em Destaque",
 
-    all_quizzes_title: "Todos os Quizzes",
-    all_quizzes_subtitle: "Escolha um quiz e comece a jogar",
+    all_quizzes_title: "Categorias",
+    all_quizzes_subtitle: "Escolha uma categoria e explore quizzes",
+
+    category_players: "Jogadores",
+    category_clubs: "Clubes",
+    category_transfers: "Transferências",
+    category_national_teams: "Seleções",
+
+    category_page_subtitle: "Quizzes nesta categoria",
+    no_quizzes_in_category: "AINDA NÃO HÁ QUIZZES NESTA CATEGORIA",
 
     play_now: "JOGAR AGORA",
     play: "JOGAR",
@@ -155,8 +179,16 @@ const translations = {
     hero_stat_3: "MODE ALÉATOIRE PRÊT",
     featured_quizzes: "Quiz en Vedette",
 
-    all_quizzes_title: "Tous les Quiz",
-    all_quizzes_subtitle: "Choisissez un quiz et commencez à jouer",
+    all_quizzes_title: "Catégories",
+    all_quizzes_subtitle: "Choisissez une catégorie et explorez les quiz",
+
+    category_players: "Joueurs",
+    category_clubs: "Clubs",
+    category_transfers: "Transferts",
+    category_national_teams: "Équipes Nationales",
+
+    category_page_subtitle: "Quiz dans cette catégorie",
+    no_quizzes_in_category: "AUCUN QUIZ DANS CETTE CATÉGORIE POUR LE MOMENT",
 
     play_now: "JOUER",
     play: "JOUER",
@@ -202,8 +234,16 @@ const translations = {
     hero_stat_3: "FLUSSO CASUALE PRONTO",
     featured_quizzes: "Quiz in Evidenza",
 
-    all_quizzes_title: "Tutti i Quiz",
-    all_quizzes_subtitle: "Scegli un quiz e inizia a giocare",
+    all_quizzes_title: "Categorie",
+    all_quizzes_subtitle: "Scegli una categoria ed esplora i quiz",
+
+    category_players: "Giocatori",
+    category_clubs: "Club",
+    category_transfers: "Trasferimenti",
+    category_national_teams: "Nazionali",
+
+    category_page_subtitle: "Quiz in questa categoria",
+    no_quizzes_in_category: "NESSUN QUIZ IN QUESTA CATEGORIA PER ORA",
 
     play_now: "GIOCA ORA",
     play: "GIOCA",
