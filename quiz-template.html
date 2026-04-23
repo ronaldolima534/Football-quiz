@@ -6,11 +6,7 @@
 <title>Football Quiz</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
 --card:#151515;
@@ -27,7 +23,6 @@ text-align:center;
 padding-top:170px;
 }
 
-/* TOP UI */
 .top-ui{
 position:fixed;
 top:0;
@@ -118,7 +113,6 @@ color:#fff;
 border:1px solid var(--line);
 }
 
-/* TITLE */
 .title-wrap{
 padding:24px 14px 14px;
 }
@@ -136,7 +130,6 @@ font-weight:900;
 box-shadow:0 14px 30px rgba(0,0,0,.35);
 }
 
-/* MAIN */
 .container{
 width:94%;
 max-width:760px;
@@ -214,57 +207,15 @@ transform:translateX(0) scale(1);
 transition:none;
 }
 
-.img-out-answer{
-animation:imgOutAnswer .22s ease forwards;
-}
+.img-out-answer{animation:imgOutAnswer .22s ease forwards;}
+.img-in-answer{animation:imgInAnswer .42s cubic-bezier(.22,1,.36,1) forwards;}
+.img-out-next{animation:imgOutNext .22s ease forwards;}
+.img-in-next{animation:imgInNext .46s cubic-bezier(.22,1,.36,1) forwards;}
 
-.img-in-answer{
-animation:imgInAnswer .42s cubic-bezier(.22,1,.36,1) forwards;
-}
-
-.img-out-next{
-animation:imgOutNext .22s ease forwards;
-}
-
-.img-in-next{
-animation:imgInNext .46s cubic-bezier(.22,1,.36,1) forwards;
-}
-
-@keyframes imgOutAnswer{
-to{
-opacity:0;
-transform:scale(.95);
-}
-}
-
-@keyframes imgInAnswer{
-0%{
-opacity:0;
-transform:scale(1.08);
-}
-100%{
-opacity:1;
-transform:scale(1);
-}
-}
-
-@keyframes imgOutNext{
-to{
-opacity:0;
-transform:translateX(-36px) scale(.97);
-}
-}
-
-@keyframes imgInNext{
-0%{
-opacity:0;
-transform:translateX(44px) scale(.98);
-}
-100%{
-opacity:1;
-transform:translateX(0) scale(1);
-}
-}
+@keyframes imgOutAnswer{to{opacity:0;transform:scale(.95);}}
+@keyframes imgInAnswer{0%{opacity:0;transform:scale(1.08);}100%{opacity:1;transform:scale(1);}}
+@keyframes imgOutNext{to{opacity:0;transform:translateX(-36px) scale(.97);}}
+@keyframes imgInNext{0%{opacity:0;transform:translateX(44px) scale(.98);}100%{opacity:1;transform:translateX(0) scale(1);}}
 
 .counter{
 margin-top:18px;
@@ -292,7 +243,6 @@ transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
 transform:scale(.97);
 }
 
-/* BOTÓN VERDE CON RELIEVE */
 .green{
 background:linear-gradient(145deg,var(--green),var(--green2));
 color:#000;
@@ -316,7 +266,6 @@ box-shadow:
 0 8px 16px rgba(34,197,94,.2);
 }
 
-/* BOTÓN GRIS CON RELIEVE */
 .gray{
 background:#202020;
 color:#fff;
@@ -341,25 +290,10 @@ box-shadow:
 0 8px 16px rgba(0,0,0,.3);
 }
 
-.btn-pop{
-animation:btnPop .28s ease;
-}
-
-.btn-glow{
-animation:btnGlow .4s ease;
-}
-
-@keyframes btnPop{
-0%{transform:scale(.92);}
-70%{transform:scale(1.06);}
-100%{transform:scale(1);}
-}
-
-@keyframes btnGlow{
-0%{filter:brightness(1);}
-50%{filter:brightness(1.15);}
-100%{filter:brightness(1);}
-}
+.btn-pop{animation:btnPop .28s ease;}
+.btn-glow{animation:btnGlow .4s ease;}
+@keyframes btnPop{0%{transform:scale(.92);}70%{transform:scale(1.06);}100%{transform:scale(1);}}
+@keyframes btnGlow{0%{filter:brightness(1);}50%{filter:brightness(1.15);}100%{filter:brightness(1);}}
 
 .final-box{
 display:none;
@@ -372,14 +306,8 @@ animation:finalAppear .35s ease;
 }
 
 @keyframes finalAppear{
-from{
-opacity:0;
-transform:translateY(18px) scale(.98);
-}
-to{
-opacity:1;
-transform:translateY(0) scale(1);
-}
+from{opacity:0;transform:translateY(18px) scale(.98);}
+to{opacity:1;transform:translateY(0) scale(1);}
 }
 
 .final-box h2{
@@ -419,33 +347,6 @@ padding:28px;
 font-size:14px;
 color:#888;
 }
-
-@media(max-width:600px){
-body{
-padding-top:190px;
-}
-
-.brand{
-font-size:28px;
-}
-
-.title-bar{
-font-size:22px;
-}
-
-.counter{
-font-size:22px;
-}
-
-.btn{
-font-size:19px;
-padding:16px;
-}
-
-.lang-wrap{
-justify-content:center;
-}
-}
 </style>
 </head>
 
@@ -463,7 +364,6 @@ justify-content:center;
 
     <div class="nav">
       <button onclick="location.href='index.html'" id="navHome"></button>
-      <button onclick="location.href='categories.html'" id="navCategories"></button>
       <button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
       <button onclick="location.href='about.html'" id="navAbout"></button>
       <button onclick="location.href='contact.html'" id="navContact"></button>
@@ -538,7 +438,6 @@ function applyQuizTranslations(){
   document.documentElement.lang = getSavedLanguage();
   document.getElementById("siteName").innerText = t("site_name");
   document.getElementById("navHome").innerText = t("nav_home");
-  document.getElementById("navCategories").innerText = t("nav_categories");
   document.getElementById("navDailyQuiz").innerText = t("nav_daily_quiz");
   document.getElementById("navAbout").innerText = t("nav_about");
   document.getElementById("navContact").innerText = t("nav_contact");
@@ -564,9 +463,7 @@ function shuffleArray(array){
 
 function pickRandomNumbers(total, count){
   const numbers = [];
-  for(let i = 1; i <= total; i++){
-    numbers.push(i);
-  }
+  for(let i = 1; i <= total; i++) numbers.push(i);
   return shuffleArray(numbers).slice(0, count);
 }
 
@@ -577,33 +474,17 @@ function buildQuestionSet(){
   selectedQuestions = [...easySet, ...mediumSet, ...hardSet];
 }
 
-function getCurrentQuestion(){
-  return selectedQuestions[current - 1];
-}
-
-function getLevel(){
-  return getCurrentQuestion().level;
-}
-
-function getNumber(){
-  return getCurrentQuestion().number;
-}
+function getCurrentQuestion(){ return selectedQuestions[current - 1]; }
+function getLevel(){ return getCurrentQuestion().level; }
+function getNumber(){ return getCurrentQuestion().number; }
 
 function updateBadge(){
   const badge = document.getElementById("difficulty");
   const level = getLevel();
   badge.className = "badge";
-
-  if(level === "easy"){
-    badge.innerText = t("easy");
-    badge.classList.add("easy");
-  }else if(level === "medium"){
-    badge.innerText = t("medium");
-    badge.classList.add("medium");
-  }else{
-    badge.innerText = t("hard");
-    badge.classList.add("hard");
-  }
+  if(level === "easy"){ badge.innerText = t("easy"); badge.classList.add("easy"); }
+  else if(level === "medium"){ badge.innerText = t("medium"); badge.classList.add("medium"); }
+  else { badge.innerText = t("hard"); badge.classList.add("hard"); }
 }
 
 function updateProgress(){
@@ -633,17 +514,14 @@ function preloadImage(src){
 }
 
 function preloadCurrentPair(){
-  const level = getLevel();
-  const number = getNumber();
-  preloadImage(`${quiz.folder}/${level}/${quiz.questionPrefix}${number}.png`);
-  preloadImage(`${quiz.folder}/${level}/${quiz.answerPrefix}${number}.png`);
+  preloadImage(`${quiz.folder}/${getLevel()}/${quiz.questionPrefix}${getNumber()}.png`);
+  preloadImage(`${quiz.folder}/${getLevel()}/${quiz.answerPrefix}${getNumber()}.png`);
 }
 
 function preloadNextQuestion(){
   if(current >= 15) return;
   const nextQuestion = selectedQuestions[current];
   if(!nextQuestion) return;
-
   preloadImage(`${quiz.folder}/${nextQuestion.level}/${quiz.questionPrefix}${nextQuestion.number}.png`);
   preloadImage(`${quiz.folder}/${nextQuestion.level}/${quiz.answerPrefix}${nextQuestion.number}.png`);
 }
@@ -658,27 +536,19 @@ function animateViewerFlash(){
 function swapImage(src, type){
   const img = document.getElementById("quizImage");
   const preload = new Image();
-
   preload.onload = function(){
     img.className = type === "answer" ? "img-out-answer" : "img-out-next";
-
     setTimeout(() => {
       img.src = src;
       img.className = type === "answer" ? "img-in-answer" : "img-in-next";
       animateViewerFlash();
     }, 170);
   };
-
   preload.src = src;
 }
 
-function loadQuestion(){
-  swapImage(`${quiz.folder}/${getLevel()}/${quiz.questionPrefix}${getNumber()}.png`, "next");
-}
-
-function loadAnswer(){
-  swapImage(`${quiz.folder}/${getLevel()}/${quiz.answerPrefix}${getNumber()}.png`, "answer");
-}
+function loadQuestion(){ swapImage(`${quiz.folder}/${getLevel()}/${quiz.questionPrefix}${getNumber()}.png`, "next"); }
+function loadAnswer(){ swapImage(`${quiz.folder}/${getLevel()}/${quiz.answerPrefix}${getNumber()}.png`, "answer"); }
 
 function mainAction(){
   if(!showing){
@@ -687,14 +557,9 @@ function mainAction(){
     updateMainButton();
     preloadNextQuestion();
   }else{
-    if(current === 15){
-      endQuiz();
-      return;
-    }
-
+    if(current === 15){ endQuiz(); return; }
     current++;
     showing = false;
-
     updateBadge();
     updateProgress();
     updateCounter();
@@ -728,38 +593,20 @@ preloadNextQuestion();
 loadQuestion();
 updateMainButton();
 
-/* ocultar bloque superior */
 const topUI = document.getElementById("topUI");
-
-function updateTopPadding(){
-  const realHeight = topUI.offsetHeight;
-  document.body.style.paddingTop = realHeight + 12 + "px";
-}
-
-function hideTopUI(){
-  const realHeight = topUI.offsetHeight;
-  topUI.style.transform = `translateY(-${realHeight}px)`;
-}
-
-function showTopUI(){
-  topUI.style.transform = "translateY(0)";
-}
+function updateTopPadding(){ document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px"; }
+function hideTopUI(){ topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`; }
+function showTopUI(){ topUI.style.transform = "translateY(0)"; }
 
 updateTopPadding();
 window.addEventListener("load", updateTopPadding);
 window.addEventListener("resize", updateTopPadding);
 
 let lastScroll = 0;
-
 window.addEventListener("scroll", () => {
   const currentScroll = window.scrollY || window.pageYOffset;
-
-  if(currentScroll > lastScroll && currentScroll > 80){
-    hideTopUI();
-  }else if(currentScroll < 10){
-    showTopUI();
-  }
-
+  if(currentScroll > lastScroll && currentScroll > 80){ hideTopUI(); }
+  else if(currentScroll < 10){ showTopUI(); }
   lastScroll = currentScroll <= 0 ? 0 : currentScroll;
 }, { passive: true });
 </script>
