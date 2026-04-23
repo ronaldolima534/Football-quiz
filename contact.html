@@ -188,6 +188,14 @@ line-height:1.7;
 color:#d7d7d7;
 }
 
+.email-link{
+font-size:20px;
+font-weight:900;
+color:#22c55e;
+text-decoration:none;
+word-break:break-word;
+}
+
 .footer{
 padding:30px;
 font-size:14px;
@@ -249,8 +257,12 @@ body{padding-top:178px;}
   </div>
 
   <div class="info-box">
-    <h3 id="box3Title"></h3>
-    <p id="box3Text"></p>
+    <h3>Contact Email</h3>
+    <p>
+      <a class="email-link" href="mailto:ronaldolimaymanta5@gmail.com">
+        ronaldolimaymanta5@gmail.com
+      </a>
+    </p>
   </div>
 </div>
 
@@ -274,8 +286,6 @@ function applyContactTranslations(){
   document.getElementById("box1Text").innerText = t("contact_box_1_text");
   document.getElementById("box2Title").innerText = t("contact_box_2_title");
   document.getElementById("box2Text").innerText = t("contact_box_2_text");
-  document.getElementById("box3Title").innerText = t("contact_box_3_title");
-  document.getElementById("box3Text").innerText = t("contact_box_3_text");
 }
 
 buildLanguageSelector("languageSelector");
