@@ -9,8 +9,6 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
---card:#151515;
---card2:#1b1b1b;
 --line:#2a2a2a;
 --green:#22c55e;
 --green2:#15803d;
@@ -69,7 +67,6 @@ border-radius:12px;
 cursor:pointer;
 background:#1d1d1d;
 border:1px solid #333;
-transition:.2s;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -105,10 +102,9 @@ font-weight:900;
 border:none;
 border-radius:14px;
 cursor:pointer;
-background:var(--card2);
-color:var(--white);
+background:#1b1b1b;
+color:white;
 border:1px solid #333;
-transition:.25s;
 }
 
 .nav .active{
@@ -151,7 +147,6 @@ margin:auto;
 padding-bottom:60px;
 }
 
-/* PREGUNTA */
 .question-text{
 background:linear-gradient(145deg,#141414,#1c1c1c);
 border:1px solid var(--line);
@@ -176,13 +171,28 @@ align-items:center;
 overflow:hidden;
 box-shadow:0 16px 34px rgba(0,0,0,.35);
 margin-bottom:18px;
+position:relative;
 }
 
 .viewer img{
 max-width:100%;
 max-height:100%;
 object-fit:contain;
-display:block;
+display:none;
+}
+
+.placeholder{
+position:absolute;
+inset:16px;
+border:2px dashed #333;
+border-radius:22px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#777;
+font-size:20px;
+font-weight:900;
+padding:20px;
 }
 
 .options{
@@ -215,11 +225,6 @@ border-color:transparent;
 background:linear-gradient(145deg,#ef4444,var(--red));
 color:white;
 border-color:transparent;
-}
-
-.option-btn.locked{
-cursor:default;
-transform:none;
 }
 
 .status-box{
@@ -286,5 +291,227 @@ body{padding-top:178px;}
 
 <div class="page-hero">
   <div class="page-hero-box">
-    <div class="page-title" id="pageTitle">Daily Quiz</div>
-    <div class="page-sub" id="pageSub">One question. One chance. Come back tomorrow for a
+    <div class="page-title">Daily Quiz</div>
+    <div class="page-sub">One question. One chance. Come back tomorrow for a new challenge.</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="question-text" id="questionText">Loading question...</div>
+
+  <div class="viewer">
+    <div class="placeholder" id="imagePlaceholder">
+      Image will appear here when uploaded
+    </div>
+    <img id="dailyImage" src="" alt="Daily Quiz Image">
+  </div>
+
+  <div class="options" id="optionsContainer"></div>
+
+  <div class="status-box" id="statusBox">
+    <div class="status-title" id="statusTitle"></div>
+    <div class="status-text" id="statusText"></div>
+  </div>
+
+</div>
+
+<div class="footer">© Football Quiz</div>
+
+<script src="translations.js"></script>
+<script src="language.js"></script>
+<script src="daily-quiz-data.js"></script>
+
+<script>
+function tx(key, fallback){
+  try{
+    const value = t(key);
+    return value && value !== key ? value : fallback;
+  }catch{
+    return fallback;
+  }
+}
+
+function applyDailyTranslations(){
+  document.documentElement.lang = getSavedLanguage();
+  document.getElementById("siteName").innerText = tx("site_name", "Football Quiz");
+  document.getElementById("navHome").innerText = tx("nav_home", "HOME");
+  document.getElementById("navDailyQuiz").innerText = tx("nav_daily_quiz", "DAILY QUIZ");
+  document.getElementById("navAbout").innerText = tx("nav_about", "ABOUT");
+  document.getElementById("navContact").innerText = tx("nav_contact", "CONTACT");
+}
+
+function getDailyIndex(){
+  if(typeof dailyQuizData === "undefined" || dailyQuizData.length === 0) return 0;
+
+  const anchor = new Date(2026, 0, 1);
+  const today = new Date();
+  const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const diffDays = Math.floor((todayMidnight - anchor) / 86400000);
+
+  return ((diffDays % dailyQuizData.length) + dailyQuizData.length) % dailyQuizData.length;
+}
+
+function getTodayKey(){
+  const now = new Date();
+  return `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+}
+
+function getSavedAnswerKey(){
+  return "footballQuizDailyAnswered_" + getTodayKey();
+}
+
+function renderImage(src){
+  const img = document.getElementById("dailyImage");
+  const placeholder = document.getElementById("imagePlaceholder");
+
+  img.style.display = "none";
+  placeholder.style.display = "flex";
+
+  img.onload = function(){
+    placeholder.style.display = "none";
+    img.style.display = "block";
+  };
+
+  img.onerror = function(){
+    img.style.display = "none";
+    placeholder.style.display = "flex";
+  };
+
+  img.src = src;
+}
+
+function renderDailyQuiz(){
+  if(typeof dailyQuizData === "undefined" || dailyQuizData.length === 0){
+    document.getElementById("questionText").innerText = "Daily quiz data not found.";
+    document.getElementById("optionsContainer").innerHTML = "";
+    return;
+  }
+
+  const index = getDailyIndex();
+  const question = dailyQuizData[index];
+
+  document.getElementById("questionText").innerText = question.question;
+
+  renderImage(question.image);
+
+  let html = "";
+
+  question.options.forEach((option, i) => {
+    html += `
+      <button class="option-btn" id="option-${i}" onclick="selectOption(${i})">
+        ${option}
+      </button>
+    `;
+  });
+
+  document.getElementById("optionsContainer").innerHTML = html;
+
+  const answered = localStorage.getItem(getSavedAnswerKey());
+
+  if(answered !== null){
+    revealStoredResult(parseInt(answered, 10));
+  }
+}
+
+function lockOptions(){
+  document.querySelectorAll(".option-btn").forEach(btn => {
+    btn.disabled = true;
+  });
+}
+
+function showStatus(correct, alreadyPlayed){
+  const statusBox = document.getElementById("statusBox");
+  const statusTitle = document.getElementById("statusTitle");
+  const statusText = document.getElementById("statusText");
+
+  statusBox.style.display = "block";
+
+  if(alreadyPlayed){
+    statusTitle.innerText = "Today's quiz already played";
+    statusText.innerText = "Come back tomorrow for a new daily question.";
+    return;
+  }
+
+  if(correct){
+    statusTitle.innerText = "Correct!";
+    statusText.innerText = "Great choice. Come back tomorrow for a new daily question.";
+  }else{
+    statusTitle.innerText = "Not this time";
+    statusText.innerText = "The correct answer is highlighted in green. Come back tomorrow for a new daily question.";
+  }
+}
+
+function revealStoredResult(selectedIndex){
+  const question = dailyQuizData[getDailyIndex()];
+
+  lockOptions();
+
+  document.getElementById(`option-${question.correct}`).classList.add("correct");
+
+  if(selectedIndex !== question.correct){
+    document.getElementById(`option-${selectedIndex}`).classList.add("wrong");
+  }
+
+  showStatus(selectedIndex === question.correct, true);
+}
+
+function selectOption(selectedIndex){
+  const answerKey = getSavedAnswerKey();
+
+  if(localStorage.getItem(answerKey) !== null) return;
+
+  localStorage.setItem(answerKey, String(selectedIndex));
+
+  const question = dailyQuizData[getDailyIndex()];
+
+  lockOptions();
+
+  document.getElementById(`option-${question.correct}`).classList.add("correct");
+
+  if(selectedIndex !== question.correct){
+    document.getElementById(`option-${selectedIndex}`).classList.add("wrong");
+  }
+
+  showStatus(selectedIndex === question.correct, false);
+}
+
+buildLanguageSelector("languageSelector");
+applyDailyTranslations();
+renderDailyQuiz();
+
+const topUI = document.getElementById("topUI");
+
+function updateTopPadding(){
+  document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px";
+}
+
+function hideTopUI(){
+  topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`;
+}
+
+function showTopUI(){
+  topUI.style.transform = "translateY(0)";
+}
+
+updateTopPadding();
+window.addEventListener("load", updateTopPadding);
+window.addEventListener("resize", updateTopPadding);
+
+let lastScroll = 0;
+
+window.addEventListener("scroll", () => {
+  const currentScroll = window.scrollY || window.pageYOffset;
+
+  if(currentScroll > lastScroll && currentScroll > 80){
+    hideTopUI();
+  }else if(currentScroll < 10){
+    showTopUI();
+  }
+
+  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+}, { passive: true });
+</script>
+
+</body>
+</html>
