@@ -151,6 +151,19 @@ margin:auto;
 padding-bottom:60px;
 }
 
+/* PREGUNTA */
+.question-text{
+background:linear-gradient(145deg,#141414,#1c1c1c);
+border:1px solid var(--line);
+border-radius:24px;
+padding:20px;
+margin-bottom:18px;
+font-size:24px;
+font-weight:900;
+line-height:1.35;
+box-shadow:0 12px 28px rgba(0,0,0,.35);
+}
+
 .viewer{
 background:#151515;
 border:1px solid var(--line);
@@ -235,6 +248,18 @@ padding:30px;
 font-size:14px;
 color:#999;
 }
+
+@media(max-width:600px){
+body{padding-top:178px;}
+.brand{font-size:30px;}
+.page-title{font-size:30px;}
+.page-sub{font-size:16px;}
+.question-text{font-size:20px;padding:18px;}
+.option-btn{font-size:18px;padding:16px;}
+.nav{gap:8px;}
+.nav button{font-size:13px;padding:9px 12px;}
+.lang-wrap{justify-content:center;}
+}
 </style>
 </head>
 
@@ -262,179 +287,4 @@ color:#999;
 <div class="page-hero">
   <div class="page-hero-box">
     <div class="page-title" id="pageTitle">Daily Quiz</div>
-    <div class="page-sub" id="pageSub">One question. One chance. Come back tomorrow for a new challenge.</div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="viewer">
-    <img id="dailyImage" src="" alt="Daily Quiz Image">
-  </div>
-
-  <div class="options" id="optionsContainer"></div>
-
-  <div class="status-box" id="statusBox">
-    <div class="status-title" id="statusTitle"></div>
-    <div class="status-text" id="statusText"></div>
-  </div>
-</div>
-
-<div class="footer">© Football Quiz</div>
-
-<script src="translations.js"></script>
-<script src="language.js"></script>
-<script src="daily-quiz-data.js"></script>
-
-<script>
-function tx(key, fallback){
-  try{
-    const value = t(key);
-    return value && value !== key ? value : fallback;
-  }catch{
-    return fallback;
-  }
-}
-
-function applyDailyTranslations(){
-  document.documentElement.lang = getSavedLanguage();
-  document.getElementById("siteName").innerText = tx("site_name", "Football Quiz");
-  document.getElementById("navHome").innerText = tx("nav_home", "HOME");
-  document.getElementById("navDailyQuiz").innerText = tx("nav_daily_quiz", "DAILY QUIZ");
-  document.getElementById("navAbout").innerText = tx("nav_about", "ABOUT");
-  document.getElementById("navContact").innerText = tx("nav_contact", "CONTACT");
-}
-
-function getTodayKey(){
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, "0");
-  const d = String(now.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
-}
-
-function getDailyIndex(){
-  const anchor = new Date(2026, 0, 1);
-  const today = new Date();
-  const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  const diffDays = Math.floor((todayMidnight - anchor) / 86400000);
-  const length = dailyQuizData.length;
-  return ((diffDays % length) + length) % length;
-}
-
-function getSavedAnswerKey(){
-  return "footballQuizDailyAnswered_" + getTodayKey();
-}
-
-function renderDailyQuiz(){
-  if(!dailyQuizData || dailyQuizData.length === 0){
-    document.getElementById("optionsContainer").innerHTML = "";
-    document.getElementById("statusBox").style.display = "block";
-    document.getElementById("statusTitle").innerText = "No Daily Quiz Yet";
-    document.getElementById("statusText").innerText = "Add questions to daily-quiz-data.js to display the daily quiz.";
-    return;
-  }
-
-  const index = getDailyIndex();
-  const question = dailyQuizData[index];
-  const answered = localStorage.getItem(getSavedAnswerKey());
-
-  document.getElementById("dailyImage").src = question.image;
-
-  const container = document.getElementById("optionsContainer");
-  let html = "";
-  question.options.forEach((option, i) => {
-    html += `<button class="option-btn" id="option-${i}" onclick="selectOption(${i})">${option}</button>`;
-  });
-  container.innerHTML = html;
-
-  if(answered !== null){
-    revealStoredResult(parseInt(answered, 10));
-  }
-}
-
-function lockOptions(){
-  document.querySelectorAll(".option-btn").forEach(btn => {
-    btn.classList.add("locked");
-    btn.disabled = true;
-  });
-}
-
-function showStatus(correct, alreadyPlayed){
-  const statusBox = document.getElementById("statusBox");
-  const statusTitle = document.getElementById("statusTitle");
-  const statusText = document.getElementById("statusText");
-  statusBox.style.display = "block";
-
-  if(alreadyPlayed){
-    statusTitle.innerText = "Today's quiz already played";
-    statusText.innerText = "Come back tomorrow for a new daily question.";
-    return;
-  }
-
-  if(correct){
-    statusTitle.innerText = "Correct!";
-    statusText.innerText = "Great choice. Come back tomorrow for a new daily question.";
-  }else{
-    statusTitle.innerText = "Not this time";
-    statusText.innerText = "The correct answer is highlighted in green. Come back tomorrow for a new daily question.";
-  }
-}
-
-function revealStoredResult(selectedIndex){
-  const index = getDailyIndex();
-  const question = dailyQuizData[index];
-  lockOptions();
-  const correctBtn = document.getElementById(`option-${question.correct}`);
-  if(correctBtn) correctBtn.classList.add("correct");
-  if(selectedIndex !== question.correct){
-    const wrongBtn = document.getElementById(`option-${selectedIndex}`);
-    if(wrongBtn) wrongBtn.classList.add("wrong");
-  }
-  showStatus(selectedIndex === question.correct, true);
-}
-
-function selectOption(selectedIndex){
-  const index = getDailyIndex();
-  const question = dailyQuizData[index];
-  const answerKey = getSavedAnswerKey();
-
-  if(localStorage.getItem(answerKey) !== null) return;
-
-  localStorage.setItem(answerKey, String(selectedIndex));
-  lockOptions();
-
-  const correctBtn = document.getElementById(`option-${question.correct}`);
-  if(correctBtn) correctBtn.classList.add("correct");
-
-  if(selectedIndex !== question.correct){
-    const wrongBtn = document.getElementById(`option-${selectedIndex}`);
-    if(wrongBtn) wrongBtn.classList.add("wrong");
-  }
-
-  showStatus(selectedIndex === question.correct, false);
-}
-
-buildLanguageSelector("languageSelector");
-applyDailyTranslations();
-renderDailyQuiz();
-
-const topUI = document.getElementById("topUI");
-function updateTopPadding(){ document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px"; }
-function hideTopUI(){ topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`; }
-function showTopUI(){ topUI.style.transform = "translateY(0)"; }
-
-updateTopPadding();
-window.addEventListener("load", updateTopPadding);
-window.addEventListener("resize", updateTopPadding);
-
-let lastScroll = 0;
-window.addEventListener("scroll", () => {
-  const currentScroll = window.scrollY || window.pageYOffset;
-  if(currentScroll > lastScroll && currentScroll > 80){ hideTopUI(); }
-  else if(currentScroll < 10){ showTopUI(); }
-  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
-}, { passive: true });
-</script>
-
-</body>
-</html>
+    <div class="page-sub" id="pageSub">One question. One chance. Come back tomorrow for a
