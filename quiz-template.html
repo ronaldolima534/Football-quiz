@@ -9,6 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
+--card:#151515;
 --line:#2a2a2a;
 --green:#22c55e;
 --green2:#15803d;
@@ -23,7 +24,6 @@ text-align:center;
 padding-top:170px;
 }
 
-/* HEADER */
 .top-ui{
 position:fixed;
 top:0;
@@ -32,67 +32,171 @@ width:100%;
 z-index:9999;
 background:rgba(10,10,10,.95);
 backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+transition:transform .35s ease;
+will-change:transform;
+}
+
+.lang-top{
+padding:12px 14px 10px;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.lang-wrap{
+width:94%;
+max-width:760px;
+margin:auto;
+display:flex;
+justify-content:flex-end;
+align-items:center;
+}
+
+.lang-buttons{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.lang-btn{
+width:48px;
+height:48px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+background:#1d1d1d;
+border:1px solid #333;
+transition:.2s;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:0;
+overflow:hidden;
+font-size:0;
+}
+
+.lang-btn:hover{
+transform:translateY(-2px);
+border-color:var(--green);
+}
+
+.lang-btn.active{
+background:linear-gradient(145deg,var(--green),var(--green2));
+border-color:transparent;
 }
 
 .header{
-padding:18px;
+padding:18px 12px;
 border-bottom:1px solid var(--line);
 }
 
 .brand{
-font-size:32px;
+font-size:34px;
 font-weight:900;
-margin-bottom:12px;
+margin-bottom:14px;
 }
 
 .nav{
 display:flex;
 justify-content:center;
+flex-wrap:wrap;
 gap:10px;
 }
 
 .nav button{
 padding:10px 14px;
+font-size:14px;
 font-weight:900;
 border:none;
-border-radius:12px;
+border-radius:14px;
+cursor:pointer;
 background:#1d1d1d;
 color:#fff;
 border:1px solid var(--line);
-cursor:pointer;
 }
 
-/* TITLE */
+.title-wrap{
+padding:24px 14px 14px;
+}
+
 .title-bar{
-margin:20px auto;
 width:94%;
 max-width:760px;
+margin:auto;
 background:#151515;
-padding:20px;
-border-radius:20px;
-font-size:26px;
+border:1px solid var(--line);
+padding:22px;
+border-radius:24px;
+font-size:28px;
 font-weight:900;
+box-shadow:0 14px 30px rgba(0,0,0,.35);
 }
 
-/* CONTAINER */
 .container{
 width:94%;
 max-width:760px;
 margin:auto;
+padding-bottom:60px;
 }
 
-/* VIEWER */
+.progress-wrap{
+height:14px;
+background:#1a1a1a;
+border-radius:999px;
+overflow:hidden;
+margin-bottom:18px;
+border:1px solid var(--line);
+box-shadow:inset 0 2px 5px rgba(0,0,0,.35);
+}
+
+.progress{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,var(--green2),var(--green));
+transition:width .6s cubic-bezier(.22,1,.36,1);
+box-shadow:0 0 18px rgba(34,197,94,.35);
+}
+
+.badge{
+display:inline-block;
+padding:10px 24px;
+border-radius:999px;
+font-size:20px;
+font-weight:900;
+margin-bottom:18px;
+animation:badgePulse 2.2s infinite;
+}
+
+.easy{background:#15803d;}
+.medium{background:#d97706;}
+.hard{background:#dc2626;}
+
+@keyframes badgePulse{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.04);}
+}
+
 .viewer{
 background:#151515;
 border:1px solid var(--line);
 padding:16px;
-border-radius:24px;
+border-radius:28px;
 aspect-ratio:16/9;
 display:flex;
 justify-content:center;
 align-items:center;
 overflow:hidden;
+box-shadow:0 16px 34px rgba(0,0,0,.35);
 position:relative;
+}
+
+.viewer.flash{
+animation:viewerFlash .35s ease;
+}
+
+@keyframes viewerFlash{
+0%{box-shadow:0 16px 34px rgba(0,0,0,.35);}
+50%{box-shadow:0 0 25px rgba(34,197,94,.22),0 16px 34px rgba(0,0,0,.35);}
+100%{box-shadow:0 16px 34px rgba(0,0,0,.35);}
 }
 
 .viewer img{
@@ -100,157 +204,496 @@ max-width:100%;
 max-height:100%;
 object-fit:contain;
 opacity:0;
-transition:opacity .3s ease;
+transform:scale(.98);
+transition:opacity .28s ease, transform .28s ease;
 }
 
 .viewer img.show{
 opacity:1;
+transform:scale(1);
 }
 
-/* BOTONES */
+.image-loader{
+position:absolute;
+inset:16px;
+display:none;
+align-items:center;
+justify-content:center;
+border:none;
+border-radius:22px;
+color:transparent;
+font-size:0;
+pointer-events:none;
+}
+
+.counter{
+margin-top:18px;
+font-size:28px;
+font-weight:900;
+}
+
 .buttons{
-margin-top:20px;
+display:grid;
+gap:14px;
+margin-top:18px;
+}
+
+.btn{
+padding:18px;
+font-size:22px;
+font-weight:900;
+border:none;
+border-radius:18px;
+cursor:pointer;
+transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.btn:active{
+transform:scale(.97);
+}
+
+.green{
+background:linear-gradient(145deg,var(--green),var(--green2));
+color:#000;
+box-shadow:
+0 8px 0 var(--greenDark),
+0 14px 24px rgba(34,197,94,.25);
+transition:.15s;
+}
+
+.green:hover{
+transform:translateY(-2px);
+box-shadow:
+0 10px 0 var(--greenDark),
+0 18px 28px rgba(34,197,94,.30);
+}
+
+.green:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 var(--greenDark),
+0 8px 16px rgba(34,197,94,.2);
+}
+
+.gray{
+background:#202020;
+color:#fff;
+border:1px solid var(--line);
+box-shadow:
+0 6px 0 #111,
+0 12px 20px rgba(0,0,0,.35);
+transition:.15s;
+}
+
+.gray:hover{
+transform:translateY(-2px);
+box-shadow:
+0 8px 0 #111,
+0 16px 24px rgba(0,0,0,.4);
+}
+
+.gray:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 #111,
+0 8px 16px rgba(0,0,0,.3);
+}
+
+.btn-pop{animation:btnPop .28s ease;}
+.btn-glow{animation:btnGlow .4s ease;}
+
+@keyframes btnPop{
+0%{transform:scale(.92);}
+70%{transform:scale(1.06);}
+100%{transform:scale(1);}
+}
+
+@keyframes btnGlow{
+0%{filter:brightness(1);}
+50%{filter:brightness(1.15);}
+100%{filter:brightness(1);}
+}
+
+.final-box{
+display:none;
+margin-top:24px;
+background:#151515;
+border:1px solid var(--line);
+padding:24px;
+border-radius:24px;
+animation:finalAppear .35s ease;
+}
+
+@keyframes finalAppear{
+from{opacity:0;transform:translateY(18px) scale(.98);}
+to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.final-box h2{
+font-size:32px;
+margin-bottom:18px;
+}
+
+.guess-options{
 display:grid;
 gap:12px;
 }
 
-.btn{
+.guess-btn{
 padding:16px;
 font-size:20px;
 font-weight:900;
 border:none;
 border-radius:16px;
 cursor:pointer;
-}
-
-.green{
-background:linear-gradient(145deg,var(--green),var(--green2));
-color:black;
-box-shadow:0 6px 0 var(--greenDark);
-}
-
-.green:active{
-transform:translateY(4px);
-box-shadow:0 2px 0 var(--greenDark);
-}
-
-.gray{
-background:#222;
-color:white;
+background:#202020;
+color:#fff;
 border:1px solid var(--line);
+transition:.2s;
 }
 
-.counter{
-margin-top:15px;
-font-size:22px;
-font-weight:900;
+.guess-btn:hover{
+transform:translateY(-2px);
 }
 
+.after-choice{
+display:none;
+margin-top:18px;
+}
+
+.footer{
+padding:28px;
+font-size:14px;
+color:#888;
+}
+
+@media(max-width:600px){
+body{padding-top:190px;}
+.brand{font-size:28px;}
+.title-bar{font-size:22px;}
+.counter{font-size:22px;}
+.btn{font-size:19px;padding:16px;}
+.lang-wrap{justify-content:center;}
+}
 </style>
 </head>
 
 <body>
 
-<div class="top-ui">
+<div class="top-ui" id="topUI">
+  <div class="lang-top">
+    <div class="lang-wrap">
+      <div class="lang-buttons" id="languageSelector"></div>
+    </div>
+  </div>
+
   <div class="header">
-    <div class="brand">Football Quiz</div>
+    <div class="brand" id="siteName"></div>
+
     <div class="nav">
-      <button onclick="location.href='index.html'">Home</button>
-      <button onclick="location.href='daily-quiz.html'">Daily Quiz</button>
+      <button onclick="location.href='index.html'" id="navHome"></button>
+      <button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
+      <button onclick="location.href='about.html'" id="navAbout"></button>
+      <button onclick="location.href='contact.html'" id="navContact"></button>
     </div>
   </div>
 </div>
 
-<div class="title-bar" id="quizTitle">Quiz</div>
+<div class="title-wrap">
+  <div class="title-bar" id="quizTitle"></div>
+</div>
 
 <div class="container">
 
-  <div class="viewer">
-    <img id="quizImage">
+  <div class="progress-wrap">
+    <div class="progress" id="progressBar"></div>
   </div>
 
-  <div class="counter" id="counter"></div>
+  <div id="difficulty" class="badge easy">EASY</div>
 
-  <div class="buttons">
-    <button class="btn green" onclick="mainAction()" id="mainBtn">ANSWER</button>
-    <button class="btn gray" onclick="location.href='index.html'">BACK</button>
+  <div class="viewer" id="viewerBox">
+    <div class="image-loader" id="imageLoader"></div>
+    <img id="quizImage" src="">
+  </div>
+
+  <div class="counter" id="counter">QUESTION 1 / 15</div>
+
+  <div class="buttons" id="gameButtons">
+    <button class="btn green" id="mainBtn" onclick="mainAction()"></button>
+    <button class="btn gray" onclick="location.href='index.html'" id="backHomeBtn"></button>
+  </div>
+
+  <div class="final-box" id="finalBox">
+    <h2 id="finalTitle"></h2>
+
+    <div class="guess-options">
+      <button class="guess-btn" onclick="finishChoice()" id="finalOption1"></button>
+      <button class="guess-btn" onclick="finishChoice()" id="finalOption2"></button>
+      <button class="guess-btn" onclick="finishChoice()" id="finalOption3"></button>
+      <button class="guess-btn" onclick="finishChoice()" id="finalOption4"></button>
+    </div>
+
+    <div class="after-choice" id="afterChoice">
+      <div class="buttons">
+        <button class="btn green" onclick="location.reload()" id="playAgainBtn"></button>
+        <button class="btn gray" onclick="location.href='index.html'" id="homeBtn"></button>
+      </div>
+    </div>
   </div>
 
 </div>
 
+<div class="footer">© Football Quiz</div>
+
 <script src="quiz-data.js"></script>
+<script src="translations.js"></script>
+<script src="language.js"></script>
 
 <script>
-
-/* CONFIG */
 const params = new URLSearchParams(location.search);
 const mode = params.get("mode") || "transfers";
 const quiz = quizData[mode];
 
+if(!quiz){
+  alert("Quiz not found");
+  location.href = "index.html";
+}
+
 let current = 1;
 let showing = false;
+let selectedQuestions = [];
 
-/* GENERAR RANDOM */
-function random(n){
-  return Math.floor(Math.random()*n)+1;
+function applyQuizTranslations(){
+  document.documentElement.lang = getSavedLanguage();
+  document.getElementById("siteName").innerText = t("site_name");
+  document.getElementById("navHome").innerText = t("nav_home");
+  document.getElementById("navDailyQuiz").innerText = t("nav_daily_quiz");
+  document.getElementById("navAbout").innerText = t("nav_about");
+  document.getElementById("navContact").innerText = t("nav_contact");
+  document.getElementById("quizTitle").innerText = t(quiz.titleKey);
+  document.getElementById("backHomeBtn").innerText = t("back_home");
+  document.getElementById("finalTitle").innerText = t("final_title");
+  document.getElementById("finalOption1").innerText = t("final_option_1");
+  document.getElementById("finalOption2").innerText = t("final_option_2");
+  document.getElementById("finalOption3").innerText = t("final_option_3");
+  document.getElementById("finalOption4").innerText = t("final_option_4");
+  document.getElementById("playAgainBtn").innerText = t("play_again");
+  document.getElementById("homeBtn").innerText = t("home");
 }
 
-/* IMAGENES */
-function getQuestion(){
-  return `${quiz.folder}/easy/q${random(20)}.webp`;
+function shuffleArray(array){
+  const arr = [...array];
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
-function getAnswer(){
-  return `${quiz.folder}/easy/a${random(20)}.webp`;
+function pickRandomNumbers(total,count){
+  const numbers = [];
+  for(let i = 1; i <= total; i++) numbers.push(i);
+  return shuffleArray(numbers).slice(0,count);
 }
 
-/* 🔥 FIX PARPADEO */
+function buildQuestionSet(){
+  const easySet = pickRandomNumbers(quiz.totalEasy,5).map(num => ({level:"easy",number:num}));
+  const mediumSet = pickRandomNumbers(quiz.totalMedium,5).map(num => ({level:"medium",number:num}));
+  const hardSet = pickRandomNumbers(quiz.totalHard,5).map(num => ({level:"hard",number:num}));
+  selectedQuestions = [...easySet,...mediumSet,...hardSet];
+}
+
+function getCurrentQuestion(){return selectedQuestions[current - 1];}
+function getLevel(){return getCurrentQuestion().level;}
+function getNumber(){return getCurrentQuestion().number;}
+
+function getQuestionImagePath(){
+  return `${quiz.folder}/${getLevel()}/${quiz.questionPrefix}${getNumber()}.webp`;
+}
+
+function getAnswerImagePath(){
+  return `${quiz.folder}/${getLevel()}/${quiz.answerPrefix}${getNumber()}.webp`;
+}
+
+function updateBadge(){
+  const badge = document.getElementById("difficulty");
+  const level = getLevel();
+  badge.className = "badge";
+
+  if(level === "easy"){
+    badge.innerText = t("easy");
+    badge.classList.add("easy");
+  }else if(level === "medium"){
+    badge.innerText = t("medium");
+    badge.classList.add("medium");
+  }else{
+    badge.innerText = t("hard");
+    badge.classList.add("hard");
+  }
+}
+
+function updateProgress(){
+  document.getElementById("progressBar").style.width = (current / 15 * 100) + "%";
+}
+
+function updateCounter(){
+  document.getElementById("counter").innerText = `${t("question_label")} ${current} / 15`;
+}
+
+function animateMainButton(){
+  const btn = document.getElementById("mainBtn");
+  btn.classList.remove("btn-pop","btn-glow");
+  void btn.offsetWidth;
+  btn.classList.add("btn-pop","btn-glow");
+}
+
+function updateMainButton(){
+  const btn = document.getElementById("mainBtn");
+  btn.innerText = !showing ? t("answer") : (current === 15 ? t("finish") : t("next"));
+  animateMainButton();
+}
+
+function preloadImage(src){
+  const img = new Image();
+  img.src = src;
+}
+
+function preloadCurrentPair(){
+  preloadImage(getQuestionImagePath());
+  preloadImage(getAnswerImagePath());
+}
+
+function preloadNextQuestion(){
+  if(current >= 15) return;
+
+  const nextQuestion = selectedQuestions[current];
+  if(!nextQuestion) return;
+
+  preloadImage(`${quiz.folder}/${nextQuestion.level}/${quiz.questionPrefix}${nextQuestion.number}.webp`);
+  preloadImage(`${quiz.folder}/${nextQuestion.level}/${quiz.answerPrefix}${nextQuestion.number}.webp`);
+}
+
+function animateViewerFlash(){
+  const viewer = document.getElementById("viewerBox");
+  viewer.classList.remove("flash");
+  void viewer.offsetWidth;
+  viewer.classList.add("flash");
+}
+
 function swapImage(src){
   const img = document.getElementById("quizImage");
+  const loader = document.getElementById("imageLoader");
 
   img.classList.remove("show");
+  loader.style.display = "flex";
 
   const temp = new Image();
 
   temp.onload = function(){
     img.src = src;
+    loader.style.display = "none";
 
-    setTimeout(()=>{
+    requestAnimationFrame(() => {
       img.classList.add("show");
-    },50);
+      animateViewerFlash();
+    });
+  };
+
+  temp.onerror = function(){
+    loader.style.display = "none";
+    img.classList.remove("show");
   };
 
   temp.src = src;
 }
 
-/* LOAD */
 function loadQuestion(){
-  swapImage(getQuestion());
+  swapImage(getQuestionImagePath());
 }
 
 function loadAnswer(){
-  swapImage(getAnswer());
+  swapImage(getAnswerImagePath());
 }
 
-/* BOTON */
 function mainAction(){
   if(!showing){
     loadAnswer();
     showing = true;
-    document.getElementById("mainBtn").innerText = "NEXT";
+    updateMainButton();
+    preloadNextQuestion();
   }else{
+    if(current === 15){
+      endQuiz();
+      return;
+    }
+
     current++;
     showing = false;
-    document.getElementById("mainBtn").innerText = "ANSWER";
-    loadQuestion();
-  }
 
-  document.getElementById("counter").innerText = current + " / 15";
+    updateBadge();
+    updateProgress();
+    updateCounter();
+    updateMainButton();
+    loadQuestion();
+    preloadCurrentPair();
+    preloadNextQuestion();
+  }
 }
 
-/* INIT */
-loadQuestion();
+function endQuiz(){
+  document.getElementById("difficulty").style.display = "none";
+  document.querySelector(".viewer").style.display = "none";
+  document.getElementById("counter").style.display = "none";
+  document.getElementById("gameButtons").style.display = "none";
+  document.getElementById("finalBox").style.display = "block";
+}
 
+function finishChoice(){
+  document.getElementById("afterChoice").style.display = "block";
+}
+
+buildLanguageSelector("languageSelector");
+buildQuestionSet();
+applyQuizTranslations();
+updateBadge();
+updateProgress();
+updateCounter();
+preloadCurrentPair();
+preloadNextQuestion();
+loadQuestion();
+updateMainButton();
+
+const topUI = document.getElementById("topUI");
+
+function updateTopPadding(){
+  document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px";
+}
+
+function hideTopUI(){
+  topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`;
+}
+
+function showTopUI(){
+  topUI.style.transform = "translateY(0)";
+}
+
+updateTopPadding();
+window.addEventListener("load", updateTopPadding);
+window.addEventListener("resize", updateTopPadding);
+
+let lastScroll = 0;
+
+window.addEventListener("scroll", () => {
+  const currentScroll = window.scrollY || window.pageYOffset;
+
+  if(currentScroll > lastScroll && currentScroll > 80){
+    hideTopUI();
+  }else if(currentScroll < 10){
+    showTopUI();
+  }
+
+  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+}, { passive:true });
 </script>
 
 </body>
