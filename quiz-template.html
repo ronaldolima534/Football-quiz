@@ -65,23 +65,12 @@ border-radius:12px;
 cursor:pointer;
 background:#1d1d1d;
 border:1px solid #333;
-transition:.2s;
 display:flex;
 align-items:center;
 justify-content:center;
 padding:0;
 overflow:hidden;
 font-size:0;
-}
-
-.lang-btn:hover{
-transform:translateY(-2px);
-border-color:var(--green);
-}
-
-.lang-btn.active{
-background:linear-gradient(145deg,var(--green),var(--green2));
-border-color:transparent;
 }
 
 .header{
@@ -194,8 +183,8 @@ animation:viewerFlash .35s ease;
 }
 
 @keyframes viewerFlash{
-0%{box-shadow:0 0 0 rgba(34,197,94,0), 0 16px 34px rgba(0,0,0,.35);}
-50%{box-shadow:0 0 25px rgba(34,197,94,.22), 0 16px 34px rgba(0,0,0,.35);}
+0%{box-shadow:0 16px 34px rgba(0,0,0,.35);}
+50%{box-shadow:0 0 25px rgba(34,197,94,.22),0 16px 34px rgba(0,0,0,.35);}
 100%{box-shadow:0 16px 34px rgba(0,0,0,.35);}
 }
 
@@ -203,32 +192,27 @@ animation:viewerFlash .35s ease;
 max-width:100%;
 max-height:100%;
 object-fit:contain;
+opacity:0;
+transform:scale(.98);
+transition:opacity .28s ease, transform .28s ease;
+}
+
+.viewer img.show{
 opacity:1;
-transform:translateX(0) scale(1);
-transition:none;
+transform:scale(1);
 }
 
-.img-out-answer{animation:imgOutAnswer .22s ease forwards;}
-.img-in-answer{animation:imgInAnswer .42s cubic-bezier(.22,1,.36,1) forwards;}
-.img-out-next{animation:imgOutNext .22s ease forwards;}
-.img-in-next{animation:imgInNext .46s cubic-bezier(.22,1,.36,1) forwards;}
-
-@keyframes imgOutAnswer{
-to{opacity:0;transform:scale(.95);}
-}
-
-@keyframes imgInAnswer{
-0%{opacity:0;transform:scale(1.08);}
-100%{opacity:1;transform:scale(1);}
-}
-
-@keyframes imgOutNext{
-to{opacity:0;transform:translateX(-36px) scale(.97);}
-}
-
-@keyframes imgInNext{
-0%{opacity:0;transform:translateX(44px) scale(.98);}
-100%{opacity:1;transform:translateX(0) scale(1);}
+.image-loader{
+position:absolute;
+inset:16px;
+display:none;
+align-items:center;
+justify-content:center;
+border:2px dashed #333;
+border-radius:22px;
+color:#777;
+font-size:18px;
+font-weight:900;
 }
 
 .counter{
@@ -250,11 +234,7 @@ font-weight:900;
 border:none;
 border-radius:18px;
 cursor:pointer;
-transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
-}
-
-.btn:active{
-transform:scale(.97);
+transition:.15s;
 }
 
 .green{
@@ -263,7 +243,6 @@ color:#000;
 box-shadow:
 0 8px 0 var(--greenDark),
 0 14px 24px rgba(34,197,94,.25);
-transition:.15s;
 }
 
 .green:hover{
@@ -287,7 +266,6 @@ border:1px solid var(--line);
 box-shadow:
 0 6px 0 #111,
 0 12px 20px rgba(0,0,0,.35);
-transition:.15s;
 }
 
 .gray:hover{
@@ -373,30 +351,12 @@ color:#888;
 }
 
 @media(max-width:600px){
-body{
-padding-top:190px;
-}
-
-.brand{
-font-size:28px;
-}
-
-.title-bar{
-font-size:22px;
-}
-
-.counter{
-font-size:22px;
-}
-
-.btn{
-font-size:19px;
-padding:16px;
-}
-
-.lang-wrap{
-justify-content:center;
-}
+body{padding-top:190px;}
+.brand{font-size:28px;}
+.title-bar{font-size:22px;}
+.counter{font-size:22px;}
+.btn{font-size:19px;padding:16px;}
+.lang-wrap{justify-content:center;}
 }
 </style>
 </head>
@@ -435,6 +395,7 @@ justify-content:center;
   <div id="difficulty" class="badge easy">EASY</div>
 
   <div class="viewer" id="viewerBox">
+    <div class="image-loader" id="imageLoader">Loading image...</div>
     <img id="quizImage" src="">
   </div>
 
@@ -476,7 +437,7 @@ const params = new URLSearchParams(location.search);
 const mode = params.get("mode") || "transfers";
 const quiz = quizData[mode];
 
-if (!quiz) {
+if(!quiz){
   alert("Quiz not found");
   location.href = "index.html";
 }
@@ -512,32 +473,22 @@ function shuffleArray(array){
   return arr;
 }
 
-function pickRandomNumbers(total, count){
+function pickRandomNumbers(total,count){
   const numbers = [];
-  for(let i = 1; i <= total; i++){
-    numbers.push(i);
-  }
-  return shuffleArray(numbers).slice(0, count);
+  for(let i = 1; i <= total; i++) numbers.push(i);
+  return shuffleArray(numbers).slice(0,count);
 }
 
 function buildQuestionSet(){
-  const easySet = pickRandomNumbers(quiz.totalEasy, 5).map(num => ({ level: "easy", number: num }));
-  const mediumSet = pickRandomNumbers(quiz.totalMedium, 5).map(num => ({ level: "medium", number: num }));
-  const hardSet = pickRandomNumbers(quiz.totalHard, 5).map(num => ({ level: "hard", number: num }));
-  selectedQuestions = [...easySet, ...mediumSet, ...hardSet];
+  const easySet = pickRandomNumbers(quiz.totalEasy,5).map(num => ({level:"easy",number:num}));
+  const mediumSet = pickRandomNumbers(quiz.totalMedium,5).map(num => ({level:"medium",number:num}));
+  const hardSet = pickRandomNumbers(quiz.totalHard,5).map(num => ({level:"hard",number:num}));
+  selectedQuestions = [...easySet,...mediumSet,...hardSet];
 }
 
-function getCurrentQuestion(){
-  return selectedQuestions[current - 1];
-}
-
-function getLevel(){
-  return getCurrentQuestion().level;
-}
-
-function getNumber(){
-  return getCurrentQuestion().number;
-}
+function getCurrentQuestion(){return selectedQuestions[current - 1];}
+function getLevel(){return getCurrentQuestion().level;}
+function getNumber(){return getCurrentQuestion().number;}
 
 function getQuestionImagePath(){
   return `${quiz.folder}/${getLevel()}/${quiz.questionPrefix}${getNumber()}.webp`;
@@ -612,34 +563,43 @@ function animateViewerFlash(){
   viewer.classList.add("flash");
 }
 
-function swapImage(src, type){
+/* CORRECCIÓN ANTI-PARPADEO */
+function swapImage(src){
   const img = document.getElementById("quizImage");
-  const preload = new Image();
+  const loader = document.getElementById("imageLoader");
 
-  preload.onload = function(){
-    img.className = type === "answer" ? "img-out-answer" : "img-out-next";
+  img.classList.remove("show");
+  loader.style.display = "flex";
 
+  const temp = new Image();
+
+  temp.onload = function(){
     setTimeout(() => {
       img.src = src;
-      img.className = type === "answer" ? "img-in-answer" : "img-in-next";
-      animateViewerFlash();
-    }, 170);
+      loader.style.display = "none";
+
+      requestAnimationFrame(() => {
+        img.classList.add("show");
+        animateViewerFlash();
+      });
+    }, 120);
   };
 
-  preload.onerror = function(){
-    img.src = "";
-    alert("Image not found: " + src);
+  temp.onerror = function(){
+    loader.innerText = "Image not found";
+    loader.style.display = "flex";
+    img.classList.remove("show");
   };
 
-  preload.src = src;
+  temp.src = src;
 }
 
 function loadQuestion(){
-  swapImage(getQuestionImagePath(), "next");
+  swapImage(getQuestionImagePath());
 }
 
 function loadAnswer(){
-  swapImage(getAnswerImagePath(), "answer");
+  swapImage(getAnswerImagePath());
 }
 
 function mainAction(){
@@ -693,13 +653,11 @@ updateMainButton();
 const topUI = document.getElementById("topUI");
 
 function updateTopPadding(){
-  const realHeight = topUI.offsetHeight;
-  document.body.style.paddingTop = realHeight + 12 + "px";
+  document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px";
 }
 
 function hideTopUI(){
-  const realHeight = topUI.offsetHeight;
-  topUI.style.transform = `translateY(-${realHeight}px)`;
+  topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`;
 }
 
 function showTopUI(){
@@ -722,7 +680,7 @@ window.addEventListener("scroll", () => {
   }
 
   lastScroll = currentScroll <= 0 ? 0 : currentScroll;
-}, { passive: true });
+}, { passive:true });
 </script>
 
 </body>
