@@ -291,19 +291,17 @@ body{padding-top:178px;}
 
 <div class="page-hero">
   <div class="page-hero-box">
-    <div class="page-title">Daily Quiz</div>
-    <div class="page-sub">One question. One chance. Come back tomorrow for a new challenge.</div>
+    <div class="page-title" id="dailyTitle"></div>
+    <div class="page-sub" id="dailySubtitle"></div>
   </div>
 </div>
 
 <div class="container">
 
-  <div class="question-text" id="questionText">Loading question...</div>
+  <div class="question-text" id="questionText"></div>
 
   <div class="viewer">
-    <div class="placeholder" id="imagePlaceholder">
-      Image will appear here when uploaded
-    </div>
+    <div class="placeholder" id="imagePlaceholder"></div>
     <img id="dailyImage" src="" alt="Daily Quiz Image">
   </div>
 
@@ -323,22 +321,107 @@ body{padding-top:178px;}
 <script src="daily-quiz-data.js"></script>
 
 <script>
-function tx(key, fallback){
-  try{
-    const value = t(key);
-    return value && value !== key ? value : fallback;
-  }catch{
-    return fallback;
+const dailyText = {
+  en:{
+    title:"Daily Quiz",
+    subtitle:"One question. One chance. Come back tomorrow for a new challenge.",
+    placeholder:"Image will appear here when uploaded",
+    alreadyTitle:"Today's quiz already played",
+    alreadyText:"Come back tomorrow for a new daily question.",
+    correctTitle:"Correct!",
+    correctText:"Great choice. Come back tomorrow for a new daily question.",
+    wrongTitle:"Not this time",
+    wrongText:"The correct answer is highlighted in green. Come back tomorrow for a new daily question.",
+    loading:"Loading question..."
+  },
+  es:{
+    title:"Quiz Diario",
+    subtitle:"Una pregunta. Una oportunidad. Vuelve mañana por un nuevo reto.",
+    placeholder:"La imagen aparecerá aquí cuando la subas",
+    alreadyTitle:"El quiz de hoy ya fue jugado",
+    alreadyText:"Vuelve mañana por una nueva pregunta diaria.",
+    correctTitle:"¡Correcto!",
+    correctText:"Gran elección. Vuelve mañana por una nueva pregunta diaria.",
+    wrongTitle:"Esta vez no",
+    wrongText:"La respuesta correcta está marcada en verde. Vuelve mañana por una nueva pregunta diaria.",
+    loading:"Cargando pregunta..."
+  },
+  pt:{
+    title:"Quiz Diário",
+    subtitle:"Uma pergunta. Uma chance. Volte amanhã para um novo desafio.",
+    placeholder:"A imagem aparecerá aqui quando for enviada",
+    alreadyTitle:"O quiz de hoje já foi jogado",
+    alreadyText:"Volte amanhã para uma nova pergunta diária.",
+    correctTitle:"Correto!",
+    correctText:"Ótima escolha. Volte amanhã para uma nova pergunta diária.",
+    wrongTitle:"Não foi desta vez",
+    wrongText:"A resposta correta está destacada em verde. Volte amanhã para uma nova pergunta diária.",
+    loading:"Carregando pergunta..."
+  },
+  fr:{
+    title:"Quiz du Jour",
+    subtitle:"Une question. Une chance. Revenez demain pour un nouveau défi.",
+    placeholder:"L’image apparaîtra ici une fois ajoutée",
+    alreadyTitle:"Le quiz du jour a déjà été joué",
+    alreadyText:"Revenez demain pour une nouvelle question quotidienne.",
+    correctTitle:"Correct !",
+    correctText:"Très bon choix. Revenez demain pour une nouvelle question quotidienne.",
+    wrongTitle:"Pas cette fois",
+    wrongText:"La bonne réponse est indiquée en vert. Revenez demain pour une nouvelle question quotidienne.",
+    loading:"Chargement de la question..."
+  },
+  it:{
+    title:"Quiz del Giorno",
+    subtitle:"Una domanda. Una possibilità. Torna domani per una nuova sfida.",
+    placeholder:"L’immagine apparirà qui quando verrà caricata",
+    alreadyTitle:"Il quiz di oggi è già stato giocato",
+    alreadyText:"Torna domani per una nuova domanda giornaliera.",
+    correctTitle:"Corretto!",
+    correctText:"Ottima scelta. Torna domani per una nuova domanda giornaliera.",
+    wrongTitle:"Non questa volta",
+    wrongText:"La risposta corretta è evidenziata in verde. Torna domani per una nuova domanda giornaliera.",
+    loading:"Caricamento domanda..."
   }
+};
+
+function currentLang(){
+  const lang = getSavedLanguage();
+  if(["en","es","pt","fr","it"].includes(lang)) return lang;
+  return "en";
+}
+
+function dText(key){
+  const lang = currentLang();
+  return dailyText[lang][key] || dailyText.en[key];
+}
+
+function getField(field){
+  const lang = currentLang();
+
+  if(typeof field === "string") return field;
+
+  if(Array.isArray(field)) return field;
+
+  if(field && typeof field === "object"){
+    return field[lang] || field.en || field.es || "";
+  }
+
+  return "";
 }
 
 function applyDailyTranslations(){
-  document.documentElement.lang = getSavedLanguage();
-  document.getElementById("siteName").innerText = tx("site_name", "Football Quiz");
-  document.getElementById("navHome").innerText = tx("nav_home", "HOME");
-  document.getElementById("navDailyQuiz").innerText = tx("nav_daily_quiz", "DAILY QUIZ");
-  document.getElementById("navAbout").innerText = tx("nav_about", "ABOUT");
-  document.getElementById("navContact").innerText = tx("nav_contact", "CONTACT");
+  document.documentElement.lang = currentLang();
+
+  document.getElementById("siteName").innerText = t("site_name");
+  document.getElementById("navHome").innerText = t("nav_home");
+  document.getElementById("navDailyQuiz").innerText = t("nav_daily_quiz");
+  document.getElementById("navAbout").innerText = t("nav_about");
+  document.getElementById("navContact").innerText = t("nav_contact");
+
+  document.getElementById("dailyTitle").innerText = dText("title");
+  document.getElementById("dailySubtitle").innerText = dText("subtitle");
+  document.getElementById("imagePlaceholder").innerText = dText("placeholder");
+  document.getElementById("questionText").innerText = dText("loading");
 }
 
 function getDailyIndex(){
@@ -391,13 +474,15 @@ function renderDailyQuiz(){
   const index = getDailyIndex();
   const question = dailyQuizData[index];
 
-  document.getElementById("questionText").innerText = question.question;
+  document.getElementById("questionText").innerText = getField(question.question);
 
   renderImage(question.image);
 
+  const optionList = getField(question.options);
+
   let html = "";
 
-  question.options.forEach((option, i) => {
+  optionList.forEach((option, i) => {
     html += `
       <button class="option-btn" id="option-${i}" onclick="selectOption(${i})">
         ${option}
@@ -428,17 +513,17 @@ function showStatus(correct, alreadyPlayed){
   statusBox.style.display = "block";
 
   if(alreadyPlayed){
-    statusTitle.innerText = "Today's quiz already played";
-    statusText.innerText = "Come back tomorrow for a new daily question.";
+    statusTitle.innerText = dText("alreadyTitle");
+    statusText.innerText = dText("alreadyText");
     return;
   }
 
   if(correct){
-    statusTitle.innerText = "Correct!";
-    statusText.innerText = "Great choice. Come back tomorrow for a new daily question.";
+    statusTitle.innerText = dText("correctTitle");
+    statusText.innerText = dText("correctText");
   }else{
-    statusTitle.innerText = "Not this time";
-    statusText.innerText = "The correct answer is highlighted in green. Come back tomorrow for a new daily question.";
+    statusTitle.innerText = dText("wrongTitle");
+    statusText.innerText = dText("wrongText");
   }
 }
 
@@ -447,10 +532,12 @@ function revealStoredResult(selectedIndex){
 
   lockOptions();
 
-  document.getElementById(`option-${question.correct}`).classList.add("correct");
+  const correctBtn = document.getElementById(`option-${question.correct}`);
+  if(correctBtn) correctBtn.classList.add("correct");
 
   if(selectedIndex !== question.correct){
-    document.getElementById(`option-${selectedIndex}`).classList.add("wrong");
+    const wrongBtn = document.getElementById(`option-${selectedIndex}`);
+    if(wrongBtn) wrongBtn.classList.add("wrong");
   }
 
   showStatus(selectedIndex === question.correct, true);
@@ -467,10 +554,12 @@ function selectOption(selectedIndex){
 
   lockOptions();
 
-  document.getElementById(`option-${question.correct}`).classList.add("correct");
+  const correctBtn = document.getElementById(`option-${question.correct}`);
+  if(correctBtn) correctBtn.classList.add("correct");
 
   if(selectedIndex !== question.correct){
-    document.getElementById(`option-${selectedIndex}`).classList.add("wrong");
+    const wrongBtn = document.getElementById(`option-${selectedIndex}`);
+    if(wrongBtn) wrongBtn.classList.add("wrong");
   }
 
   showStatus(selectedIndex === question.correct, false);
