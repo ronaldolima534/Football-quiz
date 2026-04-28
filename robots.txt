@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://football-quiz-nu.vercel.app/sitemap.xml
