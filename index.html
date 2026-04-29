@@ -31,12 +31,7 @@
   "name": "Football Quiz",
   "url": "https://football-quiz-nu.vercel.app/",
   "description": "Online football quiz website with player, club, transfer and daily football trivia challenges.",
-  "inLanguage": "en",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://football-quiz-nu.vercel.app/?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
+  "inLanguage": "en"
 }
 </script>
 
@@ -503,9 +498,7 @@ padding:10px 13px;
     <h1 id="heroTitle"></h1>
     <p id="heroSub"></p>
 
-    <button class="random-btn" onclick="playRandomQuiz()">
-      PLAY RANDOM QUIZ
-    </button>
+    <button class="random-btn" id="randomBtn" onclick="playRandomQuiz()"></button>
   </div>
 </div>
 
@@ -514,13 +507,9 @@ padding:10px 13px;
 <div class="container" id="quizContainer"></div>
 
 <div class="seo-text">
-  <h2>Play Football Quiz Online</h2>
-  <p>
-    Football Quiz is an online football trivia game where fans can test their knowledge by guessing players, clubs, transfers and national teams. Play visual football quizzes, try the daily football quiz and challenge yourself with easy, medium and hard questions.
-  </p>
-  <p>
-    If you enjoy football games, soccer quizzes, player guessing challenges and football trivia, this website is made for you.
-  </p>
+  <h2 id="seoTitle"></h2>
+  <p id="seoText1"></p>
+  <p id="seoText2"></p>
 </div>
 
 <div class="footer">
@@ -535,6 +524,50 @@ padding:10px 13px;
 <script src="language.js"></script>
 
 <script>
+const homeText = {
+  en: {
+    random: "PLAY RANDOM QUIZ",
+    seoTitle: "Play Football Quiz Online",
+    seoText1: "Football Quiz is an online football trivia game where fans can test their knowledge by guessing players, clubs, transfers and national teams. Play visual football quizzes, try the daily football quiz and challenge yourself with easy, medium and hard questions.",
+    seoText2: "If you enjoy football games, soccer quizzes, player guessing challenges and football trivia, this website is made for you."
+  },
+  es: {
+    random: "JUGAR QUIZ ALEATORIO",
+    seoTitle: "Juega Football Quiz Online",
+    seoText1: "Football Quiz es un juego online de preguntas de fútbol donde los fans pueden poner a prueba sus conocimientos adivinando jugadores, clubes, transferencias y selecciones. Juega quizzes visuales, prueba el quiz diario y desafíate con preguntas fáciles, medias y difíciles.",
+    seoText2: "Si te gustan los juegos de fútbol, los quizzes de fútbol, los retos de adivinar jugadores y las trivias futboleras, esta web es para ti."
+  },
+  pt: {
+    random: "JOGAR QUIZ ALEATÓRIO",
+    seoTitle: "Jogue Football Quiz Online",
+    seoText1: "Football Quiz é um jogo online de perguntas de futebol onde os fãs podem testar seus conhecimentos adivinhando jogadores, clubes, transferências e seleções. Jogue quizzes visuais, experimente o quiz diário e desafie-se com perguntas fáceis, médias e difíceis.",
+    seoText2: "Se você gosta de jogos de futebol, quizzes de futebol, desafios de adivinhar jogadores e curiosidades futebolísticas, este site é para você."
+  },
+  fr: {
+    random: "QUIZ ALÉATOIRE",
+    seoTitle: "Jouez à Football Quiz en Ligne",
+    seoText1: "Football Quiz est un jeu de quiz football en ligne où les fans peuvent tester leurs connaissances en devinant des joueurs, des clubs, des transferts et des équipes nationales. Jouez à des quiz visuels, essayez le quiz du jour et relevez des défis faciles, moyens et difficiles.",
+    seoText2: "Si vous aimez les jeux de football, les quiz de football, les défis pour deviner les joueurs et les questions de culture footballistique, ce site est fait pour vous."
+  },
+  it: {
+    random: "QUIZ CASUALE",
+    seoTitle: "Gioca a Football Quiz Online",
+    seoText1: "Football Quiz è un gioco online di domande sul calcio dove i tifosi possono mettere alla prova le proprie conoscenze indovinando giocatori, club, trasferimenti e nazionali. Gioca a quiz visivi, prova il quiz del giorno e sfidati con domande facili, medie e difficili.",
+    seoText2: "Se ti piacciono i giochi di calcio, i quiz calcistici, le sfide per indovinare i giocatori e le curiosità sul calcio, questo sito è fatto per te."
+  }
+};
+
+function currentLang(){
+  const lang = getSavedLanguage();
+  if(["en","es","pt","fr","it"].includes(lang)) return lang;
+  return "en";
+}
+
+function ht(key){
+  const lang = currentLang();
+  return homeText[lang][key] || homeText.en[key];
+}
+
 function safeT(key, fallback){
   try{
     const value = t(key);
@@ -555,7 +588,7 @@ function playRandomQuiz(){
 }
 
 function applyHomeTranslations(){
-  document.documentElement.lang = getSavedLanguage();
+  document.documentElement.lang = currentLang();
 
   document.getElementById("siteName").innerText = safeT("site_name", "Football Quiz");
   document.getElementById("navHome").innerText = safeT("nav_home", "HOME");
@@ -566,6 +599,11 @@ function applyHomeTranslations(){
   document.getElementById("heroTitle").innerText = safeT("hero_title", "Test Your Football Knowledge");
   document.getElementById("heroSub").innerText = safeT("hero_subtitle", "Play visual football quizzes and prove you are a real fan.");
   document.getElementById("featuredTitle").innerText = safeT("featured_quizzes", "Featured Quizzes");
+
+  document.getElementById("randomBtn").innerText = ht("random");
+  document.getElementById("seoTitle").innerText = ht("seoTitle");
+  document.getElementById("seoText1").innerText = ht("seoText1");
+  document.getElementById("seoText2").innerText = ht("seoText2");
 }
 
 function buildHomeQuizzes(){
