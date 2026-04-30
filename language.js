@@ -1,64 +1,82 @@
-const defaultLanguage = "en";
+const availableLanguages = ["en", "es", "pt", "fr", "it"];
 
-function getSavedLanguage() {
-  return localStorage.getItem("footballQuizLanguage") || defaultLanguage;
+const languageFlags = {
+  en: "🇬🇧",
+  es: "🇪🇸",
+  pt: "🇵🇹",
+  fr: "🇫🇷",
+  it: "🇮🇹"
+};
+
+function detectBrowserLanguage(){
+  const browserLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+
+  if(browserLang.startsWith("es")) return "es";
+  if(browserLang.startsWith("pt")) return "pt";
+  if(browserLang.startsWith("fr")) return "fr";
+  if(browserLang.startsWith("it")) return "it";
+
+  return "en";
 }
 
-function setLanguage(lang) {
+function getSavedLanguage(){
+  let savedLang = localStorage.getItem("footballQuizLanguage");
+
+  if(savedLang && availableLanguages.includes(savedLang)){
+    return savedLang;
+  }
+
+  const detectedLang = detectBrowserLanguage();
+  localStorage.setItem("footballQuizLanguage", detectedLang);
+  return detectedLang;
+}
+
+function setLanguage(lang){
+  if(!availableLanguages.includes(lang)) return;
+
   localStorage.setItem("footballQuizLanguage", lang);
+  location.reload();
 }
 
-function t(key) {
+function t(key){
   const lang = getSavedLanguage();
-  if (translations[lang] && translations[lang][key]) {
+
+  if(typeof translations === "undefined"){
+    return key;
+  }
+
+  if(translations[lang] && translations[lang][key]){
     return translations[lang][key];
   }
-  return translations[defaultLanguage][key] || key;
+
+  if(translations.en && translations.en[key]){
+    return translations.en[key];
+  }
+
+  return key;
 }
 
-function updateLanguageButtons() {
-  const currentLang = getSavedLanguage();
-  const buttons = document.querySelectorAll(".lang-btn");
-
-  buttons.forEach(btn => {
-    if (btn.dataset.lang === currentLang) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-  });
-}
-
-function buildLanguageSelector(containerId) {
+function buildLanguageSelector(containerId){
   const container = document.getElementById(containerId);
-  if (!container) return;
 
-  container.innerHTML = `
-    <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')" aria-label="English">
-      <img src="https://flagcdn.com/w40/gb.png" alt="English">
-    </button>
+  if(!container) return;
 
-    <button class="lang-btn" data-lang="es" onclick="changeLanguage('es')" aria-label="Español">
-      <img src="https://flagcdn.com/w40/es.png" alt="Español">
-    </button>
+  const currentLang = getSavedLanguage();
 
-    <button class="lang-btn" data-lang="pt" onclick="changeLanguage('pt')" aria-label="Português">
-      <img src="https://flagcdn.com/w40/pt.png" alt="Português">
-    </button>
+  let html = "";
 
-    <button class="lang-btn" data-lang="fr" onclick="changeLanguage('fr')" aria-label="Français">
-      <img src="https://flagcdn.com/w40/fr.png" alt="Français">
-    </button>
+  availableLanguages.forEach(lang => {
+    html += `
+      <button 
+        class="lang-btn ${currentLang === lang ? "active" : ""}" 
+        onclick="setLanguage('${lang}')"
+        aria-label="${lang}"
+        title="${lang.toUpperCase()}"
+      >
+        ${languageFlags[lang]}
+      </button>
+    `;
+  });
 
-    <button class="lang-btn" data-lang="it" onclick="changeLanguage('it')" aria-label="Italiano">
-      <img src="https://flagcdn.com/w40/it.png" alt="Italiano">
-    </button>
-  `;
-
-  updateLanguageButtons();
-}
-
-function changeLanguage(lang) {
-  setLanguage(lang);
-  location.reload();
+  container.innerHTML = html;
 }
