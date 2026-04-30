@@ -1,11 +1,11 @@
 const availableLanguages = ["en", "es", "pt", "fr", "it"];
 
 const languageFlags = {
-  en: "🇬🇧",
-  es: "🇪🇸",
-  pt: "🇵🇹",
-  fr: "🇫🇷",
-  it: "🇮🇹"
+  en: "https://flagcdn.com/gb.svg",
+  es: "https://flagcdn.com/es.svg",
+  pt: "https://flagcdn.com/pt.svg",
+  fr: "https://flagcdn.com/fr.svg",
+  it: "https://flagcdn.com/it.svg"
 };
 
 const languageNames = {
@@ -66,7 +66,6 @@ function t(key){
 
 function buildLanguageSelector(containerId){
   const container = document.getElementById(containerId);
-
   if(!container) return;
 
   const currentLang = getSavedLanguage();
@@ -81,9 +80,11 @@ function buildLanguageSelector(containerId){
         aria-label="${languageNames[lang]}"
         title="${languageNames[lang]}"
       >
-        <span style="font-size:26px;line-height:1;display:block;">
-          ${languageFlags[lang]}
-        </span>
+        <img 
+          src="${languageFlags[lang]}" 
+          alt="${languageNames[lang]}" 
+          style="width:30px;height:22px;object-fit:cover;border-radius:4px;display:block;"
+        >
       </button>
     `;
   });
