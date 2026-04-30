@@ -8,6 +8,14 @@ const languageFlags = {
   it: "🇮🇹"
 };
 
+const languageNames = {
+  en: "English",
+  es: "Español",
+  pt: "Português",
+  fr: "Français",
+  it: "Italiano"
+};
+
 function detectBrowserLanguage(){
   const browserLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
 
@@ -20,7 +28,7 @@ function detectBrowserLanguage(){
 }
 
 function getSavedLanguage(){
-  let savedLang = localStorage.getItem("footballQuizLanguage");
+  const savedLang = localStorage.getItem("footballQuizLanguage");
 
   if(savedLang && availableLanguages.includes(savedLang)){
     return savedLang;
@@ -70,10 +78,12 @@ function buildLanguageSelector(containerId){
       <button 
         class="lang-btn ${currentLang === lang ? "active" : ""}" 
         onclick="setLanguage('${lang}')"
-        aria-label="${lang}"
-        title="${lang.toUpperCase()}"
+        aria-label="${languageNames[lang]}"
+        title="${languageNames[lang]}"
       >
-        ${languageFlags[lang]}
+        <span style="font-size:26px;line-height:1;display:block;">
+          ${languageFlags[lang]}
+        </span>
       </button>
     `;
   });
