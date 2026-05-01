@@ -2,7 +2,19 @@
 <html lang="en">
 <head>
 <script>
-localStorage.setItem("footballQuizLanguage","pt");
+(function(){
+  const path = window.location.pathname;
+  if(path.startsWith("/it/")){
+    localStorage.setItem("footballQuizLanguage","it");
+    document.documentElement.lang = "it";
+  }else if(path.startsWith("/fr/")){
+    localStorage.setItem("footballQuizLanguage","fr");
+    document.documentElement.lang = "fr";
+  }else if(path.startsWith("/pt/")){
+    localStorage.setItem("footballQuizLanguage","pt");
+    document.documentElement.lang = "pt";
+  }
+})();
 </script>
 
 <meta charset="UTF-8">
@@ -15,12 +27,16 @@ localStorage.setItem("footballQuizLanguage","pt");
 <meta name="robots" content="index, follow">
 <meta name="author" content="Football Quiz">
 
-<link rel="canonical" href="https://football-quiz-nu.vercel.app/">
+<link rel="alternate" hreflang="en" href="https://football-quiz-nu.vercel.app/en/">
+<link rel="alternate" hreflang="es" href="https://football-quiz-nu.vercel.app/es/">
+<link rel="alternate" hreflang="pt" href="https://football-quiz-nu.vercel.app/pt/">
+<link rel="alternate" hreflang="fr" href="https://football-quiz-nu.vercel.app/fr/">
+<link rel="alternate" hreflang="it" href="https://football-quiz-nu.vercel.app/it/">
+<link rel="alternate" hreflang="x-default" href="https://football-quiz-nu.vercel.app/">
 
 <meta property="og:title" content="Football Quiz – Guess the Player, Clubs & Transfers">
-<meta property="og:description" content="Play online football quizzes. Guess players, clubs, transfers and national teams. New daily football quiz challenges.">
+<meta property="og:description" content="Play online football quizzes. Guess players, clubs, transfers and national teams.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://football-quiz-nu.vercel.app/">
 <meta property="og:image" content="https://football-quiz-nu.vercel.app/images/thumbnails/quiz1.jpg">
 
 <meta name="twitter:card" content="summary_large_image">
@@ -100,11 +116,9 @@ background:#1d1d1d;
 cursor:pointer;
 overflow:hidden;
 transition:.2s;
-
 display:flex;
 align-items:center;
 justify-content:center;
-
 padding:0;
 font-size:0;
 line-height:0;
@@ -527,13 +541,13 @@ padding:10px 13px;
 <div class="footer">
   © Football Quiz
   <br><br>
-  <a href="privacy.html">Privacy Policy</a> |
-  <a href="terms.html">Terms of Service</a>
+  <a href="../privacy.html">Privacy Policy</a> |
+  <a href="../terms.html">Terms of Service</a>
 </div>
 
-<script src="quiz-data.js"></script>
-<script src="translations.js"></script>
-<script src="language.js"></script>
+<script src="../quiz-data.js"></script>
+<script src="../translations.js"></script>
+<script src="../language.js"></script>
 
 <script>
 const homeText = {
@@ -631,7 +645,7 @@ function buildHomeQuizzes(){
     html += `
       <div class="card">
         <div class="thumb">
-          <img src="${quiz.thumbnail}" alt="${safeT(quiz.titleKey, "Football Quiz")}">
+          <img src="../${quiz.thumbnail}" alt="${safeT(quiz.titleKey, "Football Quiz")}">
         </div>
 
         <div class="quiz-title">
