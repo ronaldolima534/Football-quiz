@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/guess-player-by-transfers",
+      "destination": "/quiz-template.html?mode=transfers"
+    },
+    {
+      "source": "/guess-player-by-club-nationality-number-position",
+      "destination": "/quiz-template.html?mode=player-clues"
+    },
+    {
+      "source": "/guess-club-by-player-nationalities",
+      "destination": "/quiz-template.html?mode=nationality-club"
+    }
+  ]
+}
