@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<!-- HOME -->
+<url>
+  <loc>https://football-quiz-nu.vercel.app/</loc>
+</url>
+
+<!-- IDIOMAS -->
+<url>
+  <loc>https://football-quiz-nu.vercel.app/en/</loc>
+</url>
+
+<url>
+  <loc>https://football-quiz-nu.vercel.app/es/</loc>
+</url>
+
+<url>
+  <loc>https://football-quiz-nu.vercel.app/pt/</loc>
+</url>
+
+<url>
+  <loc>https://football-quiz-nu.vercel.app/fr/</loc>
+</url>
+
+<url>
+  <loc>https://football-quiz-nu.vercel.app/it/</loc>
+</url>
+
+<!-- PÁGINAS -->
+<url>
+  <loc>https://football-quiz-nu.vercel.app/en/daily-quiz.html</loc>
+</url>
+
+<url>
+  <loc>https://football-quiz-nu.vercel.app/en/about.html</loc>
+</url>
+
+<url>
+  <loc>https://football-quiz-nu.vercel.app/en/contact.html</loc>
+</url>
+
+</urlset>
