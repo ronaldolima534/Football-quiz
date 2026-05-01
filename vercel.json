@@ -1,7 +1,18 @@
 {
   "rewrites": [
+    {
+      "source": "/guess-player-by-transfers",
+      "destination": "/quiz-template.html?mode=transfers"
+    },
+    {
+      "source": "/guess-player-by-club-nationality-number-position",
+      "destination": "/quiz-template.html?mode=player-clues"
+    },
+    {
+      "source": "/guess-club-by-player-nationalities",
+      "destination": "/quiz-template.html?mode=nationality-club"
+    },
 
-    /* ENGLISH */
     {
       "source": "/en/guess-player-by-transfers",
       "destination": "/en/quiz-template.html?mode=transfers"
@@ -15,7 +26,6 @@
       "destination": "/en/quiz-template.html?mode=nationality-club"
     },
 
-    /* SPANISH */
     {
       "source": "/es/adivina-jugador-por-transferencias",
       "destination": "/es/quiz-template.html?mode=transfers"
@@ -29,7 +39,6 @@
       "destination": "/es/quiz-template.html?mode=nationality-club"
     },
 
-    /* PORTUGUESE */
     {
       "source": "/pt/adivinhe-jogador-por-transferencias",
       "destination": "/pt/quiz-template.html?mode=transfers"
@@ -43,7 +52,6 @@
       "destination": "/pt/quiz-template.html?mode=nationality-club"
     },
 
-    /* FRENCH */
     {
       "source": "/fr/devinez-joueur-par-transferts",
       "destination": "/fr/quiz-template.html?mode=transfers"
@@ -57,7 +65,6 @@
       "destination": "/fr/quiz-template.html?mode=nationality-club"
     },
 
-    /* ITALIAN */
     {
       "source": "/it/indovina-giocatore-dai-trasferimenti",
       "destination": "/it/quiz-template.html?mode=transfers"
@@ -69,21 +76,6 @@
     {
       "source": "/it/indovina-club-dalla-nazionalita-dei-giocatori",
       "destination": "/it/quiz-template.html?mode=nationality-club"
-    },
-
-    /* DEFAULT (RAÍZ) */
-    {
-      "source": "/guess-player-by-transfers",
-      "destination": "/quiz-template.html?mode=transfers"
-    },
-    {
-      "source": "/guess-player-by-club-nationality-number-position",
-      "destination": "/quiz-template.html?mode=player-clues"
-    },
-    {
-      "source": "/guess-club-by-player-nationalities",
-      "destination": "/quiz-template.html?mode=nationality-club"
     }
-
   ]
 }
