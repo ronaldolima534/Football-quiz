@@ -2,38 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- HOME -->
-  <url>
-    <loc>https://footballquizapp.com/</loc>
-  </url>
+  <url><loc>https://footballquizapp.com/</loc></url>
 
-  <!-- IDIOMAS -->
-  <url>
-    <loc>https://footballquizapp.com/en/</loc>
-  </url>
-  <url>
-    <loc>https://footballquizapp.com/es/</loc>
-  </url>
-  <url>
-    <loc>https://footballquizapp.com/pt/</loc>
-  </url>
-  <url>
-    <loc>https://footballquizapp.com/fr/</loc>
-  </url>
-  <url>
-    <loc>https://footballquizapp.com/it/</loc>
-  </url>
+  <!-- EN -->
+  <url><loc>https://footballquizapp.com/en/guess-player-by-transfers</loc></url>
+  <url><loc>https://footballquizapp.com/en/guess-player-by-club-nationality-number-position</loc></url>
+  <url><loc>https://footballquizapp.com/en/guess-club-by-player-nationalities</loc></url>
 
-  <!-- QUIZZES SEO -->
-  <url>
-    <loc>https://footballquizapp.com/guess-player-by-transfers</loc>
-  </url>
+  <!-- ES -->
+  <url><loc>https://footballquizapp.com/es/adivina-jugador-por-transferencias</loc></url>
+  <url><loc>https://footballquizapp.com/es/adivina-jugador-por-club-nacionalidad-dorsal-posicion</loc></url>
+  <url><loc>https://footballquizapp.com/es/adivina-club-por-nacionalidad-de-jugadores</loc></url>
 
-  <url>
-    <loc>https://footballquizapp.com/guess-player-by-club-nationality-number-position</loc>
-  </url>
+  <!-- PT -->
+  <url><loc>https://footballquizapp.com/pt/adivinhe-jogador-por-transferencias</loc></url>
+  <url><loc>https://footballquizapp.com/pt/adivinhe-jogador-por-clube-nacionalidade-numero-posicao</loc></url>
+  <url><loc>https://footballquizapp.com/pt/adivinhe-clube-por-nacionalidade-dos-jogadores</loc></url>
 
-  <url>
-    <loc>https://footballquizapp.com/guess-club-by-player-nationalities</loc>
-  </url>
+  <!-- FR -->
+  <url><loc>https://footballquizapp.com/fr/devinez-joueur-par-transferts</loc></url>
+  <url><loc>https://footballquizapp.com/fr/devinez-joueur-par-club-nationalite-numero-poste</loc></url>
+  <url><loc>https://footballquizapp.com/fr/devinez-club-par-nationalite-des-joueurs</loc></url>
+
+  <!-- IT -->
+  <url><loc>https://footballquizapp.com/it/indovina-giocatore-dai-trasferimenti</loc></url>
+  <url><loc>https://footballquizapp.com/it/indovina-giocatore-da-club-nazionalita-numero-ruolo</loc></url>
+  <url><loc>https://footballquizapp.com/it/indovina-club-dalla-nazionalita-dei-giocatori</loc></url>
 
 </urlset>
