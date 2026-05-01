@@ -10,7 +10,7 @@ const quizData = {
     totalMedium: 20,
     totalHard: 20,
 
-    thumbnail: "images/thumbnails/transfers.jpg",
+    thumbnail: "/images/thumbnails/quiz1.jpg",
     showOnHome: true,
     homeOrder: 1
   },
@@ -25,7 +25,7 @@ const quizData = {
     totalMedium: 20,
     totalHard: 20,
 
-    thumbnail: "images/thumbnails/player-clues.jpg",
+    thumbnail: "/images/thumbnails/quiz2.jpg",
     showOnHome: true,
     homeOrder: 2
   },
@@ -40,7 +40,7 @@ const quizData = {
     totalMedium: 10,
     totalHard: 10,
 
-    thumbnail: "images/thumbnails/nationality-club.jpg",
+    thumbnail: "/images/thumbnails/quiz3.jpg",
     showOnHome: true,
     homeOrder: 3
   }
