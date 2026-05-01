@@ -1,5 +1,77 @@
 {
   "rewrites": [
+
+    /* ENGLISH */
+    {
+      "source": "/en/guess-player-by-transfers",
+      "destination": "/en/quiz-template.html?mode=transfers"
+    },
+    {
+      "source": "/en/guess-player-by-club-nationality-number-position",
+      "destination": "/en/quiz-template.html?mode=player-clues"
+    },
+    {
+      "source": "/en/guess-club-by-player-nationalities",
+      "destination": "/en/quiz-template.html?mode=nationality-club"
+    },
+
+    /* SPANISH */
+    {
+      "source": "/es/adivina-jugador-por-transferencias",
+      "destination": "/es/quiz-template.html?mode=transfers"
+    },
+    {
+      "source": "/es/adivina-jugador-por-club-nacionalidad-dorsal-posicion",
+      "destination": "/es/quiz-template.html?mode=player-clues"
+    },
+    {
+      "source": "/es/adivina-club-por-nacionalidad-de-jugadores",
+      "destination": "/es/quiz-template.html?mode=nationality-club"
+    },
+
+    /* PORTUGUESE */
+    {
+      "source": "/pt/adivinhe-jogador-por-transferencias",
+      "destination": "/pt/quiz-template.html?mode=transfers"
+    },
+    {
+      "source": "/pt/adivinhe-jogador-por-clube-nacionalidade-numero-posicao",
+      "destination": "/pt/quiz-template.html?mode=player-clues"
+    },
+    {
+      "source": "/pt/adivinhe-clube-por-nacionalidade-dos-jogadores",
+      "destination": "/pt/quiz-template.html?mode=nationality-club"
+    },
+
+    /* FRENCH */
+    {
+      "source": "/fr/devinez-joueur-par-transferts",
+      "destination": "/fr/quiz-template.html?mode=transfers"
+    },
+    {
+      "source": "/fr/devinez-joueur-par-club-nationalite-numero-poste",
+      "destination": "/fr/quiz-template.html?mode=player-clues"
+    },
+    {
+      "source": "/fr/devinez-club-par-nationalite-des-joueurs",
+      "destination": "/fr/quiz-template.html?mode=nationality-club"
+    },
+
+    /* ITALIAN */
+    {
+      "source": "/it/indovina-giocatore-dai-trasferimenti",
+      "destination": "/it/quiz-template.html?mode=transfers"
+    },
+    {
+      "source": "/it/indovina-giocatore-da-club-nazionalita-numero-ruolo",
+      "destination": "/it/quiz-template.html?mode=player-clues"
+    },
+    {
+      "source": "/it/indovina-club-dalla-nazionalita-dei-giocatori",
+      "destination": "/it/quiz-template.html?mode=nationality-club"
+    },
+
+    /* DEFAULT (RAÍZ) */
     {
       "source": "/guess-player-by-transfers",
       "destination": "/quiz-template.html?mode=transfers"
@@ -12,5 +84,6 @@
       "source": "/guess-club-by-player-nationalities",
       "destination": "/quiz-template.html?mode=nationality-club"
     }
+
   ]
 }
