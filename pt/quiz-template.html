@@ -33,13 +33,6 @@
 <meta name="robots" content="index, follow">
 <meta name="author" content="Football Quiz">
 
-<link rel="alternate" hreflang="en" href="https://football-quiz-nu.vercel.app/en/quiz-template.html">
-<link rel="alternate" hreflang="es" href="https://football-quiz-nu.vercel.app/es/quiz-template.html">
-<link rel="alternate" hreflang="pt" href="https://football-quiz-nu.vercel.app/pt/quiz-template.html">
-<link rel="alternate" hreflang="fr" href="https://football-quiz-nu.vercel.app/fr/quiz-template.html">
-<link rel="alternate" hreflang="it" href="https://football-quiz-nu.vercel.app/it/quiz-template.html">
-<link rel="alternate" hreflang="x-default" href="https://football-quiz-nu.vercel.app/quiz-template.html">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
@@ -121,11 +114,6 @@ display:block;
 margin:0 auto;
 }
 
-.lang-btn:hover{
-transform:translateY(-2px);
-border-color:var(--green);
-}
-
 .lang-btn.active{
 background:linear-gradient(145deg,var(--green),var(--green2));
 border-color:transparent;
@@ -176,6 +164,20 @@ border-radius:24px;
 font-size:28px;
 font-weight:900;
 box-shadow:0 14px 30px rgba(0,0,0,.35);
+}
+
+.quiz-description{
+width:94%;
+max-width:760px;
+margin:14px auto 18px;
+background:linear-gradient(145deg,#141414,#1c1c1c);
+border:1px solid var(--line);
+border-radius:22px;
+padding:18px 20px;
+font-size:17px;
+line-height:1.6;
+color:#cfcfcf;
+box-shadow:0 12px 28px rgba(0,0,0,.28);
 }
 
 .container{
@@ -254,21 +256,10 @@ opacity:1;
 transform:translateX(0) scale(1);
 }
 
-.img-out-answer{
-animation:imgOutAnswer .22s ease forwards;
-}
-
-.img-in-answer{
-animation:imgInAnswer .42s cubic-bezier(.22,1,.36,1) forwards;
-}
-
-.img-out-next{
-animation:imgOutNext .22s ease forwards;
-}
-
-.img-in-next{
-animation:imgInNext .46s cubic-bezier(.22,1,.36,1) forwards;
-}
+.img-out-answer{animation:imgOutAnswer .22s ease forwards;}
+.img-in-answer{animation:imgInAnswer .42s cubic-bezier(.22,1,.36,1) forwards;}
+.img-out-next{animation:imgOutNext .22s ease forwards;}
+.img-in-next{animation:imgInNext .46s cubic-bezier(.22,1,.36,1) forwards;}
 
 @keyframes imgOutAnswer{
 to{opacity:0;transform:scale(.95);}
@@ -310,10 +301,6 @@ cursor:pointer;
 transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
 }
 
-.btn:active{
-transform:scale(.97);
-}
-
 .green{
 background:linear-gradient(145deg,var(--green),var(--green2));
 color:#000;
@@ -347,20 +334,6 @@ box-shadow:
 transition:.15s;
 }
 
-.gray:hover{
-transform:translateY(-2px);
-box-shadow:
-0 8px 0 #111,
-0 16px 24px rgba(0,0,0,.4);
-}
-
-.gray:active{
-transform:translateY(4px);
-box-shadow:
-0 2px 0 #111,
-0 8px 16px rgba(0,0,0,.3);
-}
-
 .btn-pop{animation:btnPop .28s ease;}
 .btn-glow{animation:btnGlow .4s ease;}
 
@@ -383,12 +356,6 @@ background:#151515;
 border:1px solid var(--line);
 padding:24px;
 border-radius:24px;
-animation:finalAppear .35s ease;
-}
-
-@keyframes finalAppear{
-from{opacity:0;transform:translateY(18px) scale(.98);}
-to{opacity:1;transform:translateY(0) scale(1);}
 }
 
 .final-box h2{
@@ -411,11 +378,6 @@ cursor:pointer;
 background:#202020;
 color:#fff;
 border:1px solid var(--line);
-transition:.2s;
-}
-
-.guess-btn:hover{
-transform:translateY(-2px);
 }
 
 .after-choice{
@@ -433,9 +395,9 @@ color:#888;
 body{padding-top:190px;}
 .brand{font-size:28px;}
 .title-bar{font-size:22px;}
+.quiz-description{font-size:15px;padding:16px;}
 .counter{font-size:22px;}
 .btn{font-size:19px;padding:16px;}
-.lang-wrap{justify-content:center;}
 }
 </style>
 </head>
@@ -463,6 +425,7 @@ body{padding-top:190px;}
 
 <div class="title-wrap">
   <div class="title-bar" id="quizTitle"></div>
+  <div class="quiz-description" id="quizDescription"></div>
 </div>
 
 <div class="container">
@@ -520,43 +483,65 @@ if(!quiz){
   location.href = "index.html";
 }
 
-function updateSEO(){
-  let pageTitle = "Football Quiz Game – Guess the Player Online";
-  let pageDescription = "Play a football quiz game online. Guess football players from transfers, clubs, nationality and more.";
-
-  if(mode === "transfers"){
-    pageTitle = "Guess the Player by Transfers – Football Quiz";
-    pageDescription = "Can you guess the football player from their transfer history? Play the football transfers quiz online.";
+const quizDescriptions = {
+  en:{
+    transfers:"Guess the football player by looking at their transfer history and career path. Follow the clubs, years and moves to identify the correct player in this football transfers quiz.",
+    "player-clues":"Guess the football player using four clues: club, nationality, shirt number and position. Test your football knowledge and see if you can identify the player from these details.",
+    "nationality-club":"Guess the football club by looking at the nationalities of its players. Analyse the mix of countries and try to identify which club the squad belongs to."
+  },
+  es:{
+    transfers:"Adivina el jugador de fútbol observando su historial de transferencias y trayectoria. Sigue los clubes, años y movimientos para descubrir al jugador correcto en este quiz de transferencias.",
+    "player-clues":"Adivina el jugador usando cuatro pistas: club, nacionalidad, número de camiseta y posición. Pon a prueba tu conocimiento futbolero e identifica al jugador correcto.",
+    "nationality-club":"Adivina el club de fútbol observando las nacionalidades de sus jugadores. Analiza la mezcla de países e intenta descubrir a qué club pertenece la plantilla."
+  },
+  pt:{
+    transfers:"Adivinhe o jogador de futebol observando seu histórico de transferências e trajetória. Siga os clubes, anos e mudanças para identificar o jogador correto neste quiz de transferências.",
+    "player-clues":"Adivinhe o jogador usando quatro pistas: clube, nacionalidade, número da camisa e posição. Teste seu conhecimento de futebol e descubra o jogador correto.",
+    "nationality-club":"Adivinhe o clube de futebol observando as nacionalidades dos jogadores. Analise a mistura de países e tente descobrir a qual clube pertence o elenco."
+  },
+  fr:{
+    transfers:"Devinez le joueur de football en observant son historique de transferts et son parcours. Suivez les clubs, les années et les mouvements pour identifier le bon joueur.",
+    "player-clues":"Devinez le joueur grâce à quatre indices : club, nationalité, numéro de maillot et poste. Testez vos connaissances footballistiques et trouvez le bon joueur.",
+    "nationality-club":"Devinez le club de football en observant les nationalités de ses joueurs. Analysez le mélange de pays et essayez d’identifier le club correspondant."
+  },
+  it:{
+    transfers:"Indovina il calciatore osservando la sua storia di trasferimenti e la sua carriera. Segui club, anni e passaggi per identificare il giocatore corretto.",
+    "player-clues":"Indovina il calciatore usando quattro indizi: club, nazionalità, numero di maglia e ruolo. Metti alla prova la tua conoscenza calcistica.",
+    "nationality-club":"Indovina il club osservando le nazionalità dei suoi giocatori. Analizza il mix di paesi e prova a capire a quale squadra appartiene la rosa."
   }
+};
 
-  if(mode === "player-clues"){
-    pageTitle = "Guess the Player by Club, Nationality, Number & Position – Football Quiz";
-    pageDescription = "Guess the football player using club, nationality, shirt number and position clues.";
-  }
-
-  if(mode === "nationality-club"){
-    pageTitle = "Guess the Club by Players Nationality – Football Quiz";
-    pageDescription = "Can you guess the football club based on the nationalities of its players?";
-  }
-
-  document.title = pageTitle;
-  document.querySelector("meta[name='description']").setAttribute("content", pageDescription);
+function currentLang(){
+  const lang = getSavedLanguage();
+  if(["en","es","pt","fr","it"].includes(lang)) return lang;
+  return "en";
 }
 
-updateSEO();
+function getQuizDescription(){
+  const lang = currentLang();
+  return quizDescriptions[lang][mode] || quizDescriptions.en[mode] || "";
+}
+
+function updateSEO(){
+  const desc = getQuizDescription();
+  document.title = `${t(quiz.titleKey)} – Football Quiz`;
+  document.querySelector("meta[name='description']").setAttribute("content", desc);
+}
 
 let current = 1;
 let showing = false;
 let selectedQuestions = [];
 
 function applyQuizTranslations(){
-  document.documentElement.lang = getSavedLanguage();
+  document.documentElement.lang = currentLang();
+
   document.getElementById("siteName").innerText = t("site_name");
   document.getElementById("navHome").innerText = t("nav_home");
   document.getElementById("navDailyQuiz").innerText = t("nav_daily_quiz");
   document.getElementById("navAbout").innerText = t("nav_about");
   document.getElementById("navContact").innerText = t("nav_contact");
   document.getElementById("quizTitle").innerText = t(quiz.titleKey);
+  document.getElementById("quizDescription").innerText = getQuizDescription();
   document.getElementById("backHomeBtn").innerText = t("back_home");
   document.getElementById("finalTitle").innerText = t("final_title");
   document.getElementById("finalOption1").innerText = t("final_option_1");
@@ -687,13 +672,8 @@ function swapImage(src, type){
   preload.src = src;
 }
 
-function loadQuestion(){
-  swapImage(getQuestionImagePath(), "next");
-}
-
-function loadAnswer(){
-  swapImage(getAnswerImagePath(), "answer");
-}
+function loadQuestion(){swapImage(getQuestionImagePath(), "next");}
+function loadAnswer(){swapImage(getAnswerImagePath(), "answer");}
 
 function mainAction(){
   if(!showing){
@@ -735,6 +715,7 @@ function finishChoice(){
 buildLanguageSelector("languageSelector");
 buildQuestionSet();
 applyQuizTranslations();
+updateSEO();
 updateBadge();
 updateProgress();
 updateCounter();
