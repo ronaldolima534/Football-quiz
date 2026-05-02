@@ -3,17 +3,34 @@
 <head>
 <script>
 (function(){
+  const supported = ["en","es","pt","fr","it"];
   const path = window.location.pathname;
-  if(path.startsWith("/it/")){
-    localStorage.setItem("footballQuizLanguage","it");
-    document.documentElement.lang = "it";
-  }else if(path.startsWith("/fr/")){
-    localStorage.setItem("footballQuizLanguage","fr");
-    document.documentElement.lang = "fr";
-  }else if(path.startsWith("/pt/")){
-    localStorage.setItem("footballQuizLanguage","pt");
-    document.documentElement.lang = "pt";
+
+  function detectBrowserLanguage(){
+    const browserLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+
+    if(browserLang.startsWith("es")) return "es";
+    if(browserLang.startsWith("pt")) return "pt";
+    if(browserLang.startsWith("fr")) return "fr";
+    if(browserLang.startsWith("it")) return "it";
+
+    return "en";
   }
+
+  let lang = null;
+
+  if(path.startsWith("/es/")) lang = "es";
+  else if(path.startsWith("/pt/")) lang = "pt";
+  else if(path.startsWith("/fr/")) lang = "fr";
+  else if(path.startsWith("/it/")) lang = "it";
+  else if(path.startsWith("/en/")) lang = "en";
+  else{
+    const saved = localStorage.getItem("footballQuizLanguage");
+    lang = supported.includes(saved) ? saved : detectBrowserLanguage();
+  }
+
+  localStorage.setItem("footballQuizLanguage", lang);
+  document.documentElement.lang = lang;
 })();
 </script>
 
@@ -27,29 +44,8 @@
 <meta name="robots" content="index, follow">
 <meta name="author" content="Football Quiz">
 
-<link rel="alternate" hreflang="en" href="https://football-quiz-nu.vercel.app/en/">
-<link rel="alternate" hreflang="es" href="https://football-quiz-nu.vercel.app/es/">
-<link rel="alternate" hreflang="pt" href="https://football-quiz-nu.vercel.app/pt/">
-<link rel="alternate" hreflang="fr" href="https://football-quiz-nu.vercel.app/fr/">
-<link rel="alternate" hreflang="it" href="https://football-quiz-nu.vercel.app/it/">
-<link rel="alternate" hreflang="x-default" href="https://football-quiz-nu.vercel.app/">
-
-<meta property="og:title" content="Football Quiz – Guess the Player, Clubs & Transfers">
-<meta property="og:description" content="Play online football quizzes. Guess players, clubs, transfers and national teams.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://football-quiz-nu.vercel.app/images/thumbnails/quiz1.jpg">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Football Quiz – Guess the Player">
-<meta name="twitter:description" content="Play football quizzes online and test your football knowledge.">
-<meta name="twitter:image" content="https://football-quiz-nu.vercel.app/images/thumbnails/quiz1.jpg">
-
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
 --card:#151515;
@@ -292,8 +288,6 @@ animation:fadeUp .6s ease forwards;
 .card:nth-child(1){animation-delay:.05s;}
 .card:nth-child(2){animation-delay:.14s;}
 .card:nth-child(3){animation-delay:.23s;}
-.card:nth-child(4){animation-delay:.32s;}
-.card:nth-child(5){animation-delay:.41s;}
 
 .card::before{
 content:"";
@@ -365,19 +359,6 @@ overflow:hidden;
 z-index:1;
 }
 
-.play::after{
-content:"";
-position:absolute;
-inset:0;
-background:radial-gradient(circle,rgba(255,255,255,.25),transparent 60%);
-opacity:0;
-transition:.3s;
-}
-
-.play:hover::after{
-opacity:1;
-}
-
 .play:hover{
 transform:translateY(-2px);
 box-shadow:
@@ -426,72 +407,23 @@ text-decoration:none;
 font-weight:900;
 }
 
-.footer a:hover{
-text-decoration:underline;
-}
-
 @keyframes fadeUp{
-0%{
-opacity:0;
-transform:translateY(30px);
-}
-100%{
-opacity:1;
-transform:translateY(0);
-}
+0%{opacity:0;transform:translateY(30px);}
+100%{opacity:1;transform:translateY(0);}
 }
 
 @media(max-width:600px){
-body{
-padding-top:178px;
-}
-
-.lang-wrap{
-justify-content:center;
-}
-
-.brand{
-font-size:34px;
-}
-
-.hero h1{
-font-size:32px;
-}
-
-.hero p{
-font-size:16px;
-}
-
-.hero-box{
-padding:28px 18px;
-}
-
-.random-btn{
-font-size:21px;
-padding:19px;
-}
-
-.section-title{
-font-size:26px;
-}
-
-.thumb{
-height:210px;
-}
-
-.quiz-title{
-font-size:22px;
-}
-
-.play{
-font-size:24px;
-padding:19px;
-}
-
-.nav button{
-font-size:13px;
-padding:10px 13px;
-}
+body{padding-top:178px;}
+.brand{font-size:34px;}
+.hero h1{font-size:32px;}
+.hero p{font-size:16px;}
+.hero-box{padding:28px 18px;}
+.random-btn{font-size:21px;padding:19px;}
+.section-title{font-size:26px;}
+.thumb{height:210px;}
+.quiz-title{font-size:22px;}
+.play{font-size:24px;padding:19px;}
+.nav button{font-size:13px;padding:10px 13px;}
 }
 </style>
 </head>
@@ -499,7 +431,6 @@ padding:10px 13px;
 <body>
 
 <div class="top-ui" id="topUI">
-
   <div class="lang-top">
     <div class="lang-wrap">
       <div class="lang-buttons" id="languageSelector"></div>
@@ -510,20 +441,18 @@ padding:10px 13px;
     <div class="brand" id="siteName"></div>
 
     <div class="nav">
-      <button onclick="location.href='index.html'" id="navHome"></button>
-      <button onclick="location.href='daily-quiz.html'" id="navDailyQuiz"></button>
-      <button onclick="location.href='about.html'" id="navAbout"></button>
-      <button onclick="location.href='contact.html'" id="navContact"></button>
+      <button onclick="goHome()" id="navHome"></button>
+      <button onclick="goPage('daily-quiz.html')" id="navDailyQuiz"></button>
+      <button onclick="goPage('about.html')" id="navAbout"></button>
+      <button onclick="goPage('contact.html')" id="navContact"></button>
     </div>
   </div>
-
 </div>
 
 <div class="hero">
   <div class="hero-box">
     <h1 id="heroTitle"></h1>
     <p id="heroSub"></p>
-
     <button class="random-btn" id="randomBtn" onclick="playRandomQuiz()"></button>
   </div>
 </div>
@@ -541,51 +470,84 @@ padding:10px 13px;
 <div class="footer">
   © Football Quiz
   <br><br>
-  <a href="../privacy.html">Privacy Policy</a> |
-  <a href="../terms.html">Terms of Service</a>
+  <a href="/privacy.html">Privacy Policy</a> |
+  <a href="/terms.html">Terms of Service</a>
 </div>
 
-<script src="../quiz-data.js"></script>
-<script src="../translations.js"></script>
-<script src="../language.js"></script>
-
 <script>
+const IS_LANG_FOLDER = /^\/(en|es|pt|fr|it)\//.test(window.location.pathname);
+const BASE = IS_LANG_FOLDER ? "../" : "";
+
+function loadScript(src){
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement("script");
+    s.src=BASE+src;
+    s.onload=resolve;
+    s.onerror=reject;
+    document.body.appendChild(s);
+  });
+}
+
 const homeText = {
   en: {
     random: "PLAY RANDOM QUIZ",
     seoTitle: "Play Football Quiz Online",
-    seoText1: "Football Quiz is an online football trivia game where fans can test their knowledge by guessing players, clubs, transfers and national teams. Play visual football quizzes, try the daily football quiz and challenge yourself with easy, medium and hard questions.",
+    seoText1: "Football Quiz is an online football trivia game where fans can test their knowledge by guessing players, clubs, transfers and national teams.",
     seoText2: "If you enjoy football games, soccer quizzes, player guessing challenges and football trivia, this website is made for you."
   },
   es: {
     random: "JUGAR QUIZ ALEATORIO",
     seoTitle: "Juega Football Quiz Online",
-    seoText1: "Football Quiz es un juego online de preguntas de fútbol donde los fans pueden poner a prueba sus conocimientos adivinando jugadores, clubes, transferencias y selecciones. Juega quizzes visuales, prueba el quiz diario y desafíate con preguntas fáciles, medias y difíciles.",
-    seoText2: "Si te gustan los juegos de fútbol, los quizzes de fútbol, los retos de adivinar jugadores y las trivias futboleras, esta web es para ti."
+    seoText1: "Football Quiz es un juego online de preguntas de fútbol donde los fans pueden poner a prueba sus conocimientos adivinando jugadores, clubes, transferencias y selecciones.",
+    seoText2: "Si te gustan los juegos de fútbol, los quizzes de fútbol y las trivias futboleras, esta web es para ti."
   },
   pt: {
     random: "JOGAR QUIZ ALEATÓRIO",
     seoTitle: "Jogue Football Quiz Online",
-    seoText1: "Football Quiz é um jogo online de perguntas de futebol onde os fãs podem testar seus conhecimentos adivinhando jogadores, clubes, transferências e seleções. Jogue quizzes visuais, experimente o quiz diário e desafie-se com perguntas fáceis, médias e difíceis.",
-    seoText2: "Se você gosta de jogos de futebol, quizzes de futebol, desafios de adivinhar jogadores e curiosidades futebolísticas, este site é para você."
+    seoText1: "Football Quiz é um jogo online de perguntas de futebol onde os fãs podem testar seus conhecimentos adivinhando jogadores, clubes, transferências e seleções.",
+    seoText2: "Se você gosta de jogos de futebol, quizzes de futebol e curiosidades futebolísticas, este site é para você."
   },
   fr: {
     random: "QUIZ ALÉATOIRE",
     seoTitle: "Jouez à Football Quiz en Ligne",
-    seoText1: "Football Quiz est un jeu de quiz football en ligne où les fans peuvent tester leurs connaissances en devinant des joueurs, des clubs, des transferts et des équipes nationales. Jouez à des quiz visuels, essayez le quiz du jour et relevez des défis faciles, moyens et difficiles.",
-    seoText2: "Si vous aimez les jeux de football, les quiz de football, les défis pour deviner les joueurs et les questions de culture footballistique, ce site est fait pour vous."
+    seoText1: "Football Quiz est un jeu de quiz football en ligne où les fans peuvent tester leurs connaissances en devinant des joueurs, des clubs et des transferts.",
+    seoText2: "Si vous aimez les jeux de football, les quiz football et les défis de culture footballistique, ce site est fait pour vous."
   },
   it: {
     random: "QUIZ CASUALE",
     seoTitle: "Gioca a Football Quiz Online",
-    seoText1: "Football Quiz è un gioco online di domande sul calcio dove i tifosi possono mettere alla prova le proprie conoscenze indovinando giocatori, club, trasferimenti e nazionali. Gioca a quiz visivi, prova il quiz del giorno e sfidati con domande facili, medie e difficili.",
-    seoText2: "Se ti piacciono i giochi di calcio, i quiz calcistici, le sfide per indovinare i giocatori e le curiosità sul calcio, questo sito è fatto per te."
+    seoText1: "Football Quiz è un gioco online di domande sul calcio dove i tifosi possono mettere alla prova le proprie conoscenze indovinando giocatori, club e trasferimenti.",
+    seoText2: "Se ti piacciono i giochi di calcio, i quiz calcistici e le sfide sul calcio, questo sito è fatto per te."
+  }
+};
+
+const quizRoutes = {
+  transfers: {
+    en:"guess-player-by-transfers",
+    es:"adivina-jugador-por-transferencias",
+    pt:"adivinhe-jogador-por-transferencias",
+    fr:"devinez-joueur-par-transferts",
+    it:"indovina-giocatore-dai-trasferimenti"
+  },
+  "player-clues": {
+    en:"guess-player-by-club-nationality-number-position",
+    es:"adivina-jugador-por-club-nacionalidad-dorsal-posicion",
+    pt:"adivinhe-jogador-por-clube-nacionalidade-numero-posicao",
+    fr:"devinez-joueur-par-club-nationalite-numero-poste",
+    it:"indovina-giocatore-da-club-nazionalita-numero-ruolo"
+  },
+  "nationality-club": {
+    en:"guess-club-by-player-nationalities",
+    es:"adivina-club-por-nacionalidad-de-jugadores",
+    pt:"adivinhe-clube-por-nacionalidade-dos-jogadores",
+    fr:"devinez-club-par-nationalite-des-joueurs",
+    it:"indovina-club-dalla-nazionalita-dei-giocatori"
   }
 };
 
 function currentLang(){
-  const lang = getSavedLanguage();
-  if(["en","es","pt","fr","it"].includes(lang)) return lang;
+  const saved = localStorage.getItem("footballQuizLanguage");
+  if(["en","es","pt","fr","it"].includes(saved)) return saved;
   return "en";
 }
 
@@ -603,14 +565,30 @@ function safeT(key, fallback){
   }
 }
 
-function playRandomQuiz(){
-  const quizzes = Object.entries(quizData)
-    .filter(([mode, quiz]) => quiz.showOnHome);
+function langPrefix(){
+  return "/" + currentLang() + "/";
+}
 
+function goHome(){
+  location.href = langPrefix();
+}
+
+function goPage(page){
+  location.href = langPrefix() + page;
+}
+
+function goQuiz(mode){
+  const lang = currentLang();
+  const slug = quizRoutes[mode][lang] || quizRoutes[mode].en;
+  location.href = langPrefix() + slug;
+}
+
+function playRandomQuiz(){
+  const quizzes = Object.entries(quizData).filter(([mode, quiz]) => quiz.showOnHome);
   if(quizzes.length === 0) return;
 
   const randomQuiz = quizzes[Math.floor(Math.random() * quizzes.length)];
-  location.href = `quiz-template.html?mode=${randomQuiz[0]}`;
+  goQuiz(randomQuiz[0]);
 }
 
 function applyHomeTranslations(){
@@ -645,14 +623,14 @@ function buildHomeQuizzes(){
     html += `
       <div class="card">
         <div class="thumb">
-          <img src="../${quiz.thumbnail}" alt="${safeT(quiz.titleKey, "Football Quiz")}">
+          <img src="${quiz.thumbnail}" alt="${safeT(quiz.titleKey, "Football Quiz")}">
         </div>
 
         <div class="quiz-title">
           ${safeT(quiz.titleKey, quiz.titleKey)}
         </div>
 
-        <button class="play" onclick="location.href='quiz-template.html?mode=${mode}'">
+        <button class="play" onclick="goQuiz('${mode}')">
           ${safeT("play", "PLAY")}
         </button>
       </div>
@@ -662,41 +640,50 @@ function buildHomeQuizzes(){
   container.innerHTML = html;
 }
 
-buildLanguageSelector("languageSelector");
-applyHomeTranslations();
-buildHomeQuizzes();
+function setupHeaderScroll(){
+  const topUI = document.getElementById("topUI");
 
-const topUI = document.getElementById("topUI");
-
-function updateTopPadding(){
-  document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px";
-}
-
-function hideTopUI(){
-  topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`;
-}
-
-function showTopUI(){
-  topUI.style.transform = "translateY(0)";
-}
-
-updateTopPadding();
-window.addEventListener("load", updateTopPadding);
-window.addEventListener("resize", updateTopPadding);
-
-let lastScroll = 0;
-
-window.addEventListener("scroll", () => {
-  const current = window.scrollY || window.pageYOffset;
-
-  if(current > lastScroll && current > 80){
-    hideTopUI();
-  }else if(current < 10){
-    showTopUI();
+  function updateTopPadding(){
+    document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px";
   }
 
-  lastScroll = current <= 0 ? 0 : current;
-}, { passive:true });
+  function hideTopUI(){
+    topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`;
+  }
+
+  function showTopUI(){
+    topUI.style.transform = "translateY(0)";
+  }
+
+  updateTopPadding();
+  window.addEventListener("load", updateTopPadding);
+  window.addEventListener("resize", updateTopPadding);
+
+  let lastScroll = 0;
+
+  window.addEventListener("scroll", () => {
+    const current = window.scrollY || window.pageYOffset;
+
+    if(current > lastScroll && current > 80){
+      hideTopUI();
+    }else if(current < 10){
+      showTopUI();
+    }
+
+    lastScroll = current <= 0 ? 0 : current;
+  }, { passive:true });
+}
+
+Promise.all([
+  loadScript("quiz-data.js"),
+  loadScript("translations.js"),
+  loadScript("language.js")
+]).then(()=>{
+  buildLanguageSelector("languageSelector");
+  applyHomeTranslations();
+  buildHomeQuizzes();
+  setupHeaderScroll();
+});
 </script>
 
 </body>
