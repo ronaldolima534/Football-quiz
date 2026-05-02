@@ -3,24 +3,34 @@
 <head>
 <script>
 (function(){
+  const supported = ["en","es","pt","fr","it"];
   const path = window.location.pathname;
 
-  if(path.startsWith("/es/")){
-    localStorage.setItem("footballQuizLanguage","es");
-    document.documentElement.lang = "es";
-  }else if(path.startsWith("/pt/")){
-    localStorage.setItem("footballQuizLanguage","pt");
-    document.documentElement.lang = "pt";
-  }else if(path.startsWith("/fr/")){
-    localStorage.setItem("footballQuizLanguage","fr");
-    document.documentElement.lang = "fr";
-  }else if(path.startsWith("/it/")){
-    localStorage.setItem("footballQuizLanguage","it");
-    document.documentElement.lang = "it";
-  }else if(path.startsWith("/en/")){
-    localStorage.setItem("footballQuizLanguage","en");
-    document.documentElement.lang = "en";
+  function detectBrowserLanguage(){
+    const browserLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+
+    if(browserLang.startsWith("es")) return "es";
+    if(browserLang.startsWith("pt")) return "pt";
+    if(browserLang.startsWith("fr")) return "fr";
+    if(browserLang.startsWith("it")) return "it";
+
+    return "en";
   }
+
+  let lang = null;
+
+  if(path.startsWith("/es/")) lang = "es";
+  else if(path.startsWith("/pt/")) lang = "pt";
+  else if(path.startsWith("/fr/")) lang = "fr";
+  else if(path.startsWith("/it/")) lang = "it";
+  else if(path.startsWith("/en/")) lang = "en";
+  else{
+    const saved = localStorage.getItem("footballQuizLanguage");
+    lang = supported.includes(saved) ? saved : detectBrowserLanguage();
+  }
+
+  localStorage.setItem("footballQuizLanguage", lang);
+  document.documentElement.lang = lang;
 })();
 </script>
 
@@ -34,14 +44,8 @@
 <meta name="robots" content="index, follow">
 <meta name="author" content="Football Quiz">
 
-<link rel="canonical" href="https://footballquizapp.com/">
-
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
 --card:#151515;
@@ -284,8 +288,6 @@ animation:fadeUp .6s ease forwards;
 .card:nth-child(1){animation-delay:.05s;}
 .card:nth-child(2){animation-delay:.14s;}
 .card:nth-child(3){animation-delay:.23s;}
-.card:nth-child(4){animation-delay:.32s;}
-.card:nth-child(5){animation-delay:.41s;}
 
 .card::before{
 content:"";
@@ -429,7 +431,6 @@ body{padding-top:178px;}
 <body>
 
 <div class="top-ui" id="topUI">
-
   <div class="lang-top">
     <div class="lang-wrap">
       <div class="lang-buttons" id="languageSelector"></div>
@@ -446,7 +447,6 @@ body{padding-top:178px;}
       <button onclick="goPage('contact.html')" id="navContact"></button>
     </div>
   </div>
-
 </div>
 
 <div class="hero">
@@ -546,18 +546,9 @@ const quizRoutes = {
 };
 
 function currentLang(){
-  const path = window.location.pathname;
-
-  if(path.startsWith("/es/")) return "es";
-  if(path.startsWith("/pt/")) return "pt";
-  if(path.startsWith("/fr/")) return "fr";
-  if(path.startsWith("/it/")) return "it";
-  if(path.startsWith("/en/")) return "en";
-
   const saved = localStorage.getItem("footballQuizLanguage");
   if(["en","es","pt","fr","it"].includes(saved)) return saved;
-
-  return getSavedLanguage();
+  return "en";
 }
 
 function ht(key){
@@ -575,8 +566,7 @@ function safeT(key, fallback){
 }
 
 function langPrefix(){
-  const lang = currentLang();
-  return "/" + lang + "/";
+  return "/" + currentLang() + "/";
 }
 
 function goHome(){
