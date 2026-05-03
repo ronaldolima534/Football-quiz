@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BXHRG2RYG7"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BXHRG2RYG7');
+</script>
+
 <script>
 (function(){
   const supported = ["en","es","pt","fr","it"];
@@ -45,7 +55,11 @@
 <meta name="author" content="Football Quiz">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 :root{
 --card:#151515;
@@ -288,6 +302,8 @@ animation:fadeUp .6s ease forwards;
 .card:nth-child(1){animation-delay:.05s;}
 .card:nth-child(2){animation-delay:.14s;}
 .card:nth-child(3){animation-delay:.23s;}
+.card:nth-child(4){animation-delay:.32s;}
+.card:nth-child(5){animation-delay:.41s;}
 
 .card::before{
 content:"";
@@ -359,6 +375,19 @@ overflow:hidden;
 z-index:1;
 }
 
+.play::after{
+content:"";
+position:absolute;
+inset:0;
+background:radial-gradient(circle,rgba(255,255,255,.25),transparent 60%);
+opacity:0;
+transition:.3s;
+}
+
+.play:hover::after{
+opacity:1;
+}
+
 .play:hover{
 transform:translateY(-2px);
 box-shadow:
@@ -407,23 +436,72 @@ text-decoration:none;
 font-weight:900;
 }
 
+.footer a:hover{
+text-decoration:underline;
+}
+
 @keyframes fadeUp{
-0%{opacity:0;transform:translateY(30px);}
-100%{opacity:1;transform:translateY(0);}
+0%{
+opacity:0;
+transform:translateY(30px);
+}
+100%{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 @media(max-width:600px){
-body{padding-top:178px;}
-.brand{font-size:34px;}
-.hero h1{font-size:32px;}
-.hero p{font-size:16px;}
-.hero-box{padding:28px 18px;}
-.random-btn{font-size:21px;padding:19px;}
-.section-title{font-size:26px;}
-.thumb{height:210px;}
-.quiz-title{font-size:22px;}
-.play{font-size:24px;padding:19px;}
-.nav button{font-size:13px;padding:10px 13px;}
+body{
+padding-top:178px;
+}
+
+.lang-wrap{
+justify-content:center;
+}
+
+.brand{
+font-size:34px;
+}
+
+.hero h1{
+font-size:32px;
+}
+
+.hero p{
+font-size:16px;
+}
+
+.hero-box{
+padding:28px 18px;
+}
+
+.random-btn{
+font-size:21px;
+padding:19px;
+}
+
+.section-title{
+font-size:26px;
+}
+
+.thumb{
+height:210px;
+}
+
+.quiz-title{
+font-size:22px;
+}
+
+.play{
+font-size:24px;
+padding:19px;
+}
+
+.nav button{
+font-size:13px;
+padding:10px 13px;
+}
 }
 </style>
 </head>
@@ -431,6 +509,7 @@ body{padding-top:178px;}
 <body>
 
 <div class="top-ui" id="topUI">
+
   <div class="lang-top">
     <div class="lang-wrap">
       <div class="lang-buttons" id="languageSelector"></div>
@@ -447,6 +526,7 @@ body{padding-top:178px;}
       <button onclick="goPage('contact.html')" id="navContact"></button>
     </div>
   </div>
+
 </div>
 
 <div class="hero">
