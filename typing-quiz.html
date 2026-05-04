@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BXHRG2RYG7"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BXHRG2RYG7');
+</script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7742486590733120"
+crossorigin="anonymous"></script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Guess the Player Name | Football Quiz</title>
+
+<style>
+body{
+font-family:Arial;
+background:linear-gradient(180deg,#080808,#111);
+color:#fff;
+text-align:center;
+padding-top:120px;
+}
+
+.container{
+width:95%;
+max-width:700px;
+margin:auto;
+}
+
+.viewer{
+background:#151515;
+border-radius:20px;
+padding:15px;
+margin-bottom:20px;
+}
+
+.viewer img{
+width:100%;
+max-height:350px;
+object-fit:contain;
+}
+
+input{
+width:100%;
+padding:18px;
+font-size:20px;
+border-radius:14px;
+border:none;
+margin-top:15px;
+text-align:center;
+}
+
+button{
+padding:16px;
+font-size:18px;
+font-weight:bold;
+border:none;
+border-radius:14px;
+margin-top:10px;
+cursor:pointer;
+}
+
+.green{
+background:#22c55e;
+color:#000;
+}
+
+.gray{
+background:#333;
+color:#fff;
+}
+
+.result{
+margin-top:15px;
+font-size:22px;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="viewer">
+<img id="image">
+</div>
+
+<input type="text" id="answerInput" placeholder="Type player name...">
+
+<button class="green" onclick="checkAnswer()">CHECK</button>
+
+<div class="result" id="result"></div>
+
+<button class="gray" onclick="nextQuestion()">NEXT</button>
+
+</div>
+
+<script src="typing-quiz-data.js"></script>
+
+<script>
+
+let current = 0;
+let level = "easy";
+let data = typingQuizData["guess-player-name"][level];
+
+function normalize(text){
+  return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+}
+
+function loadQuestion(){
+  const q = data[current];
+  document.getElementById("image").src = `images/guess-player-name/${level}/q${q.number}.webp`;
+  document.getElementById("answerInput").value = "";
+  document.getElementById("result").innerText = "";
+}
+
+function checkAnswer(){
+  const input = document.getElementById("answerInput").value;
+  const answers = data[current].answers;
+
+  const correct = answers.some(a => normalize(a) === normalize(input));
+
+  if(correct){
+    document.getElementById("result").innerText = "✅ Correct";
+  }else{
+    document.getElementById("result").innerText = "❌ Wrong";
+  }
+}
+
+function nextQuestion(){
+  current++;
+
+  if(current >= data.length){
+    alert("Finished!");
+    current = 0;
+  }
+
+  loadQuestion();
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
