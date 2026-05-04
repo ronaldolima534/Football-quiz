@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-<!-- Google tag (gtag.js) -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BXHRG2RYG7"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -14,7 +14,7 @@ gtag('config', 'G-BXHRG2RYG7');
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7742486590733120"
 crossorigin="anonymous"></script>
-  
+
 <script>
 (function(){
   const supported = ["en","es","pt","fr","it"];
@@ -65,6 +65,8 @@ crossorigin="anonymous"></script>
 --green:#22c55e;
 --green2:#15803d;
 --greenDark:#0f5f2d;
+--yellow:#facc15;
+--yellowDark:#a16207;
 }
 
 body{
@@ -360,6 +362,35 @@ box-shadow:
 0 12px 20px rgba(0,0,0,.35);
 }
 
+.hint{
+background:linear-gradient(145deg,var(--yellow),#eab308);
+color:#000;
+box-shadow:
+0 8px 0 var(--yellowDark),
+0 14px 24px rgba(250,204,21,.22);
+}
+
+.hint:hover{
+transform:translateY(-2px);
+box-shadow:
+0 10px 0 var(--yellowDark),
+0 0 20px rgba(250,204,21,.45),
+0 18px 28px rgba(250,204,21,.25);
+}
+
+.hint:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 var(--yellowDark),
+0 8px 16px rgba(250,204,21,.16);
+}
+
+.hint.used{
+opacity:.45;
+cursor:not-allowed;
+filter:grayscale(.35);
+}
+
 .btn-pop{animation:btnPop .28s ease;}
 .btn-glow{animation:btnGlow .4s ease;}
 
@@ -411,6 +442,91 @@ display:none;
 margin-top:18px;
 }
 
+.hint-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.82);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:99999;
+padding:18px;
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+}
+
+.hint-box{
+width:94%;
+max-width:520px;
+background:
+linear-gradient(145deg,#141414,#1e1e1e);
+border:1px solid rgba(250,204,21,.35);
+border-radius:28px;
+padding:24px;
+box-shadow:
+0 22px 60px rgba(0,0,0,.65),
+0 0 24px rgba(250,204,21,.16),
+inset 0 1px 0 rgba(255,255,255,.04);
+animation:hintAppear .28s ease forwards;
+}
+
+@keyframes hintAppear{
+0%{opacity:0;transform:translateY(22px) scale(.96);}
+100%{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.hint-box h3{
+font-size:28px;
+font-weight:900;
+margin-bottom:12px;
+}
+
+.hint-box p{
+font-size:16px;
+color:#cfcfcf;
+line-height:1.6;
+margin-bottom:18px;
+}
+
+.hint-ad-box{
+background:#101010;
+border:1px dashed #444;
+border-radius:20px;
+padding:20px;
+margin:14px 0 18px;
+color:#aaa;
+font-size:15px;
+line-height:1.5;
+}
+
+.hint-loading{
+font-size:20px;
+font-weight:900;
+color:var(--yellow);
+animation:pulseHint 1.1s infinite;
+}
+
+@keyframes pulseHint{
+0%,100%{opacity:.65;}
+50%{opacity:1;}
+}
+
+.hint-image-wrap{
+background:#0f0f0f;
+border:1px solid #333;
+border-radius:22px;
+padding:12px;
+margin:16px 0 18px;
+}
+
+.hint-image-wrap img{
+width:100%;
+max-height:360px;
+object-fit:contain;
+display:block;
+border-radius:16px;
+}
+
 .footer{
 padding:28px;
 font-size:14px;
@@ -424,6 +540,7 @@ body{padding-top:190px;}
 .quiz-description{font-size:15px;padding:16px;}
 .counter{font-size:22px;}
 .btn{font-size:19px;padding:16px;}
+.hint-box h3{font-size:24px;}
 }
 </style>
 </head>
@@ -469,6 +586,7 @@ body{padding-top:190px;}
 
   <div class="buttons" id="gameButtons">
     <button class="btn green" id="mainBtn" onclick="mainAction()"></button>
+    <button class="btn hint" id="hintBtn" onclick="openHintModal()">💡 PISTA</button>
     <button class="btn gray" onclick="goHome()" id="backHomeBtn"></button>
   </div>
 
@@ -490,6 +608,33 @@ body{padding-top:190px;}
     </div>
   </div>
 
+</div>
+
+<div class="hint-modal" id="hintModal">
+  <div class="hint-box">
+
+    <div id="hintStep1">
+      <h3 id="hintTitle"></h3>
+      <p id="hintIntro"></p>
+      <div class="hint-ad-box" id="hintAdText"></div>
+      <button class="btn hint" onclick="loadHint()" id="hintViewBtn"></button>
+      <button class="btn gray" onclick="closeHint()" id="hintCancelBtn"></button>
+    </div>
+
+    <div id="hintLoading" style="display:none;">
+      <h3 id="hintLoadingTitle"></h3>
+      <p class="hint-loading" id="hintLoadingText"></p>
+    </div>
+
+    <div id="hintContent" style="display:none;">
+      <h3 id="hintReadyTitle"></h3>
+      <div class="hint-image-wrap">
+        <img id="hintImage" src="">
+      </div>
+      <button class="btn green" onclick="closeHint()" id="hintCloseBtn"></button>
+    </div>
+
+  </div>
 </div>
 
 <div class="footer">© Football Quiz</div>
@@ -632,7 +777,71 @@ const seoData = {
   }
 };
 
+const hintText = {
+  en:{
+    btn:"💡 HINT",
+    title:"Need a hint?",
+    intro:"You can reveal one visual hint for this question.",
+    ad:"Ad-ready space: in the future, an ad can appear here before showing the hint.",
+    view:"SHOW HINT",
+    cancel:"CANCEL",
+    loadingTitle:"Preparing your hint...",
+    loading:"Loading hint...",
+    ready:"Here is your hint",
+    close:"CLOSE"
+  },
+  es:{
+    btn:"💡 PISTA",
+    title:"¿Necesitas una pista?",
+    intro:"Puedes revelar una pista visual para esta pregunta.",
+    ad:"Espacio preparado para anuncio: en el futuro, aquí puede aparecer un anuncio antes de mostrar la pista.",
+    view:"VER PISTA",
+    cancel:"CANCELAR",
+    loadingTitle:"Preparando tu pista...",
+    loading:"Cargando pista...",
+    ready:"Aquí está tu pista",
+    close:"CERRAR"
+  },
+  pt:{
+    btn:"💡 DICA",
+    title:"Precisa de uma dica?",
+    intro:"Você pode revelar uma dica visual para esta pergunta.",
+    ad:"Espaço preparado para anúncio: no futuro, um anúncio poderá aparecer aqui antes da dica.",
+    view:"VER DICA",
+    cancel:"CANCELAR",
+    loadingTitle:"Preparando sua dica...",
+    loading:"Carregando dica...",
+    ready:"Aqui está sua dica",
+    close:"FECHAR"
+  },
+  fr:{
+    btn:"💡 INDICE",
+    title:"Besoin d’un indice ?",
+    intro:"Vous pouvez révéler un indice visuel pour cette question.",
+    ad:"Espace prêt pour une annonce : à l’avenir, une annonce pourra apparaître ici avant l’indice.",
+    view:"VOIR L’INDICE",
+    cancel:"ANNULER",
+    loadingTitle:"Préparation de l’indice...",
+    loading:"Chargement de l’indice...",
+    ready:"Voici votre indice",
+    close:"FERMER"
+  },
+  it:{
+    btn:"💡 AIUTO",
+    title:"Hai bisogno di un aiuto?",
+    intro:"Puoi rivelare un aiuto visivo per questa domanda.",
+    ad:"Spazio pronto per annuncio: in futuro, qui potrà apparire un annuncio prima dell’aiuto.",
+    view:"VEDI AIUTO",
+    cancel:"ANNULLA",
+    loadingTitle:"Preparazione dell’aiuto...",
+    loading:"Caricamento aiuto...",
+    ready:"Ecco il tuo aiuto",
+    close:"CHIUDI"
+  }
+};
+
 let mode, quiz, current=1, showing=false, selectedQuestions=[];
+let hintUsedForCurrentQuestion = false;
 
 function currentLang(){
   const saved = localStorage.getItem("footballQuizLanguage");
@@ -652,6 +861,11 @@ function goPage(page){
   location.href = langPrefix() + page;
 }
 
+function ht(key){
+  const lang = currentLang();
+  return hintText[lang][key] || hintText.en[key];
+}
+
 function applySEO(){
   const lang=currentLang();
   const seo=(seoData[lang] && seoData[lang][mode]) ? seoData[lang][mode] : seoData.en[mode];
@@ -663,6 +877,19 @@ function applySEO(){
 function getQuizDescription(){
   const lang=currentLang();
   return (seoData[lang] && seoData[lang][mode] ? seoData[lang][mode] : seoData.en[mode]).text;
+}
+
+function applyHintTranslations(){
+  document.getElementById("hintBtn").innerText = ht("btn");
+  document.getElementById("hintTitle").innerText = ht("title");
+  document.getElementById("hintIntro").innerText = ht("intro");
+  document.getElementById("hintAdText").innerText = ht("ad");
+  document.getElementById("hintViewBtn").innerText = ht("view");
+  document.getElementById("hintCancelBtn").innerText = ht("cancel");
+  document.getElementById("hintLoadingTitle").innerText = ht("loadingTitle");
+  document.getElementById("hintLoadingText").innerText = ht("loading");
+  document.getElementById("hintReadyTitle").innerText = ht("ready");
+  document.getElementById("hintCloseBtn").innerText = ht("close");
 }
 
 function applyQuizTranslations(){
@@ -683,6 +910,8 @@ function applyQuizTranslations(){
   document.getElementById("finalOption4").innerText=t("final_option_4");
   document.getElementById("playAgainBtn").innerText=t("play_again");
   document.getElementById("homeBtn").innerText=t("home");
+
+  applyHintTranslations();
 }
 
 function shuffleArray(array){
@@ -714,6 +943,29 @@ function getNumber(){return getCurrentQuestion().number;}
 
 function imgPath(prefix){
   return `${BASE}${quiz.folder}/${getLevel()}/${prefix}${getNumber()}.webp`;
+}
+
+function hintPath(){
+  const prefix = quiz.hintPrefix || "h";
+  return `${BASE}${quiz.folder}/${getLevel()}/${prefix}${getNumber()}.webp`;
+}
+
+function updateHintButton(){
+  const btn = document.getElementById("hintBtn");
+
+  if(!quiz.hasHint){
+    btn.style.display = "none";
+    return;
+  }
+
+  btn.style.display = "block";
+  btn.disabled = hintUsedForCurrentQuestion;
+
+  if(hintUsedForCurrentQuestion){
+    btn.classList.add("used");
+  }else{
+    btn.classList.remove("used");
+  }
 }
 
 function updateBadge(){
@@ -762,6 +1014,7 @@ function preloadImage(src){
 function preloadCurrentPair(){
   preloadImage(imgPath(quiz.questionPrefix));
   preloadImage(imgPath(quiz.answerPrefix));
+  if(quiz.hasHint) preloadImage(hintPath());
 }
 
 function preloadNextQuestion(){
@@ -772,6 +1025,11 @@ function preloadNextQuestion(){
 
   preloadImage(`${BASE}${quiz.folder}/${nextQuestion.level}/${quiz.questionPrefix}${nextQuestion.number}.webp`);
   preloadImage(`${BASE}${quiz.folder}/${nextQuestion.level}/${quiz.answerPrefix}${nextQuestion.number}.webp`);
+
+  if(quiz.hasHint){
+    const prefix = quiz.hintPrefix || "h";
+    preloadImage(`${BASE}${quiz.folder}/${nextQuestion.level}/${prefix}${nextQuestion.number}.webp`);
+  }
 }
 
 function animateViewerFlash(){
@@ -824,15 +1082,61 @@ function mainAction(){
 
     current++;
     showing=false;
+    hintUsedForCurrentQuestion = false;
 
     updateBadge();
     updateProgress();
     updateCounter();
     updateMainButton();
+    updateHintButton();
+    closeHint();
     loadQuestion();
     preloadCurrentPair();
     preloadNextQuestion();
   }
+}
+
+function openHintModal(){
+  if(!quiz.hasHint || hintUsedForCurrentQuestion) return;
+
+  document.getElementById("hintModal").style.display = "flex";
+  document.getElementById("hintStep1").style.display = "block";
+  document.getElementById("hintLoading").style.display = "none";
+  document.getElementById("hintContent").style.display = "none";
+}
+
+function closeHint(){
+  const modal = document.getElementById("hintModal");
+  if(modal) modal.style.display = "none";
+}
+
+function loadHint(){
+  if(!quiz.hasHint || hintUsedForCurrentQuestion) return;
+
+  document.getElementById("hintStep1").style.display = "none";
+  document.getElementById("hintLoading").style.display = "block";
+  document.getElementById("hintContent").style.display = "none";
+
+  setTimeout(() => {
+    const img = document.getElementById("hintImage");
+    const preload = new Image();
+
+    preload.onload = function(){
+      img.src = hintPath();
+
+      document.getElementById("hintLoading").style.display = "none";
+      document.getElementById("hintContent").style.display = "block";
+
+      hintUsedForCurrentQuestion = true;
+      updateHintButton();
+    };
+
+    preload.onerror = function(){
+      document.getElementById("hintLoadingText").innerText = "Hint image not found.";
+    };
+
+    preload.src = hintPath();
+  }, 1200);
 }
 
 function endQuiz(){
@@ -841,6 +1145,7 @@ function endQuiz(){
   document.getElementById("counter").style.display="none";
   document.getElementById("gameButtons").style.display="none";
   document.getElementById("finalBox").style.display="block";
+  closeHint();
 }
 
 function finishChoice(){
@@ -902,10 +1207,11 @@ Promise.all([
   updateBadge();
   updateProgress();
   updateCounter();
+  updateMainButton();
+  updateHintButton();
   preloadCurrentPair();
   preloadNextQuestion();
   loadQuestion();
-  updateMainButton();
   setupHeaderScroll();
 });
 </script>
