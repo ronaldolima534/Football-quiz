@@ -586,7 +586,7 @@ body{padding-top:190px;}
 
   <div class="buttons" id="gameButtons">
     <button class="btn green" id="mainBtn" onclick="mainAction()"></button>
-    <button class="btn hint" id="hintBtn" onclick="openHintModal()">💡 PISTA</button>
+    <button class="btn hint" id="hintBtn" onclick="openHintDirect()">💡 PISTA</button>
     <button class="btn gray" onclick="goHome()" id="backHomeBtn"></button>
   </div>
 
@@ -613,17 +613,10 @@ body{padding-top:190px;}
 <div class="hint-modal" id="hintModal">
   <div class="hint-box">
 
-    <div id="hintStep1">
-      <h3 id="hintTitle"></h3>
-      <p id="hintIntro"></p>
-      <div class="hint-ad-box" id="hintAdText"></div>
-      <button class="btn hint" onclick="loadHint()" id="hintViewBtn"></button>
-      <button class="btn gray" onclick="closeHint()" id="hintCancelBtn"></button>
-    </div>
-
-    <div id="hintLoading" style="display:none;">
+    <div id="hintLoading">
       <h3 id="hintLoadingTitle"></h3>
       <p class="hint-loading" id="hintLoadingText"></p>
+      <div class="hint-ad-box" id="hintAdText"></div>
     </div>
 
     <div id="hintContent" style="display:none;">
@@ -780,63 +773,48 @@ const seoData = {
 const hintText = {
   en:{
     btn:"💡 HINT",
-    title:"Need a hint?",
-    intro:"You can reveal one visual hint for this question.",
-    ad:"Ad-ready space: in the future, an ad can appear here before showing the hint.",
-    view:"SHOW HINT",
-    cancel:"CANCEL",
-    loadingTitle:"Preparing your hint...",
-    loading:"Loading hint...",
+    ad:"Preparing hint... an ad may appear here when available.",
+    loadingTitle:"Loading hint...",
+    loading:"Please wait a moment.",
     ready:"Here is your hint",
-    close:"CLOSE"
+    close:"CLOSE",
+    missing:"Hint image not found."
   },
   es:{
     btn:"💡 PISTA",
-    title:"¿Necesitas una pista?",
-    intro:"Puedes revelar una pista visual para esta pregunta.",
-    ad:"Espacio preparado para anuncio: en el futuro, aquí puede aparecer un anuncio antes de mostrar la pista.",
-    view:"VER PISTA",
-    cancel:"CANCELAR",
-    loadingTitle:"Preparando tu pista...",
-    loading:"Cargando pista...",
+    ad:"Preparando pista... aquí podrá aparecer un anuncio cuando esté disponible.",
+    loadingTitle:"Cargando pista...",
+    loading:"Espera un momento.",
     ready:"Aquí está tu pista",
-    close:"CERRAR"
+    close:"CERRAR",
+    missing:"No se encontró la imagen de la pista."
   },
   pt:{
     btn:"💡 DICA",
-    title:"Precisa de uma dica?",
-    intro:"Você pode revelar uma dica visual para esta pergunta.",
-    ad:"Espaço preparado para anúncio: no futuro, um anúncio poderá aparecer aqui antes da dica.",
-    view:"VER DICA",
-    cancel:"CANCELAR",
-    loadingTitle:"Preparando sua dica...",
-    loading:"Carregando dica...",
+    ad:"Preparando dica... um anúncio poderá aparecer aqui quando disponível.",
+    loadingTitle:"Carregando dica...",
+    loading:"Aguarde um momento.",
     ready:"Aqui está sua dica",
-    close:"FECHAR"
+    close:"FECHAR",
+    missing:"Imagem da dica não encontrada."
   },
   fr:{
     btn:"💡 INDICE",
-    title:"Besoin d’un indice ?",
-    intro:"Vous pouvez révéler un indice visuel pour cette question.",
-    ad:"Espace prêt pour une annonce : à l’avenir, une annonce pourra apparaître ici avant l’indice.",
-    view:"VOIR L’INDICE",
-    cancel:"ANNULER",
-    loadingTitle:"Préparation de l’indice...",
-    loading:"Chargement de l’indice...",
+    ad:"Préparation de l’indice... une annonce pourra apparaître ici si disponible.",
+    loadingTitle:"Chargement de l’indice...",
+    loading:"Veuillez patienter.",
     ready:"Voici votre indice",
-    close:"FERMER"
+    close:"FERMER",
+    missing:"Image de l’indice introuvable."
   },
   it:{
     btn:"💡 AIUTO",
-    title:"Hai bisogno di un aiuto?",
-    intro:"Puoi rivelare un aiuto visivo per questa domanda.",
-    ad:"Spazio pronto per annuncio: in futuro, qui potrà apparire un annuncio prima dell’aiuto.",
-    view:"VEDI AIUTO",
-    cancel:"ANNULLA",
-    loadingTitle:"Preparazione dell’aiuto...",
-    loading:"Caricamento aiuto...",
+    ad:"Preparazione dell’aiuto... un annuncio potrà apparire qui se disponibile.",
+    loadingTitle:"Caricamento aiuto...",
+    loading:"Attendi un momento.",
     ready:"Ecco il tuo aiuto",
-    close:"CHIUDI"
+    close:"CHIUDI",
+    missing:"Immagine dell’aiuto non trovata."
   }
 };
 
@@ -881,11 +859,7 @@ function getQuizDescription(){
 
 function applyHintTranslations(){
   document.getElementById("hintBtn").innerText = ht("btn");
-  document.getElementById("hintTitle").innerText = ht("title");
-  document.getElementById("hintIntro").innerText = ht("intro");
   document.getElementById("hintAdText").innerText = ht("ad");
-  document.getElementById("hintViewBtn").innerText = ht("view");
-  document.getElementById("hintCancelBtn").innerText = ht("cancel");
   document.getElementById("hintLoadingTitle").innerText = ht("loadingTitle");
   document.getElementById("hintLoadingText").innerText = ht("loading");
   document.getElementById("hintReadyTitle").innerText = ht("ready");
@@ -1096,13 +1070,14 @@ function mainAction(){
   }
 }
 
-function openHintModal(){
+function openHintDirect(){
   if(!quiz.hasHint || hintUsedForCurrentQuestion) return;
 
   document.getElementById("hintModal").style.display = "flex";
-  document.getElementById("hintStep1").style.display = "block";
-  document.getElementById("hintLoading").style.display = "none";
+  document.getElementById("hintLoading").style.display = "block";
   document.getElementById("hintContent").style.display = "none";
+
+  loadHintDirect();
 }
 
 function closeHint(){
@@ -1110,12 +1085,8 @@ function closeHint(){
   if(modal) modal.style.display = "none";
 }
 
-function loadHint(){
+function loadHintDirect(){
   if(!quiz.hasHint || hintUsedForCurrentQuestion) return;
-
-  document.getElementById("hintStep1").style.display = "none";
-  document.getElementById("hintLoading").style.display = "block";
-  document.getElementById("hintContent").style.display = "none";
 
   setTimeout(() => {
     const img = document.getElementById("hintImage");
@@ -1132,11 +1103,11 @@ function loadHint(){
     };
 
     preload.onerror = function(){
-      document.getElementById("hintLoadingText").innerText = "Hint image not found.";
+      document.getElementById("hintLoadingText").innerText = ht("missing");
     };
 
     preload.src = hintPath();
-  }, 1200);
+  }, 1400);
 }
 
 function endQuiz(){
