@@ -12,7 +12,9 @@ const quizData = {
 
     thumbnail: "/images/thumbnails/quiz1.jpg",
     showOnHome: true,
-    homeOrder: 1
+    homeOrder: 1,
+
+    hasHint: false
   },
 
   "player-clues": {
@@ -27,7 +29,9 @@ const quizData = {
 
     thumbnail: "/images/thumbnails/quiz2.jpg",
     showOnHome: true,
-    homeOrder: 2
+    homeOrder: 2,
+
+    hasHint: false
   },
 
   "nationality-club": {
@@ -35,6 +39,7 @@ const quizData = {
     folder: "images/nationality-club",
     questionPrefix: "q",
     answerPrefix: "a",
+    hintPrefix: "h",
 
     totalEasy: 10,
     totalMedium: 10,
@@ -42,7 +47,9 @@ const quizData = {
 
     thumbnail: "/images/thumbnails/quiz3.jpg",
     showOnHome: true,
-    homeOrder: 3
+    homeOrder: 3,
+
+    hasHint: true
   }
 
 };
