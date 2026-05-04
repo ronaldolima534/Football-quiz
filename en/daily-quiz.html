@@ -1,26 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BXHRG2RYG7"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BXHRG2RYG7');
+</script>
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7742486590733120"
+crossorigin="anonymous"></script>
+
 <script>
 (function(){
+  const supported = ["en","es","pt","fr","it"];
   const path = window.location.pathname;
 
-  if(path.startsWith("/es/")){
-    localStorage.setItem("footballQuizLanguage","es");
-    document.documentElement.lang = "es";
-  }else if(path.startsWith("/pt/")){
-    localStorage.setItem("footballQuizLanguage","pt");
-    document.documentElement.lang = "pt";
-  }else if(path.startsWith("/fr/")){
-    localStorage.setItem("footballQuizLanguage","fr");
-    document.documentElement.lang = "fr";
-  }else if(path.startsWith("/it/")){
-    localStorage.setItem("footballQuizLanguage","it");
-    document.documentElement.lang = "it";
-  }else{
-    localStorage.setItem("footballQuizLanguage","en");
-    document.documentElement.lang = "en";
+  function detectBrowserLanguage(){
+    const browserLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+    if(browserLang.startsWith("es")) return "es";
+    if(browserLang.startsWith("pt")) return "pt";
+    if(browserLang.startsWith("fr")) return "fr";
+    if(browserLang.startsWith("it")) return "it";
+    return "en";
   }
+
+  let lang = null;
+
+  if(path.startsWith("/es/")) lang = "es";
+  else if(path.startsWith("/pt/")) lang = "pt";
+  else if(path.startsWith("/fr/")) lang = "fr";
+  else if(path.startsWith("/it/")) lang = "it";
+  else if(path.startsWith("/en/")) lang = "en";
+  else{
+    const saved = localStorage.getItem("footballQuizLanguage");
+    lang = supported.includes(saved) ? saved : detectBrowserLanguage();
+  }
+
+  localStorage.setItem("footballQuizLanguage", lang);
+  document.documentElement.lang = lang;
 })();
 </script>
 
@@ -28,27 +50,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Daily Football Quiz – New Football Trivia Question Every Day</title>
-
 <meta name="description" content="Play the Daily Football Quiz online. Answer one new football trivia question every day and test your football knowledge.">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Football Quiz">
-
-<link rel="alternate" hreflang="en" href="https://football-quiz-nu.vercel.app/en/daily-quiz.html">
-<link rel="alternate" hreflang="es" href="https://football-quiz-nu.vercel.app/es/daily-quiz.html">
-<link rel="alternate" hreflang="pt" href="https://football-quiz-nu.vercel.app/pt/daily-quiz.html">
-<link rel="alternate" hreflang="fr" href="https://football-quiz-nu.vercel.app/fr/daily-quiz.html">
-<link rel="alternate" hreflang="it" href="https://football-quiz-nu.vercel.app/it/daily-quiz.html">
-<link rel="alternate" hreflang="x-default" href="https://football-quiz-nu.vercel.app/daily-quiz.html">
-
-<meta property="og:title" content="Daily Football Quiz">
-<meta property="og:description" content="One football question every day. Test your knowledge and come back tomorrow for a new challenge.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://football-quiz-nu.vercel.app/images/thumbnails/quiz1.jpg">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Daily Football Quiz">
-<meta name="twitter:description" content="Answer one football trivia question every day.">
-<meta name="twitter:image" content="https://football-quiz-nu.vercel.app/images/thumbnails/quiz1.jpg">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -57,6 +61,7 @@
 --line:#2a2a2a;
 --green:#22c55e;
 --green2:#15803d;
+--greenDark:#0f5f2d;
 --red:#dc2626;
 --white:#ffffff;
 --soft:#b8b8b8;
@@ -209,7 +214,7 @@ margin:auto;
 background:linear-gradient(145deg,#131313,#1b1b1b);
 border:1px solid var(--line);
 border-radius:28px;
-padding:28px 20px;
+padding:30px 22px;
 box-shadow:
 0 16px 34px rgba(0,0,0,.34),
 inset 0 1px 0 rgba(255,255,255,.04);
@@ -217,7 +222,7 @@ animation:fadeUp .55s ease forwards;
 }
 
 .page-title{
-font-size:40px;
+font-size:42px;
 font-weight:900;
 margin-bottom:10px;
 }
@@ -230,65 +235,58 @@ line-height:1.5;
 
 .container{
 width:94%;
-max-width:760px;
+max-width:820px;
 margin:auto;
 padding-bottom:60px;
 }
 
-.question-text{
-background:linear-gradient(145deg,#141414,#1c1c1c);
+.question-card{
+background:
+linear-gradient(145deg,#141414,#1c1c1c);
 border:1px solid var(--line);
-border-radius:24px;
-padding:20px;
-margin-bottom:18px;
-font-size:24px;
-font-weight:900;
-line-height:1.35;
-box-shadow:0 12px 28px rgba(0,0,0,.35);
+border-radius:30px;
+padding:34px 26px;
+margin-bottom:24px;
+box-shadow:
+0 18px 40px rgba(0,0,0,.42),
+inset 0 1px 0 rgba(255,255,255,.04);
 animation:fadeUp .65s ease forwards;
-}
-
-.viewer{
-background:#151515;
-border:1px solid var(--line);
-padding:16px;
-border-radius:28px;
-aspect-ratio:16/9;
-display:flex;
-justify-content:center;
-align-items:center;
-overflow:hidden;
-box-shadow:0 16px 34px rgba(0,0,0,.35);
-margin-bottom:18px;
 position:relative;
-animation:fadeUp .75s ease forwards;
+overflow:hidden;
 }
 
-.viewer img{
-max-width:100%;
-max-height:100%;
-object-fit:contain;
-display:none;
-opacity:0;
-transition:opacity .3s ease;
-}
-
-.viewer img.show{
-opacity:1;
-}
-
-.placeholder{
+.question-card::before{
+content:"";
 position:absolute;
-inset:16px;
-border:2px dashed #333;
-border-radius:22px;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#777;
-font-size:20px;
+inset:0;
+background:linear-gradient(120deg,transparent,rgba(34,197,94,.14),transparent);
+opacity:.45;
+pointer-events:none;
+}
+
+.question-label{
+position:relative;
+z-index:1;
+display:inline-block;
+padding:10px 18px;
+border-radius:999px;
+background:rgba(34,197,94,.12);
+border:1px solid rgba(34,197,94,.35);
+font-size:15px;
 font-weight:900;
-padding:20px;
+color:#22c55e;
+margin-bottom:20px;
+text-transform:uppercase;
+letter-spacing:.6px;
+}
+
+.question-text{
+position:relative;
+z-index:1;
+font-size:38px;
+font-weight:900;
+line-height:1.22;
+text-shadow:0 0 20px rgba(34,197,94,.12);
 }
 
 .options{
@@ -299,8 +297,8 @@ margin-top:18px;
 
 .option-btn{
 width:100%;
-padding:18px;
-font-size:20px;
+padding:20px;
+font-size:21px;
 font-weight:900;
 border:none;
 border-radius:18px;
@@ -348,17 +346,17 @@ box-shadow:
 }
 
 .status-box{
-margin-top:20px;
+margin-top:24px;
 background:linear-gradient(145deg,#141414,#1c1c1c);
 border:1px solid #2b2b2b;
-padding:20px;
+padding:22px;
 border-radius:22px;
 display:none;
 animation:fadeUp .35s ease forwards;
 }
 
 .status-title{
-font-size:24px;
+font-size:26px;
 font-weight:900;
 margin-bottom:10px;
 }
@@ -382,26 +380,21 @@ font-weight:900;
 }
 
 @keyframes fadeUp{
-0%{
-opacity:0;
-transform:translateY(30px);
-}
-100%{
-opacity:1;
-transform:translateY(0);
-}
+0%{opacity:0;transform:translateY(30px);}
+100%{opacity:1;transform:translateY(0);}
 }
 
 @media(max-width:600px){
 body{padding-top:178px;}
 .brand{font-size:30px;}
-.page-title{font-size:30px;}
+page-title{font-size:30px;}
+.page-title{font-size:31px;}
 .page-sub{font-size:16px;}
-.question-text{font-size:20px;padding:18px;}
-.option-btn{font-size:18px;padding:16px;}
+.question-card{padding:28px 18px;border-radius:26px;}
+.question-text{font-size:30px;line-height:1.25;}
+.option-btn{font-size:18px;padding:17px;}
 .nav{gap:8px;}
 .nav button{font-size:13px;padding:9px 12px;}
-.lang-wrap{justify-content:center;}
 }
 </style>
 </head>
@@ -419,10 +412,10 @@ body{padding-top:178px;}
     <div class="brand" id="siteName"></div>
 
     <div class="nav">
-      <button onclick="location.href='index.html'" id="navHome"></button>
+      <button onclick="goHome()" id="navHome"></button>
       <button class="active" id="navDailyQuiz"></button>
-      <button onclick="location.href='about.html'" id="navAbout"></button>
-      <button onclick="location.href='contact.html'" id="navContact"></button>
+      <button onclick="goPage('about.html')" id="navAbout"></button>
+      <button onclick="goPage('contact.html')" id="navContact"></button>
     </div>
   </div>
 </div>
@@ -436,11 +429,9 @@ body{padding-top:178px;}
 
 <div class="container">
 
-  <div class="question-text" id="questionText"></div>
-
-  <div class="viewer">
-    <div class="placeholder" id="imagePlaceholder"></div>
-    <img id="dailyImage" src="" alt="Daily Quiz Image">
+  <div class="question-card">
+    <div class="question-label" id="questionLabel"></div>
+    <div class="question-text" id="questionText"></div>
   </div>
 
   <div class="options" id="optionsContainer"></div>
@@ -455,20 +446,29 @@ body{padding-top:178px;}
 <div class="footer">
   © Football Quiz
   <br><br>
-  <a href="../privacy.html">Privacy Policy</a> |
-  <a href="../terms.html">Terms of Service</a>
+  <a href="/privacy.html">Privacy Policy</a> |
+  <a href="/terms.html">Terms of Service</a>
 </div>
 
-<script src="../translations.js"></script>
-<script src="../language.js"></script>
-<script src="../daily-quiz-data.js"></script>
-
 <script>
+const IS_LANG_FOLDER = /^\/(en|es|pt|fr|it)\//.test(window.location.pathname);
+const BASE = IS_LANG_FOLDER ? "../" : "";
+
+function loadScript(src){
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement("script");
+    s.src=BASE+src;
+    s.onload=resolve;
+    s.onerror=reject;
+    document.body.appendChild(s);
+  });
+}
+
 const dailyText = {
   en:{
     title:"Daily Quiz",
-    subtitle:"One question. One chance. Come back tomorrow for a new challenge.",
-    placeholder:"Image will appear here when uploaded",
+    subtitle:"One football question every day. Test your knowledge and come back tomorrow for a new challenge.",
+    label:"Today’s Question",
     alreadyTitle:"Today's quiz already played",
     alreadyText:"Come back tomorrow for a new daily question.",
     correctTitle:"Correct!",
@@ -479,8 +479,8 @@ const dailyText = {
   },
   es:{
     title:"Quiz Diario",
-    subtitle:"Una pregunta. Una oportunidad. Vuelve mañana por un nuevo reto.",
-    placeholder:"La imagen aparecerá aquí cuando la subas",
+    subtitle:"Una pregunta de fútbol cada día. Pon a prueba tu conocimiento y vuelve mañana por un nuevo reto.",
+    label:"Pregunta de Hoy",
     alreadyTitle:"El quiz de hoy ya fue jugado",
     alreadyText:"Vuelve mañana por una nueva pregunta diaria.",
     correctTitle:"¡Correcto!",
@@ -491,8 +491,8 @@ const dailyText = {
   },
   pt:{
     title:"Quiz Diário",
-    subtitle:"Uma pergunta. Uma chance. Volte amanhã para um novo desafio.",
-    placeholder:"A imagem aparecerá aqui quando for enviada",
+    subtitle:"Uma pergunta de futebol todos os dias. Teste seus conhecimentos e volte amanhã para um novo desafio.",
+    label:"Pergunta de Hoje",
     alreadyTitle:"O quiz de hoje já foi jogado",
     alreadyText:"Volte amanhã para uma nova pergunta diária.",
     correctTitle:"Correto!",
@@ -503,8 +503,8 @@ const dailyText = {
   },
   fr:{
     title:"Quiz du Jour",
-    subtitle:"Une question. Une chance. Revenez demain pour un nouveau défi.",
-    placeholder:"L’image apparaîtra ici une fois ajoutée",
+    subtitle:"Une question de football chaque jour. Testez vos connaissances et revenez demain pour un nouveau défi.",
+    label:"Question du Jour",
     alreadyTitle:"Le quiz du jour a déjà été joué",
     alreadyText:"Revenez demain pour une nouvelle question quotidienne.",
     correctTitle:"Correct !",
@@ -515,8 +515,8 @@ const dailyText = {
   },
   it:{
     title:"Quiz del Giorno",
-    subtitle:"Una domanda. Una possibilità. Torna domani per una nuova sfida.",
-    placeholder:"L’immagine apparirà qui quando verrà caricata",
+    subtitle:"Una domanda di calcio ogni giorno. Metti alla prova le tue conoscenze e torna domani per una nuova sfida.",
+    label:"Domanda del Giorno",
     alreadyTitle:"Il quiz di oggi è già stato giocato",
     alreadyText:"Torna domani per una nuova domanda giornaliera.",
     correctTitle:"Corretto!",
@@ -528,8 +528,8 @@ const dailyText = {
 };
 
 function currentLang(){
-  const lang = getSavedLanguage();
-  if(["en","es","pt","fr","it"].includes(lang)) return lang;
+  const saved = localStorage.getItem("footballQuizLanguage");
+  if(["en","es","pt","fr","it"].includes(saved)) return saved;
   return "en";
 }
 
@@ -538,11 +538,18 @@ function dText(key){
   return dailyText[lang][key] || dailyText.en[key];
 }
 
+function goHome(){
+  location.href = "/" + currentLang() + "/";
+}
+
+function goPage(page){
+  location.href = "/" + currentLang() + "/" + page;
+}
+
 function getField(field){
   const lang = currentLang();
 
   if(typeof field === "string") return field;
-
   if(Array.isArray(field)) return field;
 
   if(field && typeof field === "object"){
@@ -550,13 +557,6 @@ function getField(field){
   }
 
   return "";
-}
-
-function fixedImagePath(src){
-  if(!src) return "";
-  if(src.startsWith("http")) return src;
-  if(src.startsWith("../")) return src;
-  return "../" + src;
 }
 
 function applyDailyTranslations(){
@@ -570,7 +570,7 @@ function applyDailyTranslations(){
 
   document.getElementById("dailyTitle").innerText = dText("title");
   document.getElementById("dailySubtitle").innerText = dText("subtitle");
-  document.getElementById("imagePlaceholder").innerText = dText("placeholder");
+  document.getElementById("questionLabel").innerText = dText("label");
   document.getElementById("questionText").innerText = dText("loading");
 }
 
@@ -624,35 +624,6 @@ function getSavedAnswerKey(){
   return "footballQuizDailyAnswered_" + getTodayKey() + "_" + currentLang();
 }
 
-function renderImage(src){
-  const img = document.getElementById("dailyImage");
-  const placeholder = document.getElementById("imagePlaceholder");
-
-  img.classList.remove("show");
-  img.style.display = "none";
-  placeholder.style.display = "flex";
-
-  const finalSrc = fixedImagePath(src);
-  const temp = new Image();
-
-  temp.onload = function(){
-    img.src = finalSrc;
-    placeholder.style.display = "none";
-    img.style.display = "block";
-
-    requestAnimationFrame(() => {
-      img.classList.add("show");
-    });
-  };
-
-  temp.onerror = function(){
-    img.style.display = "none";
-    placeholder.style.display = "flex";
-  };
-
-  temp.src = finalSrc;
-}
-
 function renderDailyQuiz(){
   if(typeof dailyQuizData === "undefined" || dailyQuizData.length === 0){
     document.getElementById("questionText").innerText = "Daily quiz data not found.";
@@ -664,8 +635,6 @@ function renderDailyQuiz(){
   const question = dailyQuizData[index];
 
   document.getElementById("questionText").innerText = getField(question.question);
-
-  renderImage(question.image);
 
   const optionList = getField(question.options);
 
@@ -754,42 +723,51 @@ function selectOption(selectedIndex){
   showStatus(selectedIndex === question.correct, false);
 }
 
-buildLanguageSelector("languageSelector");
-updateSEO();
-applyDailyTranslations();
-renderDailyQuiz();
+function setupHeaderScroll(){
+  const topUI = document.getElementById("topUI");
 
-const topUI = document.getElementById("topUI");
-
-function updateTopPadding(){
-  document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px";
-}
-
-function hideTopUI(){
-  topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`;
-}
-
-function showTopUI(){
-  topUI.style.transform = "translateY(0)";
-}
-
-updateTopPadding();
-window.addEventListener("load", updateTopPadding);
-window.addEventListener("resize", updateTopPadding);
-
-let lastScroll = 0;
-
-window.addEventListener("scroll", () => {
-  const currentScroll = window.scrollY || window.pageYOffset;
-
-  if(currentScroll > lastScroll && currentScroll > 80){
-    hideTopUI();
-  }else if(currentScroll < 10){
-    showTopUI();
+  function updateTopPadding(){
+    document.body.style.paddingTop = (topUI.offsetHeight + 12) + "px";
   }
 
-  lastScroll = currentScroll <= 0 ? 0 : currentScroll;
-}, { passive: true });
+  function hideTopUI(){
+    topUI.style.transform = `translateY(-${topUI.offsetHeight}px)`;
+  }
+
+  function showTopUI(){
+    topUI.style.transform = "translateY(0)";
+  }
+
+  updateTopPadding();
+  window.addEventListener("load", updateTopPadding);
+  window.addEventListener("resize", updateTopPadding);
+
+  let lastScroll = 0;
+
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.scrollY || window.pageYOffset;
+
+    if(currentScroll > lastScroll && currentScroll > 80){
+      hideTopUI();
+    }else if(currentScroll < 10){
+      showTopUI();
+    }
+
+    lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+  }, { passive: true });
+}
+
+Promise.all([
+  loadScript("translations.js"),
+  loadScript("language.js"),
+  loadScript("daily-quiz-data.js")
+]).then(()=>{
+  buildLanguageSelector("languageSelector");
+  updateSEO();
+  applyDailyTranslations();
+  renderDailyQuiz();
+  setupHeaderScroll();
+});
 </script>
 
 </body>
