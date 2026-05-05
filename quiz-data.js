@@ -50,6 +50,24 @@ const quizData = {
     homeOrder: 3,
 
     hasHint: true
+  },
+
+  "guess-player-name": {
+    titleKey: "quiz_guess_player_name",
+    folder: "images/guess-player-name",
+    questionPrefix: "q",
+    answerPrefix: "q",
+
+    totalEasy: 30,
+    totalMedium: 30,
+    totalHard: 30,
+
+    thumbnail: "/images/thumbnails/quiz4.jpg",
+    showOnHome: true,
+    homeOrder: 4,
+
+    hasHint: false,
+    type: "typing"
   }
 
 };
