@@ -15,194 +15,957 @@ gtag('config', 'G-BXHRG2RYG7');
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7742486590733120"
 crossorigin="anonymous"></script>
 
+<script>
+(function(){
+  const supported = ["en","es","pt","fr","it"];
+  const path = window.location.pathname;
+
+  function detectBrowserLanguage(){
+    const browserLang = (navigator.language || navigator.userLanguage || "en").toLowerCase();
+    if(browserLang.startsWith("es")) return "es";
+    if(browserLang.startsWith("pt")) return "pt";
+    if(browserLang.startsWith("fr")) return "fr";
+    if(browserLang.startsWith("it")) return "it";
+    return "en";
+  }
+
+  let lang = null;
+
+  if(path.startsWith("/es/")) lang = "es";
+  else if(path.startsWith("/pt/")) lang = "pt";
+  else if(path.startsWith("/fr/")) lang = "fr";
+  else if(path.startsWith("/it/")) lang = "it";
+  else if(path.startsWith("/en/")) lang = "en";
+  else{
+    const saved = localStorage.getItem("footballQuizLanguage");
+    lang = supported.includes(saved) ? saved : detectBrowserLanguage();
+  }
+
+  localStorage.setItem("footballQuizLanguage", lang);
+  document.documentElement.lang = lang;
+})();
+</script>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Guess the Player Name | Football Quiz</title>
+<meta name="description" content="Guess the football player by image. Type the correct player name and test your football knowledge.">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Football Quiz">
 
 <style>
-/* === MISMO ESTILO PREMIUM === */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+--line:#2a2a2a;
+--green:#22c55e;
+--green2:#15803d;
+--greenDark:#0f5f2d;
+--red:#dc2626;
+--yellow:#facc15;
+--white:#ffffff;
+--soft:#b8b8b8;
+}
+
 body{
-font-family:Arial;
-background:linear-gradient(180deg,#080808,#111);
-color:white;
+font-family:Arial,sans-serif;
+background:
+radial-gradient(circle at top, rgba(34,197,94,.10), transparent 26%),
+linear-gradient(180deg,#080808,#111);
+color:#fff;
 text-align:center;
-padding-top:160px;
+padding-top:170px;
 }
 
 .top-ui{
 position:fixed;
 top:0;
+left:0;
 width:100%;
-background:#111;
-z-index:999;
-padding:10px;
+z-index:9999;
+background:rgba(10,10,10,.95);
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+transition:transform .35s ease;
+border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.lang-top{
+padding:12px 14px 10px;
+border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.lang-wrap{
+width:94%;
+max-width:760px;
+margin:auto;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.lang-buttons{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+justify-content:center;
+align-items:center;
+}
+
+.lang-btn{
+width:48px;
+height:48px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+background:#1d1d1d;
+border:1px solid #333;
+transition:.2s;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:0;
+overflow:hidden;
+font-size:0;
+line-height:0;
+}
+
+.lang-btn img{
+width:30px !important;
+height:22px !important;
+object-fit:cover;
+border-radius:4px;
+display:block;
+margin:0 auto;
+}
+
+.lang-btn:hover{
+transform:translateY(-2px);
+border-color:var(--green);
+}
+
+.lang-btn.active{
+background:linear-gradient(145deg,var(--green),var(--green2));
+border-color:transparent;
+}
+
+.header{
+padding:18px 12px;
+border-bottom:1px solid var(--line);
 }
 
 .brand{
+font-size:34px;
+font-weight:900;
+margin-bottom:14px;
+text-shadow:0 0 24px rgba(34,197,94,.18);
+}
+
+.nav{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.nav button{
+padding:10px 14px;
+font-size:14px;
+font-weight:900;
+border:none;
+border-radius:14px;
+cursor:pointer;
+background:#1d1d1d;
+color:#fff;
+border:1px solid var(--line);
+box-shadow:0 5px 0 #111;
+transition:.18s;
+}
+
+.nav button:hover{
+transform:translateY(-2px);
+border-color:var(--green);
+}
+
+.nav button:active{
+transform:translateY(3px);
+box-shadow:0 2px 0 #111;
+}
+
+.title-wrap{
+padding:24px 14px 14px;
+}
+
+.title-bar{
+width:94%;
+max-width:760px;
+margin:auto;
+background:#151515;
+border:1px solid var(--line);
+padding:22px;
+border-radius:24px;
 font-size:28px;
 font-weight:900;
+box-shadow:0 14px 30px rgba(0,0,0,.35);
+text-transform:uppercase;
+animation:fadeUp .5s ease forwards;
+}
+
+.quiz-description{
+width:94%;
+max-width:760px;
+margin:14px auto 18px;
+background:linear-gradient(145deg,#141414,#1c1c1c);
+border:1px solid var(--line);
+border-radius:22px;
+padding:18px 20px;
+font-size:17px;
+line-height:1.6;
+color:#cfcfcf;
+box-shadow:0 12px 28px rgba(0,0,0,.28);
+animation:fadeUp .6s ease forwards;
 }
 
 .container{
-max-width:700px;
+width:94%;
+max-width:760px;
 margin:auto;
-padding:20px;
+padding-bottom:60px;
+}
+
+.progress-wrap{
+height:14px;
+background:#1a1a1a;
+border-radius:999px;
+overflow:hidden;
+margin-bottom:18px;
+border:1px solid var(--line);
+box-shadow:inset 0 2px 5px rgba(0,0,0,.35);
+}
+
+.progress{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,var(--green2),var(--green));
+transition:width .6s cubic-bezier(.22,1,.36,1);
+box-shadow:0 0 18px rgba(34,197,94,.35);
+}
+
+.badge{
+display:inline-block;
+padding:10px 24px;
+border-radius:999px;
+font-size:20px;
+font-weight:900;
+margin-bottom:18px;
+animation:badgePulse 2.2s infinite;
+}
+
+.easy{background:#15803d;}
+.medium{background:#d97706;}
+.hard{background:#dc2626;}
+
+@keyframes badgePulse{
+0%,100%{transform:scale(1);}
+50%{transform:scale(1.04);}
 }
 
 .viewer{
 background:#151515;
-padding:10px;
-border-radius:20px;
-margin-bottom:20px;
+border:1px solid var(--line);
+padding:16px;
+border-radius:28px;
+aspect-ratio:16/9;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+box-shadow:0 16px 34px rgba(0,0,0,.35);
+position:relative;
+animation:fadeUp .7s ease forwards;
+}
+
+.viewer.flash{
+animation:viewerFlash .35s ease;
+}
+
+@keyframes viewerFlash{
+0%{box-shadow:0 16px 34px rgba(0,0,0,.35);}
+50%{box-shadow:0 0 25px rgba(34,197,94,.22),0 16px 34px rgba(0,0,0,.35);}
+100%{box-shadow:0 16px 34px rgba(0,0,0,.35);}
 }
 
 .viewer img{
-width:100%;
-max-height:350px;
+max-width:100%;
+max-height:100%;
 object-fit:contain;
+opacity:1;
+transform:translateX(0) scale(1);
 }
 
-.badge{
-padding:10px 20px;
-border-radius:20px;
+.img-out-next{animation:imgOutNext .22s ease forwards;}
+.img-in-next{animation:imgInNext .46s cubic-bezier(.22,1,.36,1) forwards;}
+
+@keyframes imgOutNext{
+to{opacity:0;transform:translateX(-36px) scale(.97);}
+}
+
+@keyframes imgInNext{
+0%{opacity:0;transform:translateX(44px) scale(.98);}
+100%{opacity:1;transform:translateX(0) scale(1);}
+}
+
+.counter{
+margin-top:18px;
+font-size:28px;
 font-weight:900;
-margin-bottom:10px;
-display:inline-block;
+text-transform:uppercase;
+text-shadow:2px 2px 0 #0b0b0b;
 }
 
-.easy{background:green;}
-.medium{background:orange;}
-.hard{background:red;}
-
-.progress{
-height:10px;
-background:green;
-margin-bottom:15px;
+.answer-panel{
+margin-top:18px;
+background:linear-gradient(145deg,#141414,#1d1d1d);
+border:1px solid var(--line);
+border-radius:24px;
+padding:18px;
+box-shadow:0 14px 30px rgba(0,0,0,.32);
 }
 
-input{
+.answer-input{
 width:100%;
 padding:18px;
-font-size:20px;
-border-radius:12px;
-margin-bottom:10px;
+font-size:22px;
+font-weight:900;
 text-align:center;
+border-radius:18px;
+border:2px solid #333;
+outline:none;
+background:#0f0f0f;
+color:#fff;
+box-shadow:
+inset 0 2px 8px rgba(0,0,0,.35),
+0 8px 18px rgba(0,0,0,.24);
+}
+
+.answer-input:focus{
+border-color:var(--green);
+box-shadow:
+0 0 18px rgba(34,197,94,.22),
+inset 0 2px 8px rgba(0,0,0,.35);
+}
+
+.buttons{
+display:grid;
+gap:14px;
+margin-top:16px;
 }
 
 .btn{
-padding:16px;
-font-size:18px;
-font-weight:bold;
-border-radius:12px;
+padding:18px;
+font-size:22px;
+font-weight:900;
 border:none;
-margin-top:10px;
+border-radius:18px;
 cursor:pointer;
+transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+text-transform:uppercase;
 }
 
 .green{
-background:#22c55e;
-color:black;
+background:linear-gradient(145deg,var(--green),var(--green2));
+color:#000;
+box-shadow:
+0 8px 0 var(--greenDark),
+0 14px 24px rgba(34,197,94,.25);
+}
+
+.green:hover{
+transform:translateY(-2px);
+box-shadow:
+0 10px 0 var(--greenDark),
+0 18px 28px rgba(34,197,94,.30);
+}
+
+.green:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 var(--greenDark),
+0 8px 16px rgba(34,197,94,.2);
 }
 
 .gray{
-background:#333;
-color:white;
+background:#202020;
+color:#fff;
+border:1px solid var(--line);
+box-shadow:
+0 6px 0 #111,
+0 12px 20px rgba(0,0,0,.35);
 }
 
-.result{
-margin-top:10px;
-font-size:20px;
-font-weight:bold;
+.gray:hover{
+transform:translateY(-2px);
+border-color:#555;
+}
+
+.gray:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 #111,
+0 8px 16px rgba(0,0,0,.25);
+}
+
+.yellow{
+background:linear-gradient(145deg,var(--yellow),#eab308);
+color:#000;
+box-shadow:
+0 8px 0 #a16207,
+0 14px 24px rgba(250,204,21,.22);
+}
+
+.yellow:hover{
+transform:translateY(-2px);
+box-shadow:
+0 10px 0 #a16207,
+0 0 20px rgba(250,204,21,.45),
+0 18px 28px rgba(250,204,21,.25);
+}
+
+.yellow:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 #a16207,
+0 8px 16px rgba(250,204,21,.16);
+}
+
+.result-box{
+display:none;
+margin-top:18px;
+border-radius:22px;
+padding:18px;
+font-size:21px;
+font-weight:900;
+line-height:1.5;
+animation:fadeUp .25s ease forwards;
+}
+
+.result-correct{
+display:block;
+background:linear-gradient(145deg,#16a34a,#22c55e);
+color:#000;
+box-shadow:0 10px 24px rgba(34,197,94,.25);
+}
+
+.result-wrong{
+display:block;
+background:linear-gradient(145deg,#991b1b,#dc2626);
+color:#fff;
+box-shadow:0 10px 24px rgba(220,38,38,.22);
+}
+
+.result-warning{
+display:block;
+background:linear-gradient(145deg,#854d0e,#facc15);
+color:#000;
+box-shadow:0 10px 24px rgba(250,204,21,.22);
+}
+
+.final-box{
+display:none;
+margin-top:24px;
+background:#151515;
+border:1px solid var(--line);
+padding:26px;
+border-radius:24px;
+box-shadow:0 18px 40px rgba(0,0,0,.42);
+}
+
+.final-box h2{
+font-size:34px;
+margin-bottom:14px;
+}
+
+.final-score{
+font-size:28px;
+font-weight:900;
+color:var(--green);
+margin-bottom:18px;
+}
+
+.footer{
+padding:28px;
+font-size:14px;
+color:#888;
+}
+
+@keyframes fadeUp{
+0%{opacity:0;transform:translateY(30px);}
+100%{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:600px){
+body{padding-top:190px;}
+.brand{font-size:28px;}
+.title-bar{font-size:22px;}
+.quiz-description{font-size:15px;padding:16px;}
+.counter{font-size:22px;}
+.btn{font-size:19px;padding:16px;}
+.answer-input{font-size:18px;padding:16px;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="top-ui">
-<div class="brand">Football Quiz</div>
+<div class="top-ui" id="topUI">
+  <div class="lang-top">
+    <div class="lang-wrap">
+      <div class="lang-buttons" id="languageSelector"></div>
+    </div>
+  </div>
+
+  <div class="header">
+    <div class="brand" id="siteName"></div>
+    <div class="nav">
+      <button onclick="goHome()" id="navHome"></button>
+      <button onclick="goPage('daily-quiz.html')" id="navDailyQuiz"></button>
+      <button onclick="goPage('about.html')" id="navAbout"></button>
+      <button onclick="goPage('contact.html')" id="navContact"></button>
+    </div>
+  </div>
 </div>
 
-<div class="container">
-
-<div id="difficulty" class="badge easy">EASY</div>
-
-<div class="progress" id="progressBar"></div>
-
-<div class="viewer">
-<img id="image">
+<div class="title-wrap">
+  <div class="title-bar" id="quizTitle"></div>
+  <div class="quiz-description" id="quizDescription"></div>
 </div>
 
-<input id="input" placeholder="Type player name...">
+<div class="container" id="gameContainer">
 
-<button class="btn green" onclick="checkAnswer()">CHECK</button>
-<button class="btn gray" onclick="nextQuestion()">NEXT</button>
+  <div class="progress-wrap">
+    <div class="progress" id="progressBar"></div>
+  </div>
 
-<div class="result" id="result"></div>
+  <div id="difficulty" class="badge easy">EASY</div>
+
+  <div class="viewer" id="viewerBox">
+    <img id="quizImage" src="">
+  </div>
+
+  <div class="counter" id="counter"></div>
+
+  <div class="answer-panel" id="answerPanel">
+    <input class="answer-input" id="answerInput" type="text" autocomplete="off">
+    
+    <div class="buttons">
+      <button class="btn green" onclick="checkAnswer()" id="checkBtn"></button>
+      <button class="btn gray" onclick="nextQuestion()" id="nextBtn"></button>
+      <button class="btn yellow" onclick="showCorrectAnswer()" id="showAnswerBtn"></button>
+      <button class="btn gray" onclick="goHome()" id="backHomeBtn"></button>
+    </div>
+
+    <div class="result-box" id="resultBox"></div>
+  </div>
+
+  <div class="final-box" id="finalBox">
+    <h2 id="finalTitle"></h2>
+    <div class="final-score" id="finalScore"></div>
+    <div class="buttons">
+      <button class="btn green" onclick="location.reload()" id="playAgainBtn"></button>
+      <button class="btn gray" onclick="goHome()" id="homeBtn"></button>
+    </div>
+  </div>
 
 </div>
 
-<script src="typing-quiz-data.js"></script>
+<div class="footer">© Football Quiz</div>
 
 <script>
+const IS_LANG_FOLDER = /^\/(en|es|pt|fr|it)\//.test(window.location.pathname);
+const BASE = IS_LANG_FOLDER ? "../" : "";
 
-let level = "easy";
-let current = 0;
+function loadScript(src){
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement("script");
+    s.src=BASE+src;
+    s.onload=resolve;
+    s.onerror=reject;
+    document.body.appendChild(s);
+  });
+}
+
+const typingText = {
+  en:{
+    title:"Guess the Player Name",
+    description:"Look at the football player image and type the correct name. Accents and capital letters do not matter.",
+    placeholder:"Type player name...",
+    check:"CHECK",
+    next:"NEXT",
+    show:"SHOW ANSWER",
+    back:"BACK HOME",
+    correct:"✅ Correct!",
+    wrong:"❌ Try again!",
+    empty:"⚠️ Type an answer first.",
+    answer:"Correct answer:",
+    final:"Quiz Completed!",
+    score:"Your score:",
+    playAgain:"PLAY AGAIN",
+    home:"HOME"
+  },
+  es:{
+    title:"Adivina el Nombre del Jugador",
+    description:"Mira la imagen del futbolista y escribe el nombre correcto. No importan las mayúsculas ni las tildes.",
+    placeholder:"Escribe el nombre del jugador...",
+    check:"COMPROBAR",
+    next:"SIGUIENTE",
+    show:"VER RESPUESTA",
+    back:"VOLVER AL INICIO",
+    correct:"✅ ¡Correcto!",
+    wrong:"❌ Inténtalo otra vez.",
+    empty:"⚠️ Escribe una respuesta primero.",
+    answer:"Respuesta correcta:",
+    final:"¡Quiz Completado!",
+    score:"Tu puntuación:",
+    playAgain:"JUGAR OTRA VEZ",
+    home:"INICIO"
+  },
+  pt:{
+    title:"Adivinhe o Nome do Jogador",
+    description:"Olhe para a imagem do jogador e escreva o nome correto. Maiúsculas e acentos não importam.",
+    placeholder:"Digite o nome do jogador...",
+    check:"VERIFICAR",
+    next:"PRÓXIMA",
+    show:"VER RESPOSTA",
+    back:"VOLTAR AO INÍCIO",
+    correct:"✅ Correto!",
+    wrong:"❌ Tente novamente.",
+    empty:"⚠️ Digite uma resposta primeiro.",
+    answer:"Resposta correta:",
+    final:"Quiz Concluído!",
+    score:"Sua pontuação:",
+    playAgain:"JOGAR NOVAMENTE",
+    home:"INÍCIO"
+  },
+  fr:{
+    title:"Devinez le Nom du Joueur",
+    description:"Regardez l’image du joueur et écrivez le bon nom. Les majuscules et accents ne comptent pas.",
+    placeholder:"Écrivez le nom du joueur...",
+    check:"VÉRIFIER",
+    next:"SUIVANT",
+    show:"VOIR LA RÉPONSE",
+    back:"RETOUR ACCUEIL",
+    correct:"✅ Correct !",
+    wrong:"❌ Essayez encore.",
+    empty:"⚠️ Écrivez une réponse d’abord.",
+    answer:"Bonne réponse :",
+    final:"Quiz Terminé !",
+    score:"Votre score :",
+    playAgain:"REJOUER",
+    home:"ACCUEIL"
+  },
+  it:{
+    title:"Indovina il Nome del Giocatore",
+    description:"Guarda l’immagine del calciatore e scrivi il nome corretto. Maiuscole e accenti non contano.",
+    placeholder:"Scrivi il nome del giocatore...",
+    check:"CONTROLLA",
+    next:"AVANTI",
+    show:"VEDI RISPOSTA",
+    back:"TORNA ALLA HOME",
+    correct:"✅ Corretto!",
+    wrong:"❌ Riprova.",
+    empty:"⚠️ Scrivi prima una risposta.",
+    answer:"Risposta corretta:",
+    final:"Quiz Completato!",
+    score:"Il tuo punteggio:",
+    playAgain:"GIOCA ANCORA",
+    home:"HOME"
+  }
+};
+
+let quizKey = "guess-player-name";
+let quiz;
+let selectedQuestions = [];
+let current = 1;
 let score = 0;
+let answered = false;
+let autoNextTimer = null;
+
+function currentLang(){
+  const saved = localStorage.getItem("footballQuizLanguage");
+  if(["en","es","pt","fr","it"].includes(saved)) return saved;
+  return "en";
+}
+
+function tt(key){
+  const lang = currentLang();
+  return typingText[lang][key] || typingText.en[key];
+}
+
+function langPrefix(){
+  return "/" + currentLang() + "/";
+}
+
+function goHome(){
+  location.href = langPrefix();
+}
+
+function goPage(page){
+  location.href = langPrefix() + page;
+}
 
 function normalize(text){
-return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9\s]/g,"")
+    .replace(/\s+/g," ")
+    .trim();
 }
 
-function loadQuestion(){
-const q = typingQuizData["guess-player-name"][level][current];
-document.getElementById("image").src = "images/guess-player-name/"+level+"/q"+q.number+".webp";
-document.getElementById("input").value="";
-document.getElementById("result").innerText="";
-updateProgress();
-updateLevel();
+function shuffleArray(array){
+  const arr=[...array];
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
 }
 
-function updateLevel(){
-let badge = document.getElementById("difficulty");
-badge.className="badge "+level;
-badge.innerText=level.toUpperCase();
+function buildQuestionSet(){
+  const easy = shuffleArray(quiz.easy).slice(0,5).map(q=>({...q,level:"easy"}));
+  const medium = shuffleArray(quiz.medium).slice(0,5).map(q=>({...q,level:"medium"}));
+  const hard = shuffleArray(quiz.hard).slice(0,5).map(q=>({...q,level:"hard"}));
+
+  selectedQuestions = [...easy,...medium,...hard];
+}
+
+function getCurrentQuestion(){
+  return selectedQuestions[current - 1];
+}
+
+function applyTranslations(){
+  document.documentElement.lang = currentLang();
+
+  document.getElementById("siteName").innerText = t("site_name");
+  document.getElementById("navHome").innerText = t("nav_home");
+  document.getElementById("navDailyQuiz").innerText = t("nav_daily_quiz");
+  document.getElementById("navAbout").innerText = t("nav_about");
+  document.getElementById("navContact").innerText = t("nav_contact");
+
+  document.getElementById("quizTitle").innerText = tt("title");
+  document.getElementById("quizDescription").innerText = tt("description");
+  document.getElementById("answerInput").placeholder = tt("placeholder");
+  document.getElementById("checkBtn").innerText = tt("check");
+  document.getElementById("nextBtn").innerText = tt("next");
+  document.getElementById("showAnswerBtn").innerText = tt("show");
+  document.getElementById("backHomeBtn").innerText = tt("back");
+  document.getElementById("finalTitle").innerText = tt("final");
+  document.getElementById("playAgainBtn").innerText = tt("playAgain");
+  document.getElementById("homeBtn").innerText = tt("home");
+
+  document.title = tt("title") + " | Football Quiz";
+  document.querySelector("meta[name='description']").setAttribute("content", tt("description"));
+}
+
+function updateBadge(){
+  const badge = document.getElementById("difficulty");
+  const level = getCurrentQuestion().level;
+
+  badge.className = "badge";
+
+  if(level === "easy"){
+    badge.innerText = t("easy");
+    badge.classList.add("easy");
+  }else if(level === "medium"){
+    badge.innerText = t("medium");
+    badge.classList.add("medium");
+  }else{
+    badge.innerText = t("hard");
+    badge.classList.add("hard");
+  }
 }
 
 function updateProgress(){
-document.getElementById("progressBar").style.width=((current+1)/15*100)+"%";
+  document.getElementById("progressBar").style.width = (current / 15 * 100) + "%";
+}
+
+function updateCounter(){
+  document.getElementById("counter").innerText = `${t("question_label")} ${current} / 15`;
+}
+
+function imagePath(){
+  const q = getCurrentQuestion();
+  return `${BASE}${quiz.folder}/${q.level}/q${q.number}.webp`;
+}
+
+function animateViewerFlash(){
+  const viewer=document.getElementById("viewerBox");
+  viewer.classList.remove("flash");
+  void viewer.offsetWidth;
+  viewer.classList.add("flash");
+}
+
+function loadImage(){
+  const img = document.getElementById("quizImage");
+  const src = imagePath();
+  const preload = new Image();
+
+  preload.onload = function(){
+    img.className = "img-out-next";
+    setTimeout(()=>{
+      img.src = src;
+      img.className = "img-in-next";
+      animateViewerFlash();
+    },170);
+  };
+
+  preload.src = src;
+}
+
+function loadQuestion(){
+  clearTimeout(autoNextTimer);
+  answered = false;
+
+  document.getElementById("answerInput").value = "";
+  document.getElementById("answerInput").disabled = false;
+  document.getElementById("answerInput").focus();
+
+  document.getElementById("resultBox").className = "result-box";
+  document.getElementById("resultBox").innerText = "";
+
+  document.getElementById("answerPanel").style.display = "block";
+
+  updateBadge();
+  updateProgress();
+  updateCounter();
+  loadImage();
+}
+
+function showResult(type, message){
+  const box = document.getElementById("resultBox");
+  box.className = "result-box " + type;
+  box.innerText = message;
 }
 
 function checkAnswer(){
-const input = document.getElementById("input").value;
-const q = typingQuizData["guess-player-name"][level][current];
+  if(answered) return;
 
-if(q.answers.some(a=>normalize(a)==normalize(input))){
-document.getElementById("result").innerText="✅ Correct";
-score++;
+  const input = document.getElementById("answerInput").value;
+  const q = getCurrentQuestion();
 
-setTimeout(()=>{
-nextQuestion();
-},800);
+  if(!input.trim()){
+    showResult("result-warning", tt("empty"));
+    return;
+  }
 
-}else{
-document.getElementById("result").innerText="❌ Try again";
+  const user = normalize(input);
+  const correct = q.answers.some(answer => normalize(answer) === user);
+
+  if(correct){
+    score++;
+    answered = true;
+    document.getElementById("answerInput").disabled = true;
+    showResult("result-correct", tt("correct"));
+
+    autoNextTimer = setTimeout(()=>{
+      nextQuestion();
+    }, 950);
+
+  }else{
+    showResult("result-wrong", tt("wrong"));
+  }
 }
+
+function showCorrectAnswer(){
+  if(answered) return;
+
+  const q = getCurrentQuestion();
+  answered = true;
+  document.getElementById("answerInput").disabled = true;
+  showResult("result-warning", `${tt("answer")} ${q.answers[0]}`);
 }
 
 function nextQuestion(){
-current++;
+  clearTimeout(autoNextTimer);
 
-if(current>=5 && level=="easy"){level="medium";current=0;}
-else if(current>=5 && level=="medium"){level="hard";current=0;}
-else if(current>=5 && level=="hard"){alert("Finished");return;}
+  if(current >= 15){
+    endQuiz();
+    return;
+  }
 
-loadQuestion();
+  current++;
+  loadQuestion();
 }
 
-loadQuestion();
+function endQuiz(){
+  document.getElementById("difficulty").style.display = "none";
+  document.getElementById("viewerBox").style.display = "none";
+  document.getElementById("counter").style.display = "none";
+  document.getElementById("answerPanel").style.display = "none";
+  document.getElementById("finalBox").style.display = "block";
+  document.getElementById("finalScore").innerText = `${tt("score")} ${score} / 15`;
+  document.getElementById("progressBar").style.width = "100%";
+}
 
+function setupHeaderScroll(){
+  const topUI=document.getElementById("topUI");
+
+  function updateTopPadding(){
+    document.body.style.paddingTop=(topUI.offsetHeight+12)+"px";
+  }
+
+  function hideTopUI(){
+    topUI.style.transform=`translateY(-${topUI.offsetHeight}px)`;
+  }
+
+  function showTopUI(){
+    topUI.style.transform="translateY(0)";
+  }
+
+  updateTopPadding();
+  window.addEventListener("load",updateTopPadding);
+  window.addEventListener("resize",updateTopPadding);
+
+  let lastScroll=0;
+
+  window.addEventListener("scroll",()=>{
+    const currentScroll=window.scrollY||window.pageYOffset;
+
+    if(currentScroll>lastScroll&&currentScroll>80){
+      hideTopUI();
+    }else if(currentScroll<10){
+      showTopUI();
+    }
+
+    lastScroll=currentScroll<=0?0:currentScroll;
+  },{passive:true});
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    if(!answered){
+      checkAnswer();
+    }else{
+      nextQuestion();
+    }
+  }
+});
+
+Promise.all([
+  loadScript("translations.js"),
+  loadScript("language.js"),
+  loadScript("typing-quiz-data.js")
+]).then(()=>{
+  quiz = typingQuizData[quizKey];
+
+  buildLanguageSelector("languageSelector");
+  applyTranslations();
+  buildQuestionSet();
+  loadQuestion();
+  setupHeaderScroll();
+});
 </script>
 
 </body>
