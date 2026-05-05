@@ -53,7 +53,7 @@ crossorigin="anonymous"></script>
 
 <title>Football Quiz – Guess the Player, Clubs & Transfers | Play Online</title>
 
-<meta name="description" content="Play Football Quiz online. Guess football players by transfers, clubs, nationality, shirt number and more. Try daily football trivia challenges and test your knowledge.">
+<meta name="description" content="Play Football Quiz online. Guess football players by transfers, clubs, nationality, shirt number, player pictures and more. Try football trivia challenges and test your knowledge.">
 <meta name="keywords" content="football quiz, soccer quiz, guess the player, football trivia, football game online, guess football player, football transfers quiz, football clubs quiz">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Football Quiz">
@@ -576,42 +576,42 @@ const homeText = {
   en: {
     random: "PLAY RANDOM QUIZ",
     seoTitle: "Play Football Quiz Online",
-    seoText1: "Football Quiz is an online football trivia game where fans can test their knowledge by guessing players, clubs, transfers and national teams.",
+    seoText1: "Football Quiz is an online football trivia game where fans can test their knowledge by guessing players, clubs, transfers, pictures and national teams.",
     seoText2: "If you enjoy football games, soccer quizzes, player guessing challenges and football trivia, this website is made for you."
   },
   es: {
     random: "JUGAR QUIZ ALEATORIO",
     seoTitle: "Juega Football Quiz Online",
-    seoText1: "Football Quiz es un juego online de preguntas de fútbol donde los fans pueden poner a prueba sus conocimientos adivinando jugadores, clubes, transferencias y selecciones.",
+    seoText1: "Football Quiz es un juego online de preguntas de fútbol donde los fans pueden poner a prueba sus conocimientos adivinando jugadores, clubes, transferencias, imágenes y selecciones.",
     seoText2: "Si te gustan los juegos de fútbol, los quizzes de fútbol y las trivias futboleras, esta web es para ti."
   },
   pt: {
     random: "JOGAR QUIZ ALEATÓRIO",
     seoTitle: "Jogue Football Quiz Online",
-    seoText1: "Football Quiz é um jogo online de perguntas de futebol onde os fãs podem testar seus conhecimentos adivinhando jogadores, clubes, transferências e seleções.",
+    seoText1: "Football Quiz é um jogo online de perguntas de futebol onde os fãs podem testar seus conhecimentos adivinhando jogadores, clubes, transferências, imagens e seleções.",
     seoText2: "Se você gosta de jogos de futebol, quizzes de futebol e curiosidades futebolísticas, este site é para você."
   },
   fr: {
     random: "QUIZ ALÉATOIRE",
     seoTitle: "Jouez à Football Quiz en Ligne",
-    seoText1: "Football Quiz est un jeu de quiz football en ligne où les fans peuvent tester leurs connaissances en devinant des joueurs, des clubs et des transferts.",
+    seoText1: "Football Quiz est un jeu de quiz football en ligne où les fans peuvent tester leurs connaissances en devinant des joueurs, des clubs, des images et des transferts.",
     seoText2: "Si vous aimez les jeux de football, les quiz football et les défis de culture footballistique, ce site est fait pour vous."
   },
   it: {
     random: "QUIZ CASUALE",
     seoTitle: "Gioca a Football Quiz Online",
-    seoText1: "Football Quiz è un gioco online di domande sul calcio dove i tifosi possono mettere alla prova le proprie conoscenze indovinando giocatori, club e trasferimenti.",
+    seoText1: "Football Quiz è un gioco online di domande sul calcio dove i tifosi possono mettere alla prova le proprie conoscenze indovinando giocatori, club, immagini e trasferimenti.",
     seoText2: "Se ti piacciono i giochi di calcio, i quiz calcistici e le sfide sul calcio, questo sito è fatto per te."
   }
 };
 
 const homeQuizTitles = {
   "guess-player-name": {
-    en: "Guess the Player Name",
-    es: "Adivina el Nombre del Jugador",
-    pt: "Adivinhe o Nome do Jogador",
-    fr: "Devinez le Nom du Joueur",
-    it: "Indovina il Nome del Giocatore"
+    en: "Guess the Player by Picture",
+    es: "Adivina el Jugador por Imagen",
+    pt: "Adivinhe o Jogador por Imagem",
+    fr: "Devinez le Joueur par Image",
+    it: "Indovina il Giocatore da Immagine"
   }
 };
 
@@ -636,6 +636,13 @@ const quizRoutes = {
     pt:"adivinhe-clube-por-nacionalidade-dos-jogadores",
     fr:"devinez-club-par-nationalite-des-joueurs",
     it:"indovina-club-dalla-nazionalita-dei-giocatori"
+  },
+  "guess-player-name": {
+    en:"guess-player-by-picture",
+    es:"adivina-jugador-por-imagen",
+    pt:"adivinhe-jogador-por-imagem",
+    fr:"devinez-joueur-par-image",
+    it:"indovina-giocatore-da-immagine"
   }
 };
 
@@ -682,12 +689,14 @@ function goPage(page){
 }
 
 function goQuiz(mode){
+  const lang = currentLang();
+
   if(mode === "guess-player-name"){
-    location.href = langPrefix() + "typing-quiz.html";
+    const slug = quizRoutes["guess-player-name"][lang] || quizRoutes["guess-player-name"].en;
+    location.href = langPrefix() + slug;
     return;
   }
 
-  const lang = currentLang();
   const slug = quizRoutes[mode][lang] || quizRoutes[mode].en;
   location.href = langPrefix() + slug;
 }
