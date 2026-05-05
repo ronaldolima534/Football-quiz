@@ -12,6 +12,10 @@
       "source": "/guess-club-by-player-nationalities",
       "destination": "/quiz-template.html?mode=nationality-club"
     },
+    {
+      "source": "/guess-player-by-picture",
+      "destination": "/typing-quiz.html"
+    },
 
     {
       "source": "/en/guess-player-by-transfers",
@@ -24,6 +28,10 @@
     {
       "source": "/en/guess-club-by-player-nationalities",
       "destination": "/en/quiz-template.html?mode=nationality-club"
+    },
+    {
+      "source": "/en/guess-player-by-picture",
+      "destination": "/en/typing-quiz.html"
     },
 
     {
@@ -38,6 +46,10 @@
       "source": "/es/adivina-club-por-nacionalidad-de-jugadores",
       "destination": "/es/quiz-template.html?mode=nationality-club"
     },
+    {
+      "source": "/es/adivina-jugador-por-imagen",
+      "destination": "/es/typing-quiz.html"
+    },
 
     {
       "source": "/pt/adivinhe-jogador-por-transferencias",
@@ -50,6 +62,10 @@
     {
       "source": "/pt/adivinhe-clube-por-nacionalidade-dos-jogadores",
       "destination": "/pt/quiz-template.html?mode=nationality-club"
+    },
+    {
+      "source": "/pt/adivinhe-jogador-por-imagem",
+      "destination": "/pt/typing-quiz.html"
     },
 
     {
@@ -64,6 +80,10 @@
       "source": "/fr/devinez-club-par-nationalite-des-joueurs",
       "destination": "/fr/quiz-template.html?mode=nationality-club"
     },
+    {
+      "source": "/fr/devinez-joueur-par-image",
+      "destination": "/fr/typing-quiz.html"
+    },
 
     {
       "source": "/it/indovina-giocatore-dai-trasferimenti",
@@ -76,6 +96,10 @@
     {
       "source": "/it/indovina-club-dalla-nazionalita-dei-giocatori",
       "destination": "/it/quiz-template.html?mode=nationality-club"
+    },
+    {
+      "source": "/it/indovina-giocatore-da-immagine",
+      "destination": "/it/typing-quiz.html"
     }
   ]
 }
