@@ -22,7 +22,7 @@ const typingQuizData = {
     totalHard: 30,
 
     easy: [
-      { number: 1, answers: ["Enzo Fernández", "Enzo Fernandez", "Enzo"] },
+      { number: 1, answers: ["Enzo Fernández", "Enzo Fernandez", "Enzo", "Fernandez"] },
       { number: 2, answers: ["Lionel Messi", "Leo Messi", "Messi"] },
       { number: 3, answers: ["Michael Olise", "Olise"] },
       { number: 4, answers: ["Jude Bellingham", "Bellingham", "Jude"] },
