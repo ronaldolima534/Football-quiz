@@ -71,7 +71,7 @@ crossorigin="anonymous"></script>
 body{
 font-family:Arial,sans-serif;
 background:
-radial-gradient(circle at top, rgba(34,197,94,.12), transparent 28%),
+radial-gradient(circle at top, rgba(34,197,94,.10), transparent 26%),
 linear-gradient(180deg,#080808,#111);
 color:#fff;
 text-align:center;
@@ -159,6 +159,7 @@ border-bottom:1px solid var(--line);
 font-size:34px;
 font-weight:900;
 margin-bottom:14px;
+text-shadow:0 0 24px rgba(34,197,94,.18);
 }
 
 .nav{
@@ -179,11 +180,17 @@ background:#1d1d1d;
 color:#fff;
 border:1px solid var(--line);
 box-shadow:0 5px 0 #111;
+transition:.18s;
 }
 
 .nav button:hover{
 transform:translateY(-2px);
 border-color:var(--green);
+}
+
+.nav button:active{
+transform:translateY(3px);
+box-shadow:0 2px 0 #111;
 }
 
 .title-wrap{
@@ -198,10 +205,11 @@ background:#151515;
 border:1px solid var(--line);
 padding:22px;
 border-radius:24px;
-font-size:30px;
+font-size:28px;
 font-weight:900;
 box-shadow:0 14px 30px rgba(0,0,0,.35);
-animation:fadeUp .55s ease forwards;
+text-transform:uppercase;
+animation:fadeUp .5s ease forwards;
 }
 
 .quiz-description{
@@ -216,7 +224,7 @@ font-size:17px;
 line-height:1.6;
 color:#cfcfcf;
 box-shadow:0 12px 28px rgba(0,0,0,.28);
-animation:fadeUp .65s ease forwards;
+animation:fadeUp .6s ease forwards;
 }
 
 .container{
@@ -275,7 +283,7 @@ align-items:center;
 overflow:hidden;
 box-shadow:0 16px 34px rgba(0,0,0,.35);
 position:relative;
-animation:fadeUp .75s ease forwards;
+animation:fadeUp .7s ease forwards;
 }
 
 .viewer.flash{
@@ -312,6 +320,8 @@ to{opacity:0;transform:translateX(-36px) scale(.97);}
 margin-top:18px;
 font-size:28px;
 font-weight:900;
+text-transform:uppercase;
+text-shadow:2px 2px 0 #0b0b0b;
 }
 
 .answer-panel{
@@ -326,21 +336,23 @@ box-shadow:0 14px 30px rgba(0,0,0,.32);
 .answer-input{
 width:100%;
 padding:18px;
-font-size:21px;
+font-size:22px;
 font-weight:900;
 text-align:center;
 border-radius:18px;
-border:1px solid #333;
+border:2px solid #333;
 outline:none;
 background:#0f0f0f;
 color:#fff;
-box-shadow:inset 0 2px 8px rgba(0,0,0,.35);
+box-shadow:
+inset 0 2px 8px rgba(0,0,0,.35),
+0 8px 18px rgba(0,0,0,.24);
 }
 
 .answer-input:focus{
 border-color:var(--green);
 box-shadow:
-0 0 18px rgba(34,197,94,.2),
+0 0 18px rgba(34,197,94,.22),
 inset 0 2px 8px rgba(0,0,0,.35);
 }
 
@@ -358,6 +370,7 @@ border:none;
 border-radius:18px;
 cursor:pointer;
 transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+text-transform:uppercase;
 }
 
 .green{
@@ -391,6 +404,18 @@ box-shadow:
 0 12px 20px rgba(0,0,0,.35);
 }
 
+.gray:hover{
+transform:translateY(-2px);
+border-color:#555;
+}
+
+.gray:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 #111,
+0 8px 16px rgba(0,0,0,.25);
+}
+
 .yellow{
 background:linear-gradient(145deg,var(--yellow),#eab308);
 color:#000;
@@ -399,12 +424,27 @@ box-shadow:
 0 14px 24px rgba(250,204,21,.22);
 }
 
+.yellow:hover{
+transform:translateY(-2px);
+box-shadow:
+0 10px 0 #a16207,
+0 0 20px rgba(250,204,21,.45),
+0 18px 28px rgba(250,204,21,.25);
+}
+
+.yellow:active{
+transform:translateY(4px);
+box-shadow:
+0 2px 0 #a16207,
+0 8px 16px rgba(250,204,21,.16);
+}
+
 .result-box{
 display:none;
 margin-top:18px;
 border-radius:22px;
 padding:18px;
-font-size:20px;
+font-size:21px;
 font-weight:900;
 line-height:1.5;
 animation:fadeUp .25s ease forwards;
@@ -447,7 +487,7 @@ margin-bottom:14px;
 }
 
 .final-score{
-font-size:26px;
+font-size:28px;
 font-weight:900;
 color:var(--green);
 margin-bottom:18px;
@@ -520,15 +560,12 @@ body{padding-top:190px;}
     
     <div class="buttons">
       <button class="btn green" onclick="checkAnswer()" id="checkBtn"></button>
+      <button class="btn gray" onclick="nextQuestion()" id="nextBtn"></button>
       <button class="btn yellow" onclick="showCorrectAnswer()" id="showAnswerBtn"></button>
       <button class="btn gray" onclick="goHome()" id="backHomeBtn"></button>
     </div>
 
     <div class="result-box" id="resultBox"></div>
-  </div>
-
-  <div class="buttons" id="nextButtons" style="display:none;">
-    <button class="btn green" onclick="nextQuestion()" id="nextBtn"></button>
   </div>
 
   <div class="final-box" id="finalBox">
@@ -652,6 +689,7 @@ let selectedQuestions = [];
 let current = 1;
 let score = 0;
 let answered = false;
+let autoNextTimer = null;
 
 function currentLang(){
   const saved = localStorage.getItem("footballQuizLanguage");
@@ -787,6 +825,7 @@ function loadImage(){
 }
 
 function loadQuestion(){
+  clearTimeout(autoNextTimer);
   answered = false;
 
   document.getElementById("answerInput").value = "";
@@ -797,7 +836,6 @@ function loadQuestion(){
   document.getElementById("resultBox").innerText = "";
 
   document.getElementById("answerPanel").style.display = "block";
-  document.getElementById("nextButtons").style.display = "none";
 
   updateBadge();
   updateProgress();
@@ -830,21 +868,28 @@ function checkAnswer(){
     answered = true;
     document.getElementById("answerInput").disabled = true;
     showResult("result-correct", tt("correct"));
-    document.getElementById("nextButtons").style.display = "grid";
+
+    autoNextTimer = setTimeout(()=>{
+      nextQuestion();
+    }, 950);
+
   }else{
     showResult("result-wrong", tt("wrong"));
   }
 }
 
 function showCorrectAnswer(){
+  if(answered) return;
+
   const q = getCurrentQuestion();
   answered = true;
   document.getElementById("answerInput").disabled = true;
   showResult("result-warning", `${tt("answer")} ${q.answers[0]}`);
-  document.getElementById("nextButtons").style.display = "grid";
 }
 
 function nextQuestion(){
+  clearTimeout(autoNextTimer);
+
   if(current >= 15){
     endQuiz();
     return;
@@ -859,7 +904,6 @@ function endQuiz(){
   document.getElementById("viewerBox").style.display = "none";
   document.getElementById("counter").style.display = "none";
   document.getElementById("answerPanel").style.display = "none";
-  document.getElementById("nextButtons").style.display = "none";
   document.getElementById("finalBox").style.display = "block";
   document.getElementById("finalScore").innerText = `${tt("score")} ${score} / 15`;
   document.getElementById("progressBar").style.width = "100%";
