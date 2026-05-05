@@ -49,10 +49,18 @@ crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Guess the Player Name | Football Quiz</title>
-<meta name="description" content="Guess the football player by image. Type the correct player name and test your football knowledge.">
+<title id="seoTitle">Guess the Player by Picture – Football Quiz Game</title>
+<meta id="seoDescription" name="description" content="Can you guess the football player by picture? Type the correct player name and test your football knowledge.">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Football Quiz">
+
+<link id="canonicalLink" rel="canonical" href="https://footballquizapp.com/en/guess-player-by-picture">
+<link rel="alternate" hreflang="en" href="https://footballquizapp.com/en/guess-player-by-picture">
+<link rel="alternate" hreflang="es" href="https://footballquizapp.com/es/adivina-jugador-por-imagen">
+<link rel="alternate" hreflang="pt" href="https://footballquizapp.com/pt/adivinhe-jogador-por-imagem">
+<link rel="alternate" hreflang="fr" href="https://footballquizapp.com/fr/devinez-joueur-par-image">
+<link rel="alternate" hreflang="it" href="https://footballquizapp.com/it/indovina-giocatore-da-immagine">
+<link rel="alternate" hreflang="x-default" href="https://footballquizapp.com/en/guess-player-by-picture">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -471,6 +479,27 @@ color:#000;
 box-shadow:0 10px 24px rgba(250,204,21,.22);
 }
 
+.seo-content{
+width:94%;
+max-width:760px;
+margin:28px auto 0;
+background:linear-gradient(145deg,#141414,#1d1d1d);
+border:1px solid #2b2b2b;
+border-radius:24px;
+padding:22px;
+text-align:left;
+color:#cfcfcf;
+line-height:1.7;
+font-size:15px;
+box-shadow:0 14px 30px rgba(0,0,0,.28);
+}
+
+.seo-content h2{
+color:white;
+font-size:24px;
+margin-bottom:10px;
+}
+
 .final-box{
 display:none;
 margin-top:24px;
@@ -577,6 +606,12 @@ body{padding-top:190px;}
     </div>
   </div>
 
+  <div class="seo-content">
+    <h2 id="seoContentTitle"></h2>
+    <p id="seoContentText1"></p>
+    <p id="seoContentText2"></p>
+  </div>
+
 </div>
 
 <div class="footer">© Football Quiz</div>
@@ -597,7 +632,7 @@ function loadScript(src){
 
 const typingText = {
   en:{
-    title:"Guess the Player Name",
+    title:"Guess the Player by Picture",
     description:"Look at the football player image and type the correct name. Accents and capital letters do not matter.",
     placeholder:"Type player name...",
     check:"CHECK",
@@ -611,10 +646,13 @@ const typingText = {
     final:"Quiz Completed!",
     score:"Your score:",
     playAgain:"PLAY AGAIN",
-    home:"HOME"
+    home:"HOME",
+    seoTitle:"Guess the Player by Picture",
+    seo1:"This football quiz challenges you to identify players by looking at their image and typing the correct name.",
+    seo2:"It is a fun football trivia game for fans who enjoy guessing players, football challenges and visual quizzes."
   },
   es:{
-    title:"Adivina el Nombre del Jugador",
+    title:"Adivina el Jugador por Imagen",
     description:"Mira la imagen del futbolista y escribe el nombre correcto. No importan las mayúsculas ni las tildes.",
     placeholder:"Escribe el nombre del jugador...",
     check:"COMPROBAR",
@@ -628,10 +666,13 @@ const typingText = {
     final:"¡Quiz Completado!",
     score:"Tu puntuación:",
     playAgain:"JUGAR OTRA VEZ",
-    home:"INICIO"
+    home:"INICIO",
+    seoTitle:"Adivina el Jugador por Imagen",
+    seo1:"Este quiz de fútbol te reta a identificar jugadores mirando su imagen y escribiendo el nombre correcto.",
+    seo2:"Es un juego ideal para fans que disfrutan los retos visuales, las trivias de fútbol y los quizzes de jugadores."
   },
   pt:{
-    title:"Adivinhe o Nome do Jogador",
+    title:"Adivinhe o Jogador por Imagem",
     description:"Olhe para a imagem do jogador e escreva o nome correto. Maiúsculas e acentos não importam.",
     placeholder:"Digite o nome do jogador...",
     check:"VERIFICAR",
@@ -645,10 +686,13 @@ const typingText = {
     final:"Quiz Concluído!",
     score:"Sua pontuação:",
     playAgain:"JOGAR NOVAMENTE",
-    home:"INÍCIO"
+    home:"INÍCIO",
+    seoTitle:"Adivinhe o Jogador por Imagem",
+    seo1:"Este quiz de futebol desafia você a identificar jogadores olhando a imagem e digitando o nome correto.",
+    seo2:"É um jogo divertido para fãs que gostam de desafios visuais, curiosidades de futebol e quizzes de jogadores."
   },
   fr:{
-    title:"Devinez le Nom du Joueur",
+    title:"Devinez le Joueur par Image",
     description:"Regardez l’image du joueur et écrivez le bon nom. Les majuscules et accents ne comptent pas.",
     placeholder:"Écrivez le nom du joueur...",
     check:"VÉRIFIER",
@@ -662,10 +706,13 @@ const typingText = {
     final:"Quiz Terminé !",
     score:"Votre score :",
     playAgain:"REJOUER",
-    home:"ACCUEIL"
+    home:"ACCUEIL",
+    seoTitle:"Devinez le Joueur par Image",
+    seo1:"Ce quiz football vous met au défi d’identifier les joueurs à partir de leur image en écrivant le bon nom.",
+    seo2:"C’est un jeu amusant pour les fans qui aiment les défis visuels, les quiz football et les jeux de devinettes."
   },
   it:{
-    title:"Indovina il Nome del Giocatore",
+    title:"Indovina il Giocatore da Immagine",
     description:"Guarda l’immagine del calciatore e scrivi il nome corretto. Maiuscole e accenti non contano.",
     placeholder:"Scrivi il nome del giocatore...",
     check:"CONTROLLA",
@@ -679,7 +726,38 @@ const typingText = {
     final:"Quiz Completato!",
     score:"Il tuo punteggio:",
     playAgain:"GIOCA ANCORA",
-    home:"HOME"
+    home:"HOME",
+    seoTitle:"Indovina il Giocatore da Immagine",
+    seo1:"Questo quiz di calcio ti sfida a riconoscere i giocatori guardando l’immagine e scrivendo il nome corretto.",
+    seo2:"È un gioco divertente per tifosi che amano sfide visive, quiz calcistici e giochi di indovinelli."
+  }
+};
+
+const seoMap = {
+  en:{
+    title:"Guess the Player by Picture – Football Quiz Game",
+    description:"Can you guess the football player by picture? Play this football quiz typing game and test your knowledge by identifying players from images.",
+    canonical:"https://footballquizapp.com/en/guess-player-by-picture"
+  },
+  es:{
+    title:"Adivina el Jugador por Imagen – Quiz de Fútbol",
+    description:"¿Puedes adivinar el jugador de fútbol por su imagen? Escribe el nombre correcto en este quiz interactivo y pon a prueba tus conocimientos.",
+    canonical:"https://footballquizapp.com/es/adivina-jugador-por-imagen"
+  },
+  pt:{
+    title:"Adivinhe o Jogador por Imagem – Quiz de Futebol",
+    description:"Você consegue adivinhar o jogador de futebol pela imagem? Escreva o nome correto neste quiz interativo e teste seus conhecimentos.",
+    canonical:"https://footballquizapp.com/pt/adivinhe-jogador-por-imagem"
+  },
+  fr:{
+    title:"Devinez le Joueur par Image – Quiz Football",
+    description:"Pouvez-vous deviner le joueur de football par son image ? Écrivez le bon nom dans ce quiz interactif et testez vos connaissances.",
+    canonical:"https://footballquizapp.com/fr/devinez-joueur-par-image"
+  },
+  it:{
+    title:"Indovina il Giocatore da Immagine – Quiz Calcio",
+    description:"Riesci a indovinare il calciatore dall’immagine? Scrivi il nome corretto in questo quiz interattivo e metti alla prova le tue conoscenze.",
+    canonical:"https://footballquizapp.com/it/indovina-giocatore-da-immagine"
   }
 };
 
@@ -712,6 +790,20 @@ function goHome(){
 
 function goPage(page){
   location.href = langPrefix() + page;
+}
+
+function applySEO(){
+  const lang = currentLang();
+  const seo = seoMap[lang] || seoMap.en;
+
+  document.title = seo.title;
+  document.getElementById("seoTitle").innerText = seo.title;
+  document.getElementById("seoDescription").setAttribute("content", seo.description);
+  document.getElementById("canonicalLink").setAttribute("href", seo.canonical);
+
+  document.getElementById("seoContentTitle").innerText = tt("seoTitle");
+  document.getElementById("seoContentText1").innerText = tt("seo1");
+  document.getElementById("seoContentText2").innerText = tt("seo2");
 }
 
 function normalize(text){
@@ -764,9 +856,6 @@ function applyTranslations(){
   document.getElementById("finalTitle").innerText = tt("final");
   document.getElementById("playAgainBtn").innerText = tt("playAgain");
   document.getElementById("homeBtn").innerText = tt("home");
-
-  document.title = tt("title") + " | Football Quiz";
-  document.querySelector("meta[name='description']").setAttribute("content", tt("description"));
 }
 
 function updateBadge(){
@@ -962,6 +1051,7 @@ Promise.all([
 
   buildLanguageSelector("languageSelector");
   applyTranslations();
+  applySEO();
   buildQuestionSet();
   loadQuestion();
   setupHeaderScroll();
