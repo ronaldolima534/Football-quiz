@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-<!-- Google tag (gtag.js) -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BXHRG2RYG7"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
@@ -14,7 +14,7 @@ gtag('config', 'G-BXHRG2RYG7');
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7742486590733120"
 crossorigin="anonymous"></script>
-  
+
 <script>
 (function(){
   const supported = ["en","es","pt","fr","it"];
@@ -605,6 +605,16 @@ const homeText = {
   }
 };
 
+const homeQuizTitles = {
+  "guess-player-name": {
+    en: "Guess the Player Name",
+    es: "Adivina el Nombre del Jugador",
+    pt: "Adivinhe o Nome do Jogador",
+    fr: "Devinez le Nom du Joueur",
+    it: "Indovina il Nome del Giocatore"
+  }
+};
+
 const quizRoutes = {
   transfers: {
     en:"guess-player-by-transfers",
@@ -649,6 +659,16 @@ function safeT(key, fallback){
   }
 }
 
+function getHomeQuizTitle(mode, quiz){
+  const lang = currentLang();
+
+  if(homeQuizTitles[mode]){
+    return homeQuizTitles[mode][lang] || homeQuizTitles[mode].en;
+  }
+
+  return safeT(quiz.titleKey, quiz.titleKey);
+}
+
 function langPrefix(){
   return "/" + currentLang() + "/";
 }
@@ -662,6 +682,11 @@ function goPage(page){
 }
 
 function goQuiz(mode){
+  if(mode === "guess-player-name"){
+    location.href = langPrefix() + "typing-quiz.html";
+    return;
+  }
+
   const lang = currentLang();
   const slug = quizRoutes[mode][lang] || quizRoutes[mode].en;
   location.href = langPrefix() + slug;
@@ -707,11 +732,11 @@ function buildHomeQuizzes(){
     html += `
       <div class="card">
         <div class="thumb">
-          <img src="${quiz.thumbnail}" alt="${safeT(quiz.titleKey, "Football Quiz")}">
+          <img src="${quiz.thumbnail}" alt="${getHomeQuizTitle(mode, quiz)}">
         </div>
 
         <div class="quiz-title">
-          ${safeT(quiz.titleKey, quiz.titleKey)}
+          ${getHomeQuizTitle(mode, quiz)}
         </div>
 
         <button class="play" onclick="goQuiz('${mode}')">
