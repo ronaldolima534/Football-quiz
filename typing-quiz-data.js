@@ -55,7 +55,7 @@ const typingQuizData = {
     ],
 
     medium: [
-      { number: 1, answers: ["Nuno Mendes"] },
+      { number: 1, answers: ["Nuno Mendes", "Nuno", "Mendes"] },
       { number: 2, answers: ["Alexander Isak", "Isak"] },
       { number: 3, answers: ["Matheus Cunha", "Cunha"] },
       { number: 4, answers: ["Ansu Fati", "Ansu"] },
